@@ -2,6 +2,45 @@ from os import listdir
 from os.path import isfile, join
 from subprocess import check_output
 import re
+from multiprocessing.dummy import Pool as ThreadPool
+
+
+done = ["sturm-f",
+"ybarbo-p",
+"gilbertsmith-d",
+"wolfe-j",
+"mccarty-d",
+"neal-s",
+"scholtes-d",
+"may-l",
+"perlingiere-d",
+"williams-j",
+"hendrickson-s",
+"king-j",
+"benson-r",
+"tholt-j",
+"mclaughlin-e",
+"blair-l",
+"donoho-l",
+"staab-t",
+"parks-j",
+"swerzbin-m",
+"hernandez-j",
+"kuykendall-t",
+"giron-d",
+"hyvl-d",
+"grigsby-m",
+"arnold-j",
+"white-s",
+"beck-s",
+"schwieger-j",
+"bass-e",
+"farmer-d",
+"gay-r",
+"lokay-m",
+"ruscitti-k",
+"lavorato-j",
+"geaccone-t"]
 
 def for_files_in_folder(folder):
     all_files = []
@@ -12,6 +51,15 @@ def for_files_in_folder(folder):
         elif not isfile(join(folder, f)):
             extra_files = for_files_in_folder(join(folder, f))
             all_files.extend(extra_files)
+    return all_files
+
+
+def all_folders_in_folder(folder):
+    all_files = []
+    for f in listdir(folder):
+        # if isfile(join(folder, f)) and (f[-3:] == "txt" or f[-3:] == "eml"):
+        if not isfile(join(folder, f)):
+            all_files.append(join(folder, f))
     return all_files
 
 
@@ -55,18 +103,68 @@ def separate_attrs(email_file_path, count):
     email_file.close()
     return msg
 
-all_files = for_files_in_folder("/home/cliffton/workspace/EmailClassification/data/enron_mail/maildir/allen-p")
-# all_files = for_files_in_folder("/home/cliffton/workspace/EmailClassification/data/enron_mail")
-# all_files = for_files_in_folder("/home/cliffton/workspace/EmailClassification/data/enron")
-# print(all_files)
-count = 0
-output = open("/home/cliffton/workspace/EmailClassification/data/output.csv", "w")
-for x in all_files:
-    try:
-        count+=1
-        msg = separate_attrs(x, count)
-        output.write(msg)
-    except Exception as e:
-        pass
-print(count)
-output.close()
+
+
+
+def csv():
+    # all_files = for_files_in_folder("/home/cliffton/workspace/EmailClassification/data/enron_mail/maildir/allen-p")
+    all_files = for_files_in_folder("/home/cliffton/workspace/EmailClassification/data/enron_mail")
+    # all_files = for_files_in_folder("/home/cliffton/workspace/EmailClassification/data/enron")
+    # print(all_files)
+    count = 0
+    output = open("/home/cliffton/workspace/EmailClassification/data/output.csv", "w")
+    for x in all_files:
+        try:
+            count+=1
+            msg = separate_attrs(x, count)
+            output.write(msg)
+        except Exception as e:
+            pass
+    print(count)
+    output.close()
+
+
+def mt_csv(folder):
+    all_files = for_files_in_folder(folder)
+    count = 0
+    o = folder.split("/home/cliffton/workspace/EmailClassification/data/enron_mail/maildir/")[1]
+    output = open("/home/cliffton/workspace/EmailClassification/data/output/"+ o + ".csv", "w+")
+    for x in all_files:
+        try:
+            count+=1
+            msg = separate_attrs(x, count)
+            output.write(msg)
+        except Exception as e:
+            print(str(e))
+    # print(count)
+    print(o)
+    output.close()
+
+
+
+def users():
+    all_files = all_folders_in_folder("/home/cliffton/workspace/EmailClassification/data/enron_mail/maildir")
+    print(all_files)
+    print(len(all_files))
+
+
+
+def mt():
+    all_files = all_folders_in_folder("/home/cliffton/workspace/EmailClassification/data/enron_mail/maildir")
+    pool = ThreadPool(8) 
+    bleh = set(all_files) - set(done)
+    results = pool.map(mt_csv, bleh)
+
+
+
+# users()
+mt()
+
+
+
+
+
+
+
+
+
