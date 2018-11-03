@@ -201,9 +201,9 @@ def for_files_in_folder2(folder):
 def mt_csv2(folder):
     all_files = for_files_in_folder2(folder)
     count = 0
-    output = open("/home/cliffton/workspace/EmailData/output/spam.csv", "w+")
+    output = open("/home/cliffton/workspace/EmailData/output/ham.csv", "w+")
     for x in all_files:
-        if x.find("ham/") == -1:
+        if x.find("ham/") > -1:
             print(x)
             try:
                 # print(str(x))
