@@ -160,13 +160,18 @@ def separate_attrs2(email_file_path, count):
     email_file = open(email_file_path, "r")
     email_lines = [line for line in email_file.readlines()]
     msg = ""
+    content_found = False
     for line in email_lines:
 
-        msg += line.strip() + " "
-        # print(msg)
-        # msg = re.sub('\W+','', msg)
-        # msg = ''.join(e for e in msg if e.isalnum() or e == " ")
-        # msg = ''.join(e for e in msg if e != "," )
+        # msg += line.strip() + " "
+        
+
+        if line == "\n":
+            content_found = True
+            continue
+
+        if content_found:
+            msg += line.strip() + " "
 
         tmp = ""
         for e in msg:
@@ -180,7 +185,7 @@ def separate_attrs2(email_file_path, count):
                 tmp += e
 
 
-    msg = str(count) + ",0, " + tmp.lower() + "\n" 
+    msg = str(count) + ",1, " + tmp.lower() + "\n" 
     email_file.close()
     return msg
 
@@ -201,9 +206,9 @@ def for_files_in_folder2(folder):
 def mt_csv2(folder):
     all_files = for_files_in_folder2(folder)
     count = 0
-    output = open("/home/cliffton/workspace/EmailData/output/ham.csv", "w+")
+    output = open("/home/cliffton/workspace/EmailData/output/spam2.csv", "w+")
     for x in all_files:
-        if x.find("ham/") > -1:
+        if x.find("spam/") > -1:
             print(x)
             try:
                 # print(str(x))
@@ -220,7 +225,7 @@ def mt_csv2(folder):
 
 
 def mt2():
-    all_files = all_folders_in_folder("/home/cliffton/workspace/EmailData/data/enron/classified")
+    all_files = all_folders_in_folder("/home/cliffton/workspace/EmailData/data/enron/spam")
     # pool = ThreadPool(8)
     # results = pool.map(mt_csv2, all_files)
     for folder in all_files:
