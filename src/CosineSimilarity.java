@@ -29,9 +29,9 @@ public class CosineSimilarity {
 
     }
 
-    public void addNeighbour(Email email, double similarityScore){
-        if(similarityScore < minSimilarityScore){
-            for(Email e: neighbours){
+    public void addNeighbour(Email email, double similarityScore) {
+        if (similarityScore < minSimilarityScore) {
+            for (Email e : neighbours) {
 
             }
         }

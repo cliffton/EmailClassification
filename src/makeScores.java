@@ -2,18 +2,18 @@ import java.io.*;
 import java.util.*;
 
 
-class SomeSort implements Comparator<Integer>{
+class SomeSort implements Comparator<Integer> {
 
     ArrayList<Double> tflist;
     List wordList;
 
-    public SomeSort(ArrayList<Double> tflist){
+    public SomeSort(ArrayList<Double> tflist) {
         this.tflist = tflist;
 //        this.wordList = wordList;
     }
 
-    public int compare(Integer a, Integer b){
-        if(tflist.get(a) > tflist.get(b)){
+    public int compare(Integer a, Integer b) {
+        if (tflist.get(a) > tflist.get(b)) {
             return -1;
         }
         return 1;
@@ -32,7 +32,7 @@ public class makeScores {
         ArrayList<Email> email = new ArrayList<>();
         String[] content;
         StringBuilder sb = new StringBuilder();
-        HashMap<String, Word> totalWordCount =new HashMap<>();
+        HashMap<String, Word> totalWordCount = new HashMap<>();
         int numberOfEmails = 0, numberOfSpamEmails = 0, numberOfHamEmails = 0;
         ArrayList<tupleToSortWords> spamWords = new ArrayList<>();
         ArrayList<tupleToSortWords> hamWords = new ArrayList<>();
@@ -71,10 +71,10 @@ public class makeScores {
                     WordInEmail = totalWordCount.get(wordsInCurrentEmail[i]);
                 }
                 WordInEmail.setTotalWordCount(WordInEmail.getTotalWordCount() + 1);
-                if(!wordInEmailrecord.contains(wordsInCurrentEmail[i])){
+                if (!wordInEmailrecord.contains(wordsInCurrentEmail[i])) {
                     WordInEmail.setIDFScore(WordInEmail.getIDFScore() + 1);
                     wordInEmailrecord.add(wordsInCurrentEmail[i]);
-                    if(emailCurrent.getCategory() == 1){
+                    if (emailCurrent.getCategory() == 1) {
                         WordInEmail.setDFSpamScore(WordInEmail.getDFSpamScore() + 1);
                     } else {
                         WordInEmail.setDFHamScore(WordInEmail.getDFHamScore() + 1);
@@ -86,12 +86,12 @@ public class makeScores {
         }
 
         Word currentWord;
-        for(String word: totalWordCount.keySet()){
+        for (String word : totalWordCount.keySet()) {
             currentWord = totalWordCount.get(word);
             currentWord.setSDScore(calculateSD(currentWord.getDFSpamScore(),
                     currentWord.getDFHamScore(), currentWord.getTotalWordCount()));
         }
-        for(String word: totalWordCount.keySet()) {
+        for (String word : totalWordCount.keySet()) {
             currentWord = totalWordCount.get(word);
             currentWord.makeIDF(numberOfEmails);
             currentWord.makeDFScores(numberOfSpamEmails, numberOfHamEmails);
@@ -102,14 +102,14 @@ public class makeScores {
         while (itr.hasNext()) {
             emailCurrent = (Email) itr.next();
             emailCurrent.maxTFIDFScore(sb, spamWords, hamWords);
-            counter ++;
+            counter++;
         }
         Collections.sort(spamWords);
         Collections.sort(hamWords);
         pw.write(sb.toString());
         StringBuilder sb1 = new StringBuilder();
 
-        for(tupleToSortWords t:spamWords){
+        for (tupleToSortWords t : spamWords) {
             sb1.append(t.word);
             sb1.append(",");
             sb1.append(t.tfidfScore);
@@ -122,14 +122,14 @@ public class makeScores {
 
     }
 
-    public static double calculateSD(double xjSpam, double xjHam, double U){
+    public static double calculateSD(double xjSpam, double xjHam, double U) {
 
-        double SpamPart = (xjSpam - U)/(2 * U);
-        double HamPart = (xjHam - U)/(2 * U);
-        return Math.sqrt(0.5*(SpamPart*SpamPart + HamPart*HamPart));
+        double SpamPart = (xjSpam - U) / (2 * U);
+        double HamPart = (xjHam - U) / (2 * U);
+        return Math.sqrt(0.5 * (SpamPart * SpamPart + HamPart * HamPart));
     }
 
-    public static void sortIt(){
+    public static void sortIt() {
 
     }
 

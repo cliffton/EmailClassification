@@ -2,17 +2,18 @@ public class Word {
     private String word;
     private double IDFScore, DFScoreSpam, SDScore, DFScoreHam, totalWordCount;
 
-    Word(){
+    Word() {
     }
 
-    Word(String word){
+    Word(String word) {
         this.word = word;
         this.DFScoreHam = 0;
         this.DFScoreSpam = 0;
         this.SDScore = 0;
         this.totalWordCount = 0;
     }
-    Word(String word, double IDFScore, double DFScoreSpam, double SDScore, double DFScoreHam){
+
+    Word(String word, double IDFScore, double DFScoreSpam, double SDScore, double DFScoreHam) {
         this.word = word;
         this.IDFScore = IDFScore;
         this.DFScoreSpam = DFScoreSpam;
@@ -20,57 +21,57 @@ public class Word {
         this.SDScore = SDScore;
     }
 
-    public void setIDFScore(double IDFScore){
+    public void setIDFScore(double IDFScore) {
         this.IDFScore = IDFScore;
     }
 
-    public void setTotalWordCount(double totalWordCount){
+    public void setTotalWordCount(double totalWordCount) {
         this.totalWordCount = totalWordCount;
     }
 
-    public void setDFSpamScore(double DFScoreSpam){
+    public void setDFSpamScore(double DFScoreSpam) {
         this.DFScoreSpam = DFScoreSpam;
     }
 
-    public void setDFHamScore(double DFScoreHam){
+    public void setDFHamScore(double DFScoreHam) {
         this.DFScoreHam = DFScoreHam;
     }
 
-    public void setSDScore(double SDScore){
+    public void setSDScore(double SDScore) {
         this.SDScore = SDScore;
     }
 
-    public double getIDFScore(){
+    public double getIDFScore() {
         return this.IDFScore;
     }
 
-    public double getTotalWordCount(){
+    public double getTotalWordCount() {
         return this.totalWordCount;
     }
 
-    public double getDFSpamScore(){
+    public double getDFSpamScore() {
         return this.DFScoreSpam;
     }
 
-    public double getDFHamScore(){
+    public double getDFHamScore() {
         return this.DFScoreHam;
     }
 
-    public double getSDScore(){
+    public double getSDScore() {
         return this.SDScore;
     }
 
-    public void makeIDF(int number){
-        this.IDFScore = log2(number/this.IDFScore);
+    public void makeIDF(int number) {
+        this.IDFScore = log2(number / this.IDFScore);
     }
 
-    double log2(double value){
-        return Math.log(value)/Math.log(2);
+    double log2(double value) {
+        return Math.log(value) / Math.log(2);
     }
 
     public void makeDFScores(int numberOfSpamEmails, int numberOfHamEmails) {
-        this.DFScoreSpam = log2(numberOfSpamEmails/this.DFScoreSpam);
-        this.DFScoreHam = log2(numberOfHamEmails/this.DFScoreHam);
+        this.DFScoreSpam = log2(numberOfSpamEmails / this.DFScoreSpam);
+        this.DFScoreHam = log2(numberOfHamEmails / this.DFScoreHam);
     }
 
     @Override
