@@ -5,16 +5,6 @@ import java.util.Collections;
 import java.util.Comparator;
 
 
-class SomeOtherSort implements Comparator<Pair<Email, Double>> {
-
-    public int compare(Pair<Email, Double> a, Pair<Email, Double> b) {
-        if (a.getValue() > b.getValue()) {
-            return -1;
-        }
-        return 1;
-    }
-
-}
 
 public class CosineSimilarity {
 
@@ -61,7 +51,7 @@ public class CosineSimilarity {
                 return;
             }
 
-            Collections.sort(neighbours, new SomeOtherSort());
+            Collections.sort(neighbours, new EmailComparator());
             neighbours.remove(0);
             neighbours.add(new Pair<Email, Double>(email, similarityScore));
 
