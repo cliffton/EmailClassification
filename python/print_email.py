@@ -184,6 +184,9 @@ def separate_attrs2(email_file_path, count):
             elif e.isalnum():
                 tmp += e
 
+            elif not e.isalnum():
+                tmp += " "
+
 
     msg = str(count) + ",0, " + tmp.lower() + "\n" 
     email_file.close()
@@ -206,7 +209,7 @@ def for_files_in_folder2(folder):
 def mt_csv2(folder):
     all_files = for_files_in_folder2(folder)
     count = 0
-    output = open("/home/cliffton/workspace/EmailData/output/ham3.csv", "w+")
+    output = open("/home/cliffton/workspace/EmailData/output/ham4.csv", "w+")
     for x in all_files:
         if x.find("ham/") > -1:
             print(x)
@@ -233,7 +236,7 @@ def mt2():
 
 
 def mt3():
-    mt_csv2("/home/cliffton/workspace/EmailData/data/assasin/ham/easy_ham")
+    mt_csv2("/home/cliffton/workspace/EmailData/data/assasin/ham")
 
 
 
