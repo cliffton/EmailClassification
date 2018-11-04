@@ -46,4 +46,9 @@ public class Email {
     public int getCategory(){
         return this.category;
     }
+
+
+    public double getTFIDFScore(Word word){
+        return words.get(word).doubleValue();
+    }
 }
