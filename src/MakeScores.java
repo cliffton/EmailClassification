@@ -73,7 +73,6 @@ public class MakeScores {
 
         }
 
-
         Iterator itr = emails.iterator();
 
         Email emailCurrent;
