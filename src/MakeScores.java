@@ -29,7 +29,7 @@ public class MakeScores {
         System.out.println(f);
 
         // CSV File ?
-        String CSVFile = "emails.csv";
+        String CSVFile = "emails1.csv";
 
 
         // Spam
@@ -40,79 +40,121 @@ public class MakeScores {
 
         String split = ",";
         String line = "";
-        ArrayList<Email> email = new ArrayList<>();
+        ArrayList<Email> emails = new ArrayList<>();
         String[] content;
         StringBuilder sb = new StringBuilder();
 
 
-        HashMap<String, Word> totalWordCount = new HashMap<>();
         int numberOfEmails = 0, numberOfSpamEmails = 0, numberOfHamEmails = 0;
         ArrayList<tupleToSortWords> spamWords = new ArrayList<>();
         ArrayList<tupleToSortWords> hamWords = new ArrayList<>();
 
         String[] files = {
-                "./src/ham.csv",
-                "./src/spam.csv"
+                "ham.csv",
+                "spam.csv"
         };
 
+
+        // Creating Email Objects
         for (int i = 0; i < files.length; i++) {
+
             CSVFile = files[i];
             BufferedReader br = new BufferedReader(new FileReader(CSVFile));
+
             while ((line = br.readLine()) != null) {
                 numberOfEmails++;
                 content = line.split(split);
                 try {
-                    email.add(new Email(content[2], Integer.parseInt(content[1])));
+                    emails.add(new Email(content[2], Integer.parseInt(content[1])));
                 } catch (Exception e) {
                     System.out.printf("ss");
                 }
             }
+
         }
-        Iterator itr = email.iterator();
+
+
+        Iterator itr = emails.iterator();
 
         Email emailCurrent;
         String[] wordsInCurrentEmail;
         Word WordInEmail;
+        HashMap<String, Word> totalWordCount = new HashMap<>();
 
+
+        // Iterate over emails
         while (itr.hasNext()) {
+            
             emailCurrent = (Email) itr.next();
             wordsInCurrentEmail = emailCurrent.getContent().split(" ");
             HashSet<String> wordInEmailrecord = new HashSet<>();
+            
             for (int i = 0; i < wordsInCurrentEmail.length; i++) {
+                
+                // Add word to map.
                 if (!totalWordCount.containsKey(wordsInCurrentEmail[i])) {
+                    
                     WordInEmail = new Word(wordsInCurrentEmail[i]);
                     totalWordCount.put(wordsInCurrentEmail[i], WordInEmail);
-                } else {
+
+                } 
+
+                else {
+                    
                     WordInEmail = totalWordCount.get(wordsInCurrentEmail[i]);
+
                 }
+
+                // Increment word count.
                 WordInEmail.setTotalWordCount(WordInEmail.getTotalWordCount() + 1);
+
+                // Per Email Calculation
                 if (!wordInEmailrecord.contains(wordsInCurrentEmail[i])) {
+                    
                     WordInEmail.setIDFScore(WordInEmail.getIDFScore() + 1);
                     wordInEmailrecord.add(wordsInCurrentEmail[i]);
+                    
                     if (emailCurrent.getCategory() == 1) {
+                        
                         WordInEmail.setDFSpamScore(WordInEmail.getDFSpamScore() + 1);
+
                     } else {
+                        
                         WordInEmail.setDFHamScore(WordInEmail.getDFHamScore() + 1);
+                    
                     }
                 }
+
+                // Add word to email.
                 emailCurrent.setWord(WordInEmail);
             }
+
             emailCurrent.makeTF();
         }
 
+
+        // 
         Word currentWord;
+        
         for (String word : totalWordCount.keySet()) {
             currentWord = totalWordCount.get(word);
-            currentWord.setSDScore(calculateSD(currentWord.getDFSpamScore(),
-                    currentWord.getDFHamScore(), currentWord.getTotalWordCount()));
+            currentWord.setSDScore(
+                calculateSD(
+                    currentWord.getDFSpamScore(), 
+                    currentWord.getDFHamScore(),  
+                    currentWord.getTotalWordCount()
+                )
+            );
         }
+
         for (String word : totalWordCount.keySet()) {
             currentWord = totalWordCount.get(word);
             currentWord.makeIDF(numberOfEmails);
             currentWord.makeDFScores(numberOfSpamEmails, numberOfHamEmails);
         }
+
         PrintWriter pw = new PrintWriter(new File("test.csv"));
-        itr = email.iterator();
+        itr = emails.iterator();
         int counter = 0;
         while (itr.hasNext()) {
             emailCurrent = (Email) itr.next();
