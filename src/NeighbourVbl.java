@@ -8,15 +8,19 @@ public class NeighbourVbl implements Vbl {
 
     public ArrayList<Pair<Email, Double>> neighbours = new ArrayList<>();
     private int k = 0;
-    private double minSimilarityScore = Double.MAX_VALUE;
+    public double[] similarityScores;
+
+    // Use bitset instead
+    public int[] categories;
 
 
     public NeighbourVbl(int numberOfNeighbors) {
         k = numberOfNeighbors;
+        similarityScores = new double[k];
+        categories = new int[k];
     }
 
-    @Override
-    public void set(Vbl vbl) {
+    public void setOld(Vbl vbl) {
         ArrayList<Pair<Email, Double>> result = new ArrayList<>();
         ArrayList<Pair<Email, Double>> n1 = this.neighbours;
         ArrayList<Pair<Email, Double>> n2 = ((NeighbourVbl) vbl).neighbours;
@@ -50,6 +54,45 @@ public class NeighbourVbl implements Vbl {
 
 
     @Override
+    public void set(Vbl vbl) {
+        ArrayList<Pair<Double, Integer>> result = new ArrayList<>();
+        double[] tmpScores = ((NeighbourVbl) vbl).similarityScores;
+        int[] tmpCategories = ((NeighbourVbl) vbl).categories;
+
+
+        int left = 0;
+        int right = 0;
+
+        while (left < k && right < k) {
+
+            if (this.similarityScores[left] < tmpScores[right]) {
+
+                result.add(new Pair<Double, Integer>(this.similarityScores[left], this.categories[left]));
+                left++;
+
+            } else {
+
+                result.add(new Pair<Double, Integer>(tmpScores[right], tmpCategories[right]));
+                right++;
+
+            }
+        }
+
+        while (left < k) {
+            result.add(new Pair<Double, Integer>(this.similarityScores[left], this.categories[left]));
+            left++;
+        }
+
+
+        while (right < k) {
+            result.add(new Pair<Double, Integer>(tmpScores[right], tmpCategories[right]));
+            right++;
+        }
+
+
+    }
+
+    @Override
     public void reduce(Vbl vbl) {
         set(vbl);
     }
@@ -58,8 +101,9 @@ public class NeighbourVbl implements Vbl {
     public Object clone() {
         try {
             NeighbourVbl vbl = (NeighbourVbl) super.clone();
-            vbl.neighbours = this.neighbours;
+            vbl.similarityScores = this.similarityScores;
             vbl.k = this.k;
+            vbl.categories = this.categories;
             return vbl;
 
         } catch (CloneNotSupportedException exc) {
