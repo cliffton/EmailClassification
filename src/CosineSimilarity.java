@@ -82,6 +82,27 @@ public class CosineSimilarity {
     }
 
 
+    public int voting(Email email, ArrayList<Pair<Email, Double>> neighbours) {
+        int spamCount = 0;
+        int hamCount = 0;
+
+        for (Pair<Email, Double> e : neighbours) {
+            if (e.getKey().category == 0) {
+                hamCount++;
+            } else {
+                spamCount++;
+            }
+        }
+
+
+        if (spamCount > hamCount) {
+            return 1;
+        }
+        return 0;
+
+    }
+
+
     public static void main(String[] args) {
 
     }
