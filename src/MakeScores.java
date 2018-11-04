@@ -21,10 +21,21 @@ class SomeSort implements Comparator<Integer> {
 
 }
 
-public class makeScores {
+public class MakeScores {
     public static void main(String[] args) throws IOException {
-        String CSVFile = "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\src\\emails.csv";
+
+
+        File f = new File("ham2.csv");
+        System.out.println(f);
+
+        // CSV File ?
+        String CSVFile = "emails.csv";
+
+
+        // Spam
         PrintWriter pw1 = new PrintWriter(new File("spam.csv"));
+
+        // Ham
         PrintWriter pw2 = new PrintWriter(new File("ham.csv"));
 
         String split = ",";
@@ -32,13 +43,17 @@ public class makeScores {
         ArrayList<Email> email = new ArrayList<>();
         String[] content;
         StringBuilder sb = new StringBuilder();
+
+
         HashMap<String, Word> totalWordCount = new HashMap<>();
         int numberOfEmails = 0, numberOfSpamEmails = 0, numberOfHamEmails = 0;
         ArrayList<tupleToSortWords> spamWords = new ArrayList<>();
         ArrayList<tupleToSortWords> hamWords = new ArrayList<>();
 
-        String[] files = {"C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\src\\ham.csv",
-                "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\src\\spam.csv"};
+        String[] files = {
+                "./src/ham.csv",
+                "./src/spam.csv"
+        };
 
         for (int i = 0; i < files.length; i++) {
             CSVFile = files[i];
