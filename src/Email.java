@@ -57,7 +57,7 @@ public class Email {
     public void maxTFIDFScore(StringBuilder sb, ArrayList<tupleToSortWords> spamWords, ArrayList<tupleToSortWords> hamWords) {
         double score;
         for(Word word: this.words.keySet()){
-            score = (this.words.get(word))*word.getIDFScore()*(1 - word.getSDScore());
+            score = (this.words.get(word))*word.getIDFScore();
             sb.append(word.toString());
             sb.append(",");
             this.words.put(word, score);
@@ -66,9 +66,9 @@ public class Email {
             sb.append(this.category);
             sb.append("\n");
             if(this.category == 1){
-                spamWords.add(new tupleToSortWords(word.toString(), score));
+                spamWords.add(new tupleToSortWords(word.toString(), score*(1 - word.getSDScore())));
             } else {
-                hamWords.add(new tupleToSortWords(word.toString(), score));
+                hamWords.add(new tupleToSortWords(word.toString(), score*(1 - word.getSDScore())));
             }
 
 
