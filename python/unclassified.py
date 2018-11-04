@@ -164,7 +164,7 @@ def something():
         line = remove_dirty(email, count)
         output.write(line)
         count+=1
-        if count == 1000:
+        if count == 5000:
             break
 
     output.close()
