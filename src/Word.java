@@ -1,6 +1,6 @@
 public class Word {
     private String word;
-    private double IDFScore, DFScoreSpam, SDScore, DFScoreHam;
+    private double IDFScore, DFScoreSpam, SDScore, DFScoreHam, totalWordCount;
 
     Word(){
     }
@@ -10,6 +10,7 @@ public class Word {
         this.DFScoreHam = 0;
         this.DFScoreSpam = 0;
         this.SDScore = 0;
+        this.totalWordCount = 0;
     }
     Word(String word, double IDFScore, double DFScoreSpam, double SDScore, double DFScoreHam){
         this.word = word;
@@ -21,6 +22,10 @@ public class Word {
 
     public void setIDFScore(double IDFScore){
         this.IDFScore = IDFScore;
+    }
+
+    public void setTotalWordCount(double totalWordCount){
+        this.totalWordCount = totalWordCount;
     }
 
     public void setDFSpamScore(double DFScoreSpam){
@@ -39,6 +44,9 @@ public class Word {
         return this.IDFScore;
     }
 
+    public double getTotalWordCount(){
+        return this.totalWordCount;
+    }
 
     public double getDFSpamScore(){
         return this.DFScoreSpam;
@@ -64,5 +72,15 @@ public class Word {
         this.DFScoreSpam = log2(numberOfSpamEmails/this.DFScoreSpam);
         this.DFScoreHam = log2(numberOfHamEmails/this.DFScoreHam);
     }
+
+    @Override
+    public String toString() {
+        return word;
+    }
+
+//    @Override
+//    public int compareTo(Object o) {
+//        double tfidf = ((Word)o)
+//    }
 }
 
