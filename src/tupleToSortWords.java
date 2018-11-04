@@ -17,4 +17,8 @@ public class tupleToSortWords implements Comparable{
         return tfidfScore;
     }
 
+    @Override
+    public String toString() {
+        return word;
+    }
 }

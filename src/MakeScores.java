@@ -29,7 +29,7 @@ public class MakeScores {
         System.out.println(f);
 
         // CSV File ?
-        String CSVFile = "emails1.csv";
+        String CSVFile = "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\emails1.csv";
 
 
         // Spam
@@ -50,8 +50,8 @@ public class MakeScores {
         ArrayList<tupleToSortWords> hamWords = new ArrayList<>();
 
         String[] files = {
-                "ham.csv",
-                "spam.csv"
+                "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\ham.csv",
+                "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\spam.csv"
         };
 
 
@@ -127,6 +127,16 @@ public class MakeScores {
 
                 // Add word to email.
                 emailCurrent.setWord(WordInEmail);
+
+            }
+            if (emailCurrent.getCategory() == 1) {
+
+                numberOfSpamEmails ++;
+
+            } else {
+
+                numberOfHamEmails ++;
+
             }
 
             emailCurrent.makeTF();
@@ -164,18 +174,23 @@ public class MakeScores {
         Collections.sort(spamWords);
         Collections.sort(hamWords);
         pw.write(sb.toString());
+
+        pw.close();
+        System.out.println("done!");
+
+        ArrayList<String> selectedWords = new ArrayList<>();
+        HashSet<String> wordsRecords = new HashSet<>();
+        MakeSelectedWordList(numberOfSpamEmails, spamWords, selectedWords, wordsRecords);
+        MakeSelectedWordList(numberOfHamEmails, hamWords, selectedWords, wordsRecords);
+
         StringBuilder sb1 = new StringBuilder();
 
-        for (tupleToSortWords t : spamWords) {
-            sb1.append(t.word);
-            sb1.append(",");
-            sb1.append(t.tfidfScore);
+        for (String t : selectedWords) {
+            sb1.append(t);
             sb1.append("\n");
         }
         pw1.write(sb1.toString());
         pw1.close();
-        pw.close();
-        System.out.println("done!");
 
     }
 
@@ -186,8 +201,20 @@ public class MakeScores {
         return Math.sqrt(0.5 * (SpamPart * SpamPart + HamPart * HamPart));
     }
 
-    public static void sortIt() {
+    public static void MakeSelectedWordList(int numberOfEmails, ArrayList<tupleToSortWords> Words,
+                                     ArrayList<String> selectedWords, HashSet<String> wordsRecords){
+        String word;
+        int wordsCounter = 0, wordsTakenCounter = 0;
 
+        while (wordsTakenCounter != numberOfEmails){
+            word = Words.get(wordsCounter).toString();
+            if(!wordsRecords.contains(word)){
+                wordsRecords.add(word);
+                selectedWords.add(word);
+                wordsTakenCounter ++;
+            }
+            wordsCounter++;
+        }
     }
 
 }
