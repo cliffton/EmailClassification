@@ -53,7 +53,6 @@ public class makeScores {
                 }
             }
         }
-        Integer[] email1= email.toArray(new Integer[email.size()]);
         Iterator itr = email.iterator();
         Email emailCurrent;
         String[] wordsInCurrentEmail;
