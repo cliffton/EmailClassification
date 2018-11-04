@@ -54,6 +54,7 @@ public class makeScores {
             }
         }
         Iterator itr = email.iterator();
+
         Email emailCurrent;
         String[] wordsInCurrentEmail;
         Word WordInEmail;
