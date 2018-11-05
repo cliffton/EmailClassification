@@ -5,22 +5,22 @@ import java.util.Collections;
 import java.util.Comparator;
 
 
-
 public class CosineSimilarity {
 
 
     ArrayList<Word> words;
     Email email1;
     Email email2;
-    ArrayList<Pair<Email, Double>> neighbours = new ArrayList<>();
+    ArrayList<Pair<Email, Double>> neighbours;
     int k = 0;
     double minSimilarityScore = Double.MAX_VALUE;
     double[] calArray;
 
 
-    public CosineSimilarity(int numberOfNeighbors) {
-        k = numberOfNeighbors;
-        calArray = new double[k];
+    public CosineSimilarity(int numberOfNeighbors, ArrayList<Pair<Email, Double>> neighbours) {
+        this.k = numberOfNeighbors;
+        this.calArray = new double[k];
+        this.neighbours = neighbours;
     }
 
 

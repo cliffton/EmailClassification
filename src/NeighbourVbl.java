@@ -62,8 +62,7 @@ public class NeighbourVbl implements Vbl {
 
         int left = 0;
         int right = 0;
-
-        while (left < k && right < k) {
+        while (left < k && right < k && result.size() < k) {
 
             if (this.similarityScores[left] < tmpScores[right]) {
 
@@ -78,16 +77,16 @@ public class NeighbourVbl implements Vbl {
             }
         }
 
-        while (left < k) {
-            result.add(new Pair<Double, Integer>(this.similarityScores[left], this.categories[left]));
-            left++;
-        }
+        // while (left < k) {
+        //    result.add(new Pair<Double, Integer>(this.similarityScores[left], this.categories[left]));
+        //    left++;
+        // }
 
 
-        while (right < k) {
-            result.add(new Pair<Double, Integer>(tmpScores[right], tmpCategories[right]));
-            right++;
-        }
+        // while (right < k) {
+        //    result.add(new Pair<Double, Integer>(tmpScores[right], tmpCategories[right]));
+        //    right++;
+        // }
 
 
     }
