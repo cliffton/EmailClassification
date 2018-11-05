@@ -29,8 +29,8 @@ public class EmailClassifierClu extends Job {
             masterFor(0, emails.size() - 2, WorkerTask.class).args(ctor);
 
             // Set up reduction task.
-            //rule().atFinish().task(ReduceTask.class).args(ctor)
-            //        .runInJobProcess();
+            rule().atFinish().task(ReduceTask.class).args(ctor)
+                    .runInJobProcess();
 
         } catch (Exception e) {
             usage();
@@ -57,6 +57,7 @@ public class EmailClassifierClu extends Job {
 
         private ArrayList<Word> words;
         private ArrayList<Email> emails;
+        private ArrayList<Email> unclassifiedEmail;
         private Email unclassified;
         private NeighbourVbl neighbourVbl;
         int N;
@@ -85,7 +86,7 @@ public class EmailClassifierClu extends Job {
 
             int k = 10;
 
-            unclassified = new Email("I want to sell toys", 2);
+
             MakeScores ms = new MakeScores();
             words = ms.getWords();
             emails = ms.getEmails();
@@ -96,27 +97,33 @@ public class EmailClassifierClu extends Job {
                 emailQueue.add(email);
             }
 
-            parallelFor(emailQueue).exec(new ObjectLoop<Email>() {
+            while (lb < ub) {
+
+                unclassified = unclassifiedEmail.get(lb);
+                neighbourVbl.reset();
+                lb++;
+
+                parallelFor(emailQueue).exec(new ObjectLoop<Email>() {
 
 
-                NeighbourVbl thrNeighbourVbl;
-                //Email thrUnclassified;
+                    NeighbourVbl thrNeighbourVbl;
+                    //Email thrUnclassified;
 
-                public void start() {
-                    thrNeighbourVbl = threadLocal(neighbourVbl);
-                    //thrUnclassified = unclassified;
+                    public void start() {
+                        thrNeighbourVbl = threadLocal(neighbourVbl);
+                        //thrUnclassified = unclassified;
 
-                }
-
-
-                public void run(Email email) {
-                    double similarityScore = thrNeighbourVbl.cosineSimilarity(email, unclassified, words);
-                    thrNeighbourVbl.addNeighbour(similarityScore, email);
-                }
-            });
+                    }
 
 
-            // TODO : 
+                    public void run(Email email) {
+                        double similarityScore = thrNeighbourVbl.cosineSimilarity(email, unclassified, words);
+                        thrNeighbourVbl.addNeighbour(similarityScore, email);
+                    }
+                });
+            }
+
+            // TODO :
 
             // Puts the tuple with the largest result
             // for this task into tuple space.

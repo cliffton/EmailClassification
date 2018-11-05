@@ -23,6 +23,11 @@ public class NeighbourVbl implements Vbl {
         categories = new int[k];
     }
 
+    public void reset(){
+        similarityScores = new double[k];
+        categories = new int[k];
+    }
+
 
     public void addNeighbour(double similarityScore, Email email) {
 
