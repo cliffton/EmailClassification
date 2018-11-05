@@ -152,10 +152,10 @@ public class NeighbourVbl implements Vbl {
         }
 
 
-        if (spamCount > hamCount) {
-            return 1;
+        if (hamCount >= spamCount) {
+            return 0;
         }
-        return 0;
+        return 1;
 
     }
 

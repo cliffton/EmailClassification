@@ -32,18 +32,18 @@ public class MakeScores extends Task {
         int numberOfEmails = 0, numberOfSpamEmails = 0, numberOfHamEmails = 0;
         ArrayList<tupleToSortWords> spamWords = new ArrayList<>();
         ArrayList<tupleToSortWords> hamWords = new ArrayList<>();
-        String[] files = {
-                "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\ham.csv",
-                "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\spam.csv",
-                "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\unclassified.csv"
-        };
-
-
 //        String[] files = {
-//                "/home/cliffton/workspace/EmailClassification/dataFiles/ham4.csv",
-//                "/home/cliffton/workspace/EmailClassification/dataFiles/spam4.csv",
-//                "/home/cliffton/workspace/EmailClassification/dataFiles/ham4.csv"
+//                "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\ham.csv",
+//                "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\spam.csv",
+//                "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\unclassified.csv"
 //        };
+
+
+        String[] files = {
+                "/home/cliffton/workspace/EmailClassification/dataFiles/ham.csv",
+                "/home/cliffton/workspace/EmailClassification/dataFiles/spam.csv",
+                "/home/cliffton/workspace/EmailClassification/dataFiles/unclassified.csv"
+        };
 
         // Creating Email Objects
         Email temp;
