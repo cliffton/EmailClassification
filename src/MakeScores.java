@@ -144,6 +144,11 @@ public class MakeScores extends Task {
         HashSet<String> wordsRecords = new HashSet<>();
         MakeSelectedWordList(numberOfSpamEmails, spamWords, selectedWords, wordsRecords);
         MakeSelectedWordList(numberOfHamEmails, hamWords, selectedWords, wordsRecords);
+        ArrayList<Word> allWords = new ArrayList<>();
+        for(String w: wordsRecords){
+            allWords.add(totalWordCount.get(w));
+        }
+
         StringBuilder sb1 = new StringBuilder();
         for (String t : selectedWords) {
             sb1.append(t);
