@@ -34,7 +34,7 @@ public class EmailClassifierSmp
             unclassified = new Email("I want to sell toys", 2);
             MakeScores ms = new MakeScores();
             words = ms.getWords();
-            emails = ms.getEmails();
+            emails = ms.getUnClassifiedEmails();
             neighbourVbl = new NeighbourVbl(k);
 
             WorkQueue<Email> emailQueue = new WorkQueue<>();

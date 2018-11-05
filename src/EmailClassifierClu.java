@@ -22,7 +22,7 @@ public class EmailClassifierClu extends Job {
 
             MakeScores ms = new MakeScores();
             words = ms.getWords();
-            emails = ms.getEmails();
+            emails = ms.getClassifiedEmails();
             masterChunk(50);
 
             // Lower bound is inclusive so -1, also -2 for last 2 points.
@@ -89,7 +89,7 @@ public class EmailClassifierClu extends Job {
 
             MakeScores ms = new MakeScores();
             words = ms.getWords();
-            emails = ms.getEmails();
+            emails = ms.getClassifiedEmails();
             neighbourVbl = new NeighbourVbl(k);
 
             WorkQueue<Email> emailQueue = new WorkQueue<>();

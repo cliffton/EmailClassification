@@ -23,7 +23,7 @@ public class NeighbourVbl implements Vbl {
         categories = new int[k];
     }
 
-    public void reset(){
+    public void reset() {
         similarityScores = new double[k];
         categories = new int[k];
     }
@@ -61,8 +61,11 @@ public class NeighbourVbl implements Vbl {
             e2Denominator += (tf2 * tf2);
         }
 
-        return numerator / (Math.sqrt(e1Denominator) * Math.sqrt(e2Denominator));
+        double result = (double) (numerator / (Math.sqrt(e1Denominator) * Math.sqrt(e2Denominator)));
+        if(result != result)
+            return 0.0;
 
+        return result;
     }
 
 

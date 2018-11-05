@@ -26,6 +26,8 @@ public class EmailClassifierSeq extends Task {
             int k = 10;
 
             MakeScores ms = new MakeScores();
+
+            ms.main(args);
             words = ms.getWords();
             classifiedEmails = ms.getClassifiedEmails();
             NeighbourVbl neighbourVbl = new NeighbourVbl(k);

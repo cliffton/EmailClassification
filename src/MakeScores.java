@@ -26,15 +26,23 @@ public class MakeScores extends Task {
         emails = new ArrayList<>();
         emailsClassified = new ArrayList<>();
         emailsUnClassified = new ArrayList<>();
+        allWords = new ArrayList<>();
         String[] content;
         StringBuilder sb = new StringBuilder();
         int numberOfEmails = 0, numberOfSpamEmails = 0, numberOfHamEmails = 0;
         ArrayList<tupleToSortWords> spamWords = new ArrayList<>();
         ArrayList<tupleToSortWords> hamWords = new ArrayList<>();
+//        String[] files = {
+//                "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\ham.csv",
+//                "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\spam.csv",
+//                "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\unclassified.csv"
+//        };
+
+
         String[] files = {
-                "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\ham.csv",
-                "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\spam.csv",
-                "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\unclassified.csv"
+                "/home/cliffton/workspace/EmailClassification/dataFiles/ham.csv",
+                "/home/cliffton/workspace/EmailClassification/dataFiles/spam.csv",
+                "/home/cliffton/workspace/EmailClassification/dataFiles/unclassified.csv"
         };
 
         // Creating Email Objects
@@ -191,7 +199,7 @@ public class MakeScores extends Task {
     }
 
     public ArrayList<Email> getClassifiedEmails() {
-        return emailsUnClassified;
+        return emailsClassified;
     }
 
     public ArrayList<Email> getUnClassifiedEmails() {

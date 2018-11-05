@@ -56,6 +56,10 @@ public class Email {
     }
 
     public double getTFIDFScore(Word word) {
+        if (words.get(word) == null) {
+            return 0.0;
+        }
+
         return words.get(word).doubleValue();
     }
 
@@ -66,7 +70,8 @@ public class Email {
             this.words.put(word, score);
         }
     }
-    public void makeTfidfSDScore(StringBuilder sb, ArrayList<tupleToSortWords> spamWords, ArrayList<tupleToSortWords> hamWords){
+
+    public void makeTfidfSDScore(StringBuilder sb, ArrayList<tupleToSortWords> spamWords, ArrayList<tupleToSortWords> hamWords) {
         double score, scoreSD;
         for (Word word : this.words.keySet()) {
             score = this.words.get(word);
