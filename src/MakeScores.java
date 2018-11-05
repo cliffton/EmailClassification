@@ -84,23 +84,21 @@ public class MakeScores {
 
         // Iterate over emails
         while (itr.hasNext()) {
-            
+
             emailCurrent = (Email) itr.next();
             wordsInCurrentEmail = emailCurrent.getContent().split(" ");
             HashSet<String> wordInEmailrecord = new HashSet<>();
-            
+
             for (int i = 0; i < wordsInCurrentEmail.length; i++) {
-                
+
                 // Add word to map.
                 if (!totalWordCount.containsKey(wordsInCurrentEmail[i])) {
-                    
+
                     WordInEmail = new Word(wordsInCurrentEmail[i]);
                     totalWordCount.put(wordsInCurrentEmail[i], WordInEmail);
 
-                } 
+                } else {
 
-                else {
-                    
                     WordInEmail = totalWordCount.get(wordsInCurrentEmail[i]);
 
                 }
@@ -110,18 +108,18 @@ public class MakeScores {
 
                 // Per Email Calculation
                 if (!wordInEmailrecord.contains(wordsInCurrentEmail[i])) {
-                    
+
                     WordInEmail.setIDFScore(WordInEmail.getIDFScore() + 1);
                     wordInEmailrecord.add(wordsInCurrentEmail[i]);
-                    
+
                     if (emailCurrent.getCategory() == 1) {
-                        
+
                         WordInEmail.setDFSpamScore(WordInEmail.getDFSpamScore() + 1);
 
                     } else {
-                        
+
                         WordInEmail.setDFHamScore(WordInEmail.getDFHamScore() + 1);
-                    
+
                     }
                 }
 
@@ -135,15 +133,15 @@ public class MakeScores {
 
         // 
         Word currentWord;
-        
+
         for (String word : totalWordCount.keySet()) {
             currentWord = totalWordCount.get(word);
             currentWord.setSDScore(
-                calculateSD(
-                    currentWord.getDFSpamScore(), 
-                    currentWord.getDFHamScore(),  
-                    currentWord.getTotalWordCount()
-                )
+                    calculateSD(
+                            currentWord.getDFSpamScore(),
+                            currentWord.getDFHamScore(),
+                            currentWord.getTotalWordCount()
+                    )
             );
         }
 
@@ -188,6 +186,15 @@ public class MakeScores {
 
     public static void sortIt() {
 
+    }
+
+
+    public ArrayList<Word> getWords() {
+        return new ArrayList<Word>();
+    }
+
+    public ArrayList<Email> getEmails() {
+        return new ArrayList<Email>();
     }
 
 }

@@ -1,15 +1,21 @@
+import edu.rit.pj2.Loop;
+import edu.rit.pj2.ObjectLoop;
 import edu.rit.pj2.Task;
+import edu.rit.pj2.WorkQueue;
 import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class EmailClassifierSeq extends Task {
+
+public class EmailClassifierSmp
+        extends Task {
 
 
     ArrayList<Word> words;
     ArrayList<Email> emails;
-
+    Email unclassified;
+    NeighbourVbl neighbourVbl;
 
     /**
      * Main Program
@@ -19,26 +25,42 @@ public class EmailClassifierSeq extends Task {
      */
     public void main(String[] args) throws Exception {
 
-
         try {
 
             if (args.length != 1) usage();
 
             int k = 10;
 
+            unclassified = new Email("I want to sell toys", 2);
             MakeScores ms = new MakeScores();
             words = ms.getWords();
             emails = ms.getEmails();
-            NeighbourVbl neighbourVbl = new NeighbourVbl(k);
+            neighbourVbl = new NeighbourVbl(k);
 
-
-            Email unclassified = new Email("I want to sell toys", 2);
-
+            WorkQueue<Email> emailQueue = new WorkQueue<>();
             for (Email email : emails) {
-                double similarityScore = neighbourVbl.cosineSimilarity(email, unclassified, words);
-                neighbourVbl.addNeighbour(similarityScore, email);
-
+                emailQueue.add(email);
             }
+
+            parallelFor(emailQueue).exec(new ObjectLoop<Email>() {
+
+
+                NeighbourVbl thrNeighbourVbl;
+                //Email thrUnclassified;
+
+                public void start() {
+                    thrNeighbourVbl = threadLocal(neighbourVbl);
+                    //thrUnclassified = unclassified;
+
+                }
+
+
+                public void run(Email email) {
+                    double similarityScore = thrNeighbourVbl.cosineSimilarity(email, unclassified, words);
+                    thrNeighbourVbl.addNeighbour(similarityScore, email);
+                }
+            });
+
 
             int category = neighbourVbl.voting();
 
@@ -68,3 +90,4 @@ public class EmailClassifierSeq extends Task {
         return 1;
     }
 }
+
