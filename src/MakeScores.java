@@ -32,18 +32,18 @@ public class MakeScores extends Task {
         int numberOfEmails = 0, numberOfSpamEmails = 0, numberOfHamEmails = 0;
         ArrayList<tupleToSortWords> spamWords = new ArrayList<>();
         ArrayList<tupleToSortWords> hamWords = new ArrayList<>();
-//        String[] files = {
-//                "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\ham.csv",
-//                "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\spam.csv",
-//                "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\unclassified.csv"
-//        };
-
-
         String[] files = {
-                "/home/cliffton/workspace/EmailClassification/dataFiles/ham4.csv",
-                "/home/cliffton/workspace/EmailClassification/dataFiles/spam4.csv",
-                "/home/cliffton/workspace/EmailClassification/dataFiles/ham4.csv"
+                "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\ham.csv",
+                "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\spam.csv",
+                "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\unclassified.csv"
         };
+
+
+//        String[] files = {
+//                "/home/cliffton/workspace/EmailClassification/dataFiles/ham4.csv",
+//                "/home/cliffton/workspace/EmailClassification/dataFiles/spam4.csv",
+//                "/home/cliffton/workspace/EmailClassification/dataFiles/ham4.csv"
+//        };
 
         // Creating Email Objects
         Email temp;
@@ -59,8 +59,11 @@ public class MakeScores extends Task {
                     if (Integer.parseInt(content[1]) == 1) {
                         emailsClassified.add(temp);
                     } else {
-                        emailsUnClassified.add(temp);
+                        emailsClassified.add(temp);
                     }
+                }
+                else {
+                    emailsUnClassified.add(temp);
                 }
             }
         }
@@ -155,7 +158,7 @@ public class MakeScores extends Task {
         ArrayList<String> selectedWords = new ArrayList<>();
         HashSet<String> wordsRecords = new HashSet<>();
         MakeSelectedWordList(numberOfSpamEmails, spamWords, selectedWords, wordsRecords);
-        MakeSelectedWordList(numberOfHamEmails, hamWords, selectedWords, wordsRecords);
+        MakeSelectedWordList(numberOfSpamEmails, hamWords, selectedWords, wordsRecords);
         //ArrayList<Word> allWords = new ArrayList<>();
         for (String w : wordsRecords) {
             allWords.add(totalWordCount.get(w));
