@@ -12,10 +12,10 @@ public class EmailClassifierSmp
         extends Task {
 
 
-    ArrayList<Word> words;
-    ArrayList<Email> emails;
-    Email unclassified;
-    NeighbourVbl neighbourVbl;
+    private ArrayList<Word> words;
+    private ArrayList<Email> emails;
+    private Email unclassified;
+    private NeighbourVbl neighbourVbl;
 
     /**
      * Main Program
