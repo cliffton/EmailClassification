@@ -40,9 +40,9 @@ public class MakeScores extends Task {
 
 
         String[] files = {
-                "/home/cliffton/workspace/EmailClassification/dataFiles/ham.csv",
-                "/home/cliffton/workspace/EmailClassification/dataFiles/spam.csv",
-                "/home/cliffton/workspace/EmailClassification/dataFiles/unclassified.csv"
+                "/home/cliffton/workspace/EmailClassification/dataFiles/ham4.csv",
+                "/home/cliffton/workspace/EmailClassification/dataFiles/spam4.csv",
+                "/home/cliffton/workspace/EmailClassification/dataFiles/ham4.csv"
         };
 
         // Creating Email Objects
