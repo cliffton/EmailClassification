@@ -59,24 +59,26 @@ public class Email {
         return words.get(word).doubleValue();
     }
 
-    public void maxTFIDFScore(StringBuilder sb, ArrayList<tupleToSortWords> spamWords, ArrayList<tupleToSortWords> hamWords) {
+    public void maxTFIDFScore() {
         double score;
         for (Word word : this.words.keySet()) {
             score = (this.words.get(word)) * word.getIDFScore();
+            this.words.put(word, score);
+        }
+    }
+    public void makeTfidfSDScore(StringBuilder sb, ArrayList<tupleToSortWords> spamWords, ArrayList<tupleToSortWords> hamWords){
+        double score, scoreSD;
+        for (Word word : this.words.keySet()) {
+            score = this.words.get(word);
             sb.append(word.toString());
             sb.append(",");
-            this.words.put(word, score);
-            sb.append(score);
-            sb.append(",");
-            sb.append(this.category);
-            sb.append("\n");
+            scoreSD = score * (1 - word.getSDScore());
             if (this.category == 1) {
-                spamWords.add(new tupleToSortWords(word.toString(), score * (1 - word.getSDScore())));
+                spamWords.add(new tupleToSortWords(word.toString(), scoreSD));
             } else {
-                hamWords.add(new tupleToSortWords(word.toString(), score * (1 - word.getSDScore())));
+                hamWords.add(new tupleToSortWords(word.toString(), scoreSD));
             }
-
-
+            sb.append("\n");
         }
     }
 }

@@ -25,8 +25,16 @@ public class Word {
         this.IDFScore = IDFScore;
     }
 
+    public double getIDFScore() {
+        return this.IDFScore;
+    }
+
     public void setTotalWordCount(double totalWordCount) {
         this.totalWordCount = totalWordCount;
+    }
+
+    public double getTotalWordCount() {
+        return this.totalWordCount;
     }
 
     public void setDFSpamScore(double DFScoreSpam) {
@@ -39,14 +47,6 @@ public class Word {
 
     public void setSDScore(double SDScore) {
         this.SDScore = SDScore;
-    }
-
-    public double getIDFScore() {
-        return this.IDFScore;
-    }
-
-    public double getTotalWordCount() {
-        return this.totalWordCount;
     }
 
     public double getDFSpamScore() {
