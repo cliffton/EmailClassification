@@ -42,7 +42,7 @@ public class MakeScores extends Task {
         String[] files = {
                 "/home/cliffton/workspace/EmailClassification/dataFiles/ham.csv",
                 "/home/cliffton/workspace/EmailClassification/dataFiles/spam.csv",
-                "/home/cliffton/workspace/EmailClassification/dataFiles/unclassified.csv"
+                "/home/cliffton/workspace/EmailClassification/dataFiles/unclassifiedSPAM.csv"
         };
 
         // Creating Email Objects
@@ -158,7 +158,7 @@ public class MakeScores extends Task {
         ArrayList<String> selectedWords = new ArrayList<>();
         HashSet<String> wordsRecords = new HashSet<>();
         MakeSelectedWordList(numberOfSpamEmails, spamWords, selectedWords, wordsRecords);
-        MakeSelectedWordList(numberOfSpamEmails, hamWords, selectedWords, wordsRecords);
+        MakeSelectedWordList(numberOfHamEmails, hamWords, selectedWords, wordsRecords);
         //ArrayList<Word> allWords = new ArrayList<>();
         for (String w : wordsRecords) {
             allWords.add(totalWordCount.get(w));
