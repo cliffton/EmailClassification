@@ -6,6 +6,12 @@ import java.util.*;
 
 
 public class MakeScores extends Task {
+
+    ArrayList<Word> allWords;
+    ArrayList<Email> emailsClassified;
+    ArrayList<Email> emailsUnClassified;
+    ArrayList<Email> emails;
+
     public void main(String[] args) throws IOException {
         File f = new File("ham2.csv");
         System.out.println(f);
@@ -17,9 +23,9 @@ public class MakeScores extends Task {
         PrintWriter pw2 = new PrintWriter(new File("ham.csv"));
         String split = ",";
         String line = "";
-        ArrayList<Email> emails = new ArrayList<>();
-        ArrayList<Email> emailsClassified = new ArrayList<>();
-        ArrayList<Email> emailsUnClassified = new ArrayList<>();
+        emails = new ArrayList<>();
+        emailsClassified = new ArrayList<>();
+        emailsUnClassified = new ArrayList<>();
         String[] content;
         StringBuilder sb = new StringBuilder();
         int numberOfEmails = 0, numberOfSpamEmails = 0, numberOfHamEmails = 0;
@@ -41,11 +47,10 @@ public class MakeScores extends Task {
                 content = line.split(split);
                 temp = new Email(content[2], Integer.parseInt(content[1]));
                 emails.add(temp);
-                if(Integer.parseInt(content[1]) != 2){
-                    if(Integer.parseInt(content[1]) == 1) {
+                if (Integer.parseInt(content[1]) != 2) {
+                    if (Integer.parseInt(content[1]) == 1) {
                         emailsClassified.add(temp);
-                    }
-                    else {
+                    } else {
                         emailsUnClassified.add(temp);
                     }
                 }
@@ -58,7 +63,7 @@ public class MakeScores extends Task {
         HashMap<String, Word> totalWordCount = new HashMap<>();
         HashMap<String, Word> totalClassifiedWordCount = new HashMap<>();
         // Iterate over emails
-        for(int j = 0; j < emails.size(); j++) {
+        for (int j = 0; j < emails.size(); j++) {
             emailCurrent = emails.get(j);
             wordsInCurrentEmail = emailCurrent.getContent().split(" ");
             HashSet<String> wordInEmailrecord = new HashSet<>();
@@ -66,8 +71,7 @@ public class MakeScores extends Task {
                 if (!totalWordCount.containsKey(wordsInCurrentEmail[i])) {
                     WordInEmail = new Word(wordsInCurrentEmail[i]);
                     totalWordCount.put(wordsInCurrentEmail[i], WordInEmail);
-                }
-                else {
+                } else {
                     WordInEmail = totalWordCount.get(wordsInCurrentEmail[i]);
                 }
                 WordInEmail.setTotalWordCount(WordInEmail.getTotalWordCount() + 1);
@@ -80,13 +84,13 @@ public class MakeScores extends Task {
             emailCurrent.makeTF();
         }
 
-        for(int j = 0; j < emailsClassified.size(); j++) {
+        for (int j = 0; j < emailsClassified.size(); j++) {
             emailCurrent = emailsClassified.get(j);
             wordsInCurrentEmail = emailCurrent.getContent().split(" ");
             HashSet<String> wordInEmailrecord = new HashSet<>();
             for (int i = 0; i < wordsInCurrentEmail.length; i++) {
                 WordInEmail = totalWordCount.get(wordsInCurrentEmail[i]);
-                if (!totalClassifiedWordCount.containsKey(wordsInCurrentEmail[i])){
+                if (!totalClassifiedWordCount.containsKey(wordsInCurrentEmail[i])) {
                     totalClassifiedWordCount.put(wordsInCurrentEmail[i], WordInEmail);
                 }
                 if (!wordInEmailrecord.contains(wordsInCurrentEmail[i])) {
@@ -99,9 +103,9 @@ public class MakeScores extends Task {
                 }
             }
             if (emailCurrent.getCategory() == 1) {
-                numberOfSpamEmails ++;
+                numberOfSpamEmails++;
             } else {
-                numberOfHamEmails ++;
+                numberOfHamEmails++;
             }
         }
         // 
@@ -130,7 +134,7 @@ public class MakeScores extends Task {
             counter++;
         }
 
-        for(int j = 0; j < emailsClassified.size(); j++) {
+        for (int j = 0; j < emailsClassified.size(); j++) {
             emailCurrent = emailsClassified.get(j);
             emailCurrent.makeTfidfSDScore(sb, spamWords, hamWords);
         }
@@ -144,8 +148,8 @@ public class MakeScores extends Task {
         HashSet<String> wordsRecords = new HashSet<>();
         MakeSelectedWordList(numberOfSpamEmails, spamWords, selectedWords, wordsRecords);
         MakeSelectedWordList(numberOfHamEmails, hamWords, selectedWords, wordsRecords);
-        ArrayList<Word> allWords = new ArrayList<>();
-        for(String w: wordsRecords){
+        //ArrayList<Word> allWords = new ArrayList<>();
+        for (String w : wordsRecords) {
             allWords.add(totalWordCount.get(w));
         }
 
@@ -172,10 +176,10 @@ public class MakeScores extends Task {
         int wordsCounter = 0, wordsTakenCounter = 0;
         while (wordsTakenCounter != numberOfEmails) {
             word = Words.get(wordsCounter).toString();
-            if(!wordsRecords.contains(word)) {
+            if (!wordsRecords.contains(word)) {
                 wordsRecords.add(word);
                 selectedWords.add(word);
-                wordsTakenCounter ++;
+                wordsTakenCounter++;
             }
             wordsCounter++;
         }
@@ -183,11 +187,19 @@ public class MakeScores extends Task {
 
 
     public ArrayList<Word> getWords() {
-        return new ArrayList<Word>();
+        return allWords;
     }
 
-    public ArrayList<Email> getEmails() {
-        return new ArrayList<Email>();
+    public ArrayList<Email> getClassifiedEmails() {
+        return emailsUnClassified;
+    }
+
+    public ArrayList<Email> getUnClassifiedEmails() {
+        return emailsUnClassified;
+    }
+
+    public ArrayList<Email> getAllEmails() {
+        return emails;
     }
 
 }
