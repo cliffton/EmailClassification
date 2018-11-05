@@ -4,11 +4,13 @@ import javafx.util.Pair;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class NeighbourVbl implements Vbl {
 
     public ArrayList<Pair<Email, Double>> neighbours = new ArrayList<>();
+    //    public ArrayList<Pair<Email, Double>> tmpArray = new ArrayList<>();
     private int k = 0;
     public double[] similarityScores;
 
@@ -53,6 +55,14 @@ public class NeighbourVbl implements Vbl {
     public void addNeighbour(double similarityScore, Email email) {
         neighbours.add(new Pair<Email, Double>(email, similarityScore));
         Collections.sort(neighbours, new EmailComparator());
+        ArrayList<Pair<Email, Double>> tmpArray = new ArrayList<Pair<Email, Double>>();
+        if (neighbours.size() > k) {
+
+            tmpArray.addAll(neighbours.subList(0, k));
+            neighbours = tmpArray;
+        }
+        //neighbours = System.arraycopy(neighbours, 0, tmpArray, 0, k-1);
+        //System.arraycopy(source_arr, sourcePos, dest_arr,destPos, len);
 
     }
 
