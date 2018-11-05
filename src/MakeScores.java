@@ -125,6 +125,7 @@ public class MakeScores {
 
     public static double calculateSD(double xjSpam, double xjHam, double U) {
 
+
         double SpamPart = (xjSpam - U) / (2 * U);
         double HamPart = (xjHam - U) / (2 * U);
         return Math.sqrt(0.5 * (SpamPart * SpamPart + HamPart * HamPart));
