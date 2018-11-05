@@ -85,11 +85,11 @@ public class MakeScores {
         for (String word : totalWordCount.keySet()) {
             currentWord = totalWordCount.get(word);
             currentWord.setSDScore(
-                calculateSD(
-                    currentWord.getDFSpamScore(), 
-                    currentWord.getDFHamScore(),  
-                    currentWord.getTotalWordCount()
-                )
+                    calculateSD(
+                            currentWord.getDFSpamScore(),
+                            currentWord.getDFHamScore(),
+                            currentWord.getTotalWordCount()
+                    )
             );
         }
         for (String word : totalWordCount.keySet()) {
@@ -144,6 +144,15 @@ public class MakeScores {
             }
             wordsCounter++;
         }
+    }
+
+
+    public ArrayList<Word> getWords() {
+        return new ArrayList<Word>();
+    }
+
+    public ArrayList<Email> getEmails() {
+        return new ArrayList<Email>();
     }
 
 }

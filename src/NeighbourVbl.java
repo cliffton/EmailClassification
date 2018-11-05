@@ -2,7 +2,9 @@ import edu.rit.pj2.Tuple;
 import edu.rit.pj2.Vbl;
 import javafx.util.Pair;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class NeighbourVbl implements Vbl {
 
@@ -12,12 +14,71 @@ public class NeighbourVbl implements Vbl {
 
     // Use bitset instead
     public int[] categories;
+    double minSimilarityScore = Double.MAX_VALUE;
 
 
     public NeighbourVbl(int numberOfNeighbors) {
         k = numberOfNeighbors;
         similarityScores = new double[k];
         categories = new int[k];
+    }
+
+
+    public void addNeighbour(double similarityScore, Email email) {
+
+        if (similarityScore < minSimilarityScore) {
+
+            if (neighbours.size() < k) {
+                neighbours.add(new Pair<Email, Double>(email, similarityScore));
+                minSimilarityScore = similarityScore;
+                return;
+            }
+
+            Collections.sort(neighbours, new EmailComparator());
+            neighbours.remove(0);
+            neighbours.add(new Pair<Email, Double>(email, similarityScore));
+        }
+
+    }
+
+
+    public double cosineSimilarity(Email e1, Email e2, ArrayList<Word> words) {
+
+        double numerator = 0;
+        double e1Denominator = 0;
+        double e2Denominator = 0;
+
+        for (Word word : words) {
+            double tf1 = e1.getTFIDFScore(word);
+            double tf2 = e2.getTFIDFScore(word);
+            numerator += (tf1 * tf2);
+            e1Denominator += (tf1 * tf1);
+            e2Denominator += (tf2 * tf2);
+        }
+
+        return numerator / (Math.sqrt(e1Denominator) * Math.sqrt(e2Denominator));
+
+    }
+
+
+    public int voting() {
+        int spamCount = 0;
+        int hamCount = 0;
+
+        for (int category : categories) {
+            if (category == 0) {
+                hamCount++;
+            } else {
+                spamCount++;
+            }
+        }
+
+
+        if (spamCount > hamCount) {
+            return 1;
+        }
+        return 0;
+
     }
 
     public void setOld(Vbl vbl) {
