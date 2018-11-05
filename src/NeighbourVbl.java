@@ -14,7 +14,7 @@ public class NeighbourVbl implements Vbl {
 
     // Use bitset instead
     public int[] categories;
-    double minSimilarityScore = Double.MAX_VALUE;
+    double minSimilarityScore = 0.0;
 
 
     public NeighbourVbl(int numberOfNeighbors) {
@@ -29,20 +29,27 @@ public class NeighbourVbl implements Vbl {
     }
 
 
+//    public void addNeighbour(double similarityScore, Email email) {
+//        if (neighbours.size() < k) {
+//            neighbours.add(new Pair<Email, Double>(email, similarityScore));
+//            return;
+//        }
+//
+//
+//        if (similarityScore > minSimilarityScore) {
+//
+//
+//            Collections.sort(neighbours, new EmailComparator());
+//            neighbours.remove(0);
+//            minSimilarityScore = neighbours.get(0).getValue();
+//            neighbours.add(new Pair<Email, Double>(email, similarityScore));
+//        }
+//
+//    }
+
     public void addNeighbour(double similarityScore, Email email) {
-
-        if (similarityScore < minSimilarityScore) {
-
-            if (neighbours.size() < k) {
-                neighbours.add(new Pair<Email, Double>(email, similarityScore));
-                minSimilarityScore = similarityScore;
-                return;
-            }
-
-            Collections.sort(neighbours, new EmailComparator());
-            neighbours.remove(0);
-            neighbours.add(new Pair<Email, Double>(email, similarityScore));
-        }
+        neighbours.add(new Pair<Email, Double>(email, similarityScore));
+        Collections.sort(neighbours, new EmailComparator());
 
     }
 
@@ -62,23 +69,47 @@ public class NeighbourVbl implements Vbl {
         }
 
         double result = (double) (numerator / (Math.sqrt(e1Denominator) * Math.sqrt(e2Denominator)));
-        if(result != result)
+        if (result != result)
             return 0.0;
 
         return result;
     }
 
 
+//    public int voting() {
+//        int spamCount = 0;
+//        int hamCount = 0;
+//
+//        for (int category : categories) {
+//            if (category == 0) {
+//                hamCount++;
+//            } else {
+//                spamCount++;
+//            }
+//        }
+//
+//
+//        if (spamCount > hamCount) {
+//            return 1;
+//        }
+//        return 0;
+//
+//    }
+
     public int voting() {
         int spamCount = 0;
         int hamCount = 0;
+        int count = 0;
+        for (int i = neighbours.size() - 1; i >= 0 & count < k; i--, count++) {
 
-        for (int category : categories) {
-            if (category == 0) {
+            Email neighbour = neighbours.get(i).getKey();
+
+            if (neighbour.category == 0) {
                 hamCount++;
             } else {
                 spamCount++;
             }
+
         }
 
 

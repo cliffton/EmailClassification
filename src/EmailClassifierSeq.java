@@ -36,14 +36,16 @@ public class EmailClassifierSeq extends Task {
             unClassifiedEmails = ms.getUnClassifiedEmails();
 
             for (Email unclassified : unClassifiedEmails) {
-
+                neighbourVbl.reset();
                 for (Email email : classifiedEmails) {
                     double similarityScore = neighbourVbl.cosineSimilarity(email, unclassified, words);
                     neighbourVbl.addNeighbour(similarityScore, email);
 
                 }
+
                 int category = neighbourVbl.voting();
-                System.out.println(category);
+                System.out.println("Email " + category = " + category);
+                System.out.flush();
             }
 
 
