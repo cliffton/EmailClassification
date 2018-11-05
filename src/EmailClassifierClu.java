@@ -23,7 +23,7 @@ public class EmailClassifierClu extends Job {
             MakeScores ms = new MakeScores();
             words = ms.getWords();
             emails = ms.getEmails();
-            //masterChunk(50);
+            masterChunk(50);
 
             // Lower bound is inclusive so -1, also -2 for last 2 points.
             masterFor(0, emails.size() - 2, WorkerTask.class).args(ctor);
@@ -114,6 +114,9 @@ public class EmailClassifierClu extends Job {
                     thrNeighbourVbl.addNeighbour(similarityScore, email);
                 }
             });
+
+
+            // TODO : 
 
             // Puts the tuple with the largest result
             // for this task into tuple space.
