@@ -44,7 +44,7 @@ public class EmailClassifierSeq extends Task {
                 }
 
                 int category = neighbourVbl.voting();
-                System.out.println("Email " + category = " + category);
+                System.out.println("Email " + category);
                 System.out.flush();
             }
 
