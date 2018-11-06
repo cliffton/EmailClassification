@@ -46,12 +46,12 @@ public class EmailClassifierSeq extends Task {
                 }
 
                 int category = neighbourVbl.voting();
-                if (category == 1) {
+//                if (category == 1) {
 
                     System.out.println("Cat " + category + " Email = " + unclassified.content);
-                } else {
-                    System.out.println("Cat " + category);
-                }
+//                } else {
+//                    System.out.println("Cat " + category);
+//                }
                 System.out.flush();
             }
 

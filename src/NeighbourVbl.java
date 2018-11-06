@@ -167,76 +167,82 @@ public class NeighbourVbl implements Vbl {
 
     }
 
-    public void setOld(Vbl vbl) {
-        ArrayList<Pair<Email, Double>> result = new ArrayList<>();
+    public void set(Vbl vbl) {
+        ArrayList<Pair<Email, Double>> result = new ArrayList<Pair<Email, Double>>();
         ArrayList<Pair<Email, Double>> n1 = this.neighbours;
         ArrayList<Pair<Email, Double>> n2 = ((NeighbourVbl) vbl).neighbours;
 
-        int left = 0;
-        int right = 0;
+//        int left = 0;
+//        int right = 0;
+//
+//        while (left < n1.size() && right < n2.size() && result.size() < k) {
+//            if (n1.get(left).getValue() > n2.get(right).getValue()) {
+//                result.add(n1.get(left));
+//                left++;
+//            } else {
+//                result.add(n2.get(right));
+//                right++;
+//            }
+//        }
+//
+//        while (left < n1.size() && result.size() < k) {
+//            result.add(n1.get(left));
+//            left++;
+//        }
+//
+//
+//        while (right < n2.size() && result.size() < k) {
+//            result.add(n2.get(right));
+//            right++;
+//        }
 
-        while (left < n1.size() && right < n2.size()) {
-            if (n1.get(left).getValue() < n2.get(right).getValue()) {
-                result.add(n1.get(left));
-                left++;
-            } else {
-                result.add(n2.get(right));
-                right++;
-            }
-        }
 
-        while (left < n1.size()) {
-            result.add(n1.get(left));
-            left++;
-        }
-
-
-        while (right < n2.size()) {
-            result.add(n2.get(right));
-            right++;
-        }
-
-        this.neighbours = result;
+        result.addAll(n1);
+        result.addAll(n2);
+        Collections.sort(result, new EmailComparator());
+        this.neighbours = new ArrayList<Pair<Email, Double>>();
+        this.neighbours.addAll(result.subList(0, (result.size() < k) ? result.size() - 1 : k));
+        //this.neighbours = result;
     }
 
 
-    @Override
-    public void set(Vbl vbl) {
-        ArrayList<Pair<Double, Integer>> result = new ArrayList<>();
-        double[] tmpScores = ((NeighbourVbl) vbl).similarityScores;
-        int[] tmpCategories = ((NeighbourVbl) vbl).categories;
-
-
-        int left = 0;
-        int right = 0;
-        while (left < k && right < k && result.size() < k) {
-
-            if (this.similarityScores[left] < tmpScores[right]) {
-
-                result.add(new Pair<Double, Integer>(this.similarityScores[left], this.categories[left]));
-                left++;
-
-            } else {
-
-                result.add(new Pair<Double, Integer>(tmpScores[right], tmpCategories[right]));
-                right++;
-
-            }
-        }
-
-        // while (left < k) {
-        //    result.add(new Pair<Double, Integer>(this.similarityScores[left], this.categories[left]));
-        //    left++;
-        // }
-
-
-        // while (right < k) {
-        //    result.add(new Pair<Double, Integer>(tmpScores[right], tmpCategories[right]));
-        //    right++;
-        // }
-
-
-    }
+//    @Override
+//    public void set(Vbl vbl) {
+//        ArrayList<Pair<Double, Integer>> result = new ArrayList<>();
+//        double[] tmpScores = ((NeighbourVbl) vbl).similarityScores;
+//        int[] tmpCategories = ((NeighbourVbl) vbl).categories;
+//
+//
+//        int left = 0;
+//        int right = 0;
+//        while (left < k && right < k && result.size() < k) {
+//
+//            if (this.similarityScores[left] < tmpScores[right]) {
+//
+//                result.add(new Pair<Double, Integer>(this.similarityScores[left], this.categories[left]));
+//                left++;
+//
+//            } else {
+//
+//                result.add(new Pair<Double, Integer>(tmpScores[right], tmpCategories[right]));
+//                right++;
+//
+//            }
+//        }
+//
+//        // while (left < k) {
+//        //    result.add(new Pair<Double, Integer>(this.similarityScores[left], this.categories[left]));
+//        //    left++;
+//        // }
+//
+//
+//        // while (right < k) {
+//        //    result.add(new Pair<Double, Integer>(tmpScores[right], tmpCategories[right]));
+//        //    right++;
+//        // }
+//
+//
+//    }
 
     @Override
     public void reduce(Vbl vbl) {
@@ -250,6 +256,7 @@ public class NeighbourVbl implements Vbl {
             vbl.similarityScores = this.similarityScores;
             vbl.k = this.k;
             vbl.categories = this.categories;
+            vbl.neighbours = this.neighbours;
             return vbl;
 
         } catch (CloneNotSupportedException exc) {

@@ -20,7 +20,7 @@ public class MakeScores extends Task {
     String[] files = {
             "/home/cliffton/workspace/EmailClassification/dataFiles/ham.csv",
             "/home/cliffton/workspace/EmailClassification/dataFiles/spam.csv",
-            "/home/cliffton/workspace/EmailClassification/dataFiles/unclassified.csv"
+            "/home/cliffton/workspace/EmailClassification/dataFiles/unclassified10.csv"
     };
 
     public void main(String[] args) throws IOException {
@@ -222,7 +222,7 @@ public class MakeScores extends Task {
     }
 
     public ArrayList<Email> getUnClassifiedEmails() {
-        Collections.shuffle(emailsUnClassified);
+//        Collections.shuffle(emailsUnClassified);
         return emailsUnClassified;
     }
 
