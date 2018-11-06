@@ -54,8 +54,12 @@ public class EmailClassifierSmp extends Task {
 
                     public void run(int i) {
                         Email email = classifiedEmails.get(i);
-                        double similarityScore = thrNeighbourVbl.cosineSimilarity(email, unclassified, words);
-                        thrNeighbourVbl.addNeighbour(similarityScore, email);
+                        System.out.println(unclassified.category);
+                        System.out.println(email.content);
+                        System.out.flush();
+
+//                        double similarityScore = thrNeighbourVbl.cosineSimilarity(email, unclassified, words);
+//                        thrNeighbourVbl.addNeighbour(similarityScore, email);
                     }
                 });
 
