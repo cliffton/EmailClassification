@@ -230,4 +230,19 @@ public class MakeScores extends Task {
         return emails;
     }
 
+    public void writeBackToCSV() throws FileNotFoundException {
+        PrintWriter pw = new PrintWriter(new File("classifiedTheUnclassified.csv"));
+        StringBuilder sb = new StringBuilder();
+        int counter = 0;
+        String delimiter = ",";
+        for(Email e: emailsUnClassified){
+            sb.append(counter).append(delimiter).
+                    append(e.getCategory()).append(delimiter).
+                    append(e.getContent()).append("\n");
+        }
+        pw.write(sb.toString());
+        pw.close();
+
+    }
+
 }
