@@ -82,4 +82,5 @@ data
 enron
 emails.csv
 test.csv
-spamSmp.csv
+spamSMP.csv
+*.onetoc2
