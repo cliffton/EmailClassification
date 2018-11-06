@@ -81,3 +81,6 @@ emails.csv.zip
 data
 enron
 emails.csv
+test.csv
+spamSMP.csv
+*.onetoc2
