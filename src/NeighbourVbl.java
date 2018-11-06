@@ -74,6 +74,8 @@ public class NeighbourVbl implements Vbl {
         double e1Denominator = 0;
         double e2Denominator = 0;
 
+
+        //TODO: Should probably do this the other way round.
         for (Word word : words) {
             double tf1 = e1.getTFIDFScore(word);
             double tf2 = e2.getTFIDFScore(word);
@@ -153,7 +155,7 @@ public class NeighbourVbl implements Vbl {
 
         }
 
-        if(total == 0.0){
+        if (total == 0.0) {
             return 0;
         }
 
