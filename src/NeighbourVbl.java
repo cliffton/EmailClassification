@@ -31,6 +31,7 @@ public class NeighbourVbl implements Vbl {
     public void reset() {
         similarityScores = new double[k];
         categories = new int[k];
+        neighbours = new ArrayList<>();
     }
 
 
@@ -138,11 +139,12 @@ public class NeighbourVbl implements Vbl {
     public int voting() {
         int spamCount = 0;
         int hamCount = 0;
-        int count = 0;
+        double total = 0;
         for (int i = 0; i < k; i++) {
 
-            Email neighbour = neighbours.get(i).getKey();
 
+            Email neighbour = neighbours.get(i).getKey();
+            total += neighbours.get(i).getValue();
             if (neighbour.category == 1) {
                 spamCount++;
             } else {
@@ -151,11 +153,15 @@ public class NeighbourVbl implements Vbl {
 
         }
 
-
-        if (spamCount > hamCount) {
-            return 1;
+        if(total == 0.0){
+            return 0;
         }
-        return 0;
+
+
+        if (hamCount >= spamCount) {
+            return 0;
+        }
+        return 1;
 
     }
 

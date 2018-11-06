@@ -23,7 +23,7 @@ public class EmailClassifierSeq extends Task {
 
             if (args.length != 1) usage();
 
-            int k = 10;
+            int k = 20;
 
             MakeScores ms = new MakeScores();
 
@@ -48,7 +48,12 @@ public class EmailClassifierSeq extends Task {
                 }
 
                 int category = neighbourVbl.voting();
-                System.out.println("Email " + category);
+                if (category == 1) {
+
+                    System.out.println("Cat " + category + " Email = " + unclassified.content);
+                } else {
+                    System.out.println("Cat " + category);
+                }
                 System.out.flush();
             }
 
