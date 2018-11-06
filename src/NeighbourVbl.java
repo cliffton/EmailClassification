@@ -56,9 +56,8 @@ public class NeighbourVbl implements Vbl {
     public void addNeighbour(double similarityScore, Email email) {
         neighbours.add(new Pair<Email, Double>(email, similarityScore));
         Collections.sort(neighbours, new EmailComparator());
-        ArrayList<Pair<Email, Double>> tmpArray = new ArrayList<Pair<Email, Double>>();
         if (neighbours.size() > k) {
-
+            ArrayList<Pair<Email, Double>> tmpArray = new ArrayList<Pair<Email, Double>>();
             tmpArray.addAll(neighbours.subList(0, k));
             neighbours = tmpArray;
         }
@@ -201,7 +200,13 @@ public class NeighbourVbl implements Vbl {
         result.addAll(n2);
         Collections.sort(result, new EmailComparator());
         this.neighbours = new ArrayList<Pair<Email, Double>>();
-        this.neighbours.addAll(result.subList(0, (result.size() < k) ? result.size() - 1 : k));
+        if (result.size() < k) {
+            this.neighbours = result;
+        } else {
+
+            this.neighbours.addAll(result.subList(0, k));
+        }
+
         //this.neighbours = result;
     }
 

@@ -10,7 +10,7 @@ public class EmailClassifierSmp extends Task {
     ArrayList<Word> words;
     ArrayList<Email> unClassifiedEmails;
     ArrayList<Email> classifiedEmails;
-    NeighbourVbl neighbourVbl;
+//    NeighbourVbl neighbourVbl;
     Email unclassified;
 
     /**
@@ -31,14 +31,15 @@ public class EmailClassifierSmp extends Task {
             words = ms.getWords();
             classifiedEmails = ms.getClassifiedEmails();
             unClassifiedEmails = ms.getUnClassifiedEmails();
-            neighbourVbl = new NeighbourVbl(k);
-            int N = unClassifiedEmails.size();
+
+            int N = classifiedEmails.size();
 
             int count = 0;
             while (count < unClassifiedEmails.size()) {
 
                 unclassified = unClassifiedEmails.get(count);
-                neighbourVbl.reset();
+//                neighbourVbl.reset();
+                final NeighbourVbl neighbourVbl = new NeighbourVbl(k);
                 parallelFor(0, N - 1).exec(new Loop() {
 
 
@@ -54,8 +55,9 @@ public class EmailClassifierSmp extends Task {
 
                     public void run(int i) {
                         Email email = classifiedEmails.get(i);
-//                        System.out.println(unclassified.category);
-//                        System.out.println(email.content);
+
+//                        System.out.println(this.rank() + " " + i + "" + email.content);
+                        //System.out.println(i);
 //                        System.out.flush();
 
                         double similarityScore = thrNeighbourVbl.cosineSimilarity(email, unclassified, words);
@@ -71,7 +73,6 @@ public class EmailClassifierSmp extends Task {
 //                }
                 System.out.flush();
                 count++;
-
             }
 
 
