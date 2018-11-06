@@ -77,7 +77,7 @@ public class Email {
             score = this.words.get(word);
             sb.append(word.toString());
             sb.append(",");
-            scoreSD = score * (1 - word.getSDScore());
+            scoreSD = score;
             if (this.category == 1) {
                 spamWords.add(new tupleToSortWords(word.toString(), scoreSD));
             } else {
