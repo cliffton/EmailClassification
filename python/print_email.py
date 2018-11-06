@@ -160,6 +160,7 @@ def separate_attrs2(email_file_path, count):
     email_file = open(email_file_path, "r")
     email_lines = [line for line in email_file.readlines()]
     msg = ""
+    tmp = ""
     content_found = False
     for line in email_lines:
 
@@ -188,7 +189,7 @@ def separate_attrs2(email_file_path, count):
                 tmp += " "
 
 
-    msg = str(count) + ",0, " + tmp.lower() + "\n" 
+    msg = str(count) + ",1, " + tmp.lower() + "\n" 
     email_file.close()
     return msg
 
@@ -197,8 +198,8 @@ def for_files_in_folder2(folder):
     all_files = []
 
     for f in listdir(folder):
-        # if isfile(join(folder, f)) and (f[-3:] == "txt" or f[-3:] == "eml") and (f != "Summary.txt") :
-        if isfile(join(folder, f)):
+        if isfile(join(folder, f)) and (f[-3:] == "txt" or f[-3:] == "eml") and (f != "Summary.txt") :
+        # if isfile(join(folder, f)):
             all_files.append(join(folder, f))
         elif not isfile(join(folder, f)):
             extra_files = for_files_in_folder(join(folder, f))
@@ -209,9 +210,9 @@ def for_files_in_folder2(folder):
 def mt_csv2(folder):
     all_files = for_files_in_folder2(folder)
     count = 0
-    output = open("/home/cliffton/workspace/EmailData/output/ham4.csv", "w+")
+    output = open("/home/cliffton/workspace/EmailData/output/morespam.csv", "w+")
     for x in all_files:
-        if x.find("ham/") > -1:
+        if x.find("spam/") > -1:
             print(x)
             try:
                 # print(str(x))
@@ -228,20 +229,20 @@ def mt_csv2(folder):
 
 
 def mt2():
-    all_files = all_folders_in_folder("/home/cliffton/workspace/EmailData/data/assasin/spam/spam")
+    all_files = all_folders_in_folder("/home/cliffton/workspace/EmailData/data/enron/spam")
     # pool = ThreadPool(8)
     # results = pool.map(mt_csv2, all_files)
     for folder in all_files:
         mt_csv2(folder)
 
 
-def mt3():
-    mt_csv2("/home/cliffton/workspace/EmailData/data/assasin/ham")
+# def mt3():
+#     mt_csv2("/home/cliffton/workspace/EmailData/data/assasin/ham")
 
 
 
 # users()
-mt3()
+mt2()
 
 
 
