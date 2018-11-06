@@ -11,17 +11,17 @@ public class MakeScores extends Task {
     private ArrayList<Email> emailsClassified;
     private ArrayList<Email> emailsUnClassified;
     private ArrayList<Email> emails;
-    private String[] files = {
-            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\ham.csv",
-            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\spam.csv",
-            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\unclassified.csv"
-    };
+//    private String[] files = {
+//            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\ham.csv",
+//            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\spam.csv",
+//            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\unclassified.csv"
+//    };
 
-    //        String[] files = {
-//                "/home/cliffton/workspace/EmailClassification/dataFiles/ham4.csv",
-//                "/home/cliffton/workspace/EmailClassification/dataFiles/spam4.csv",
-//                "/home/cliffton/workspace/EmailClassification/dataFiles/ham4.csv"
-//        }
+    String[] files = {
+            "/home/cliffton/workspace/EmailClassification/dataFiles/ham4.csv",
+            "/home/cliffton/workspace/EmailClassification/dataFiles/spam4.csv",
+            "/home/cliffton/workspace/EmailClassification/dataFiles/unclassified.csv"
+    };
 
     public void main(String[] args) throws IOException {
         int numberOfEmails, numberOfSpamEmails, numberOfHamEmails;
@@ -50,9 +50,11 @@ public class MakeScores extends Task {
 
 
     }
+
     public int makeEmailsLists() throws IOException {
         Email temp;
-        String line, CSVFile, content[], split = ",";;
+        String line, CSVFile, content[], split = ",";
+        ;
         int numberOfEmails = 0;
         for (int i = 0; i < files.length; i++) {
             CSVFile = files[i];
@@ -68,8 +70,7 @@ public class MakeScores extends Task {
                     } else {
                         emailsClassified.add(temp);
                     }
-                }
-                else {
+                } else {
                     emailsUnClassified.add(temp);
                 }
             }
@@ -80,7 +81,7 @@ public class MakeScores extends Task {
 
     public void makeWordsArray(StringBuilder sb, ArrayList<tupleToSortWords> spamWords,
                                ArrayList<tupleToSortWords> hamWords, int numberOfSpamEmails,
-                               int numberOfHamEmails, HashMap<String, Word> totalWordCount){
+                               int numberOfHamEmails, HashMap<String, Word> totalWordCount) {
         Email emailCurrent;
         ArrayList<String> selectedWords = new ArrayList<>();
         HashSet<String> wordsRecords = new HashSet<>();
@@ -99,7 +100,7 @@ public class MakeScores extends Task {
         }
     }
 
-    public void makeTFIDFForAllEmails(){
+    public void makeTFIDFForAllEmails() {
         Email emailCurrent;
         Iterator itr = emails.iterator();
         while (itr.hasNext()) {
@@ -108,13 +109,14 @@ public class MakeScores extends Task {
         }
     }
 
-    public void makeIDFScoreForAllEmails(HashMap<String, Word> totalWordCount, int numberOfEmails){
+    public void makeIDFScoreForAllEmails(HashMap<String, Word> totalWordCount, int numberOfEmails) {
         Word currentWord;
         for (String word : totalWordCount.keySet()) {
             currentWord = totalWordCount.get(word);
             currentWord.makeIDF(numberOfEmails);
         }
     }
+
     private void calculateSDForallEmails(HashMap<String, Word> totalClassifiedWordCount,
                                          HashMap<String, Word> totalWordCount) {
         Word currentWord;
@@ -152,7 +154,7 @@ public class MakeScores extends Task {
         }
     }
 
-    private void calculateAllWordsAndTheirTF(HashMap<String, Word> totalWordCount){
+    private void calculateAllWordsAndTheirTF(HashMap<String, Word> totalWordCount) {
         Email emailCurrent;
         String[] wordsInCurrentEmail;
         Word WordInEmail;
@@ -179,7 +181,7 @@ public class MakeScores extends Task {
     }
 
     private TotalEmails makeValuesForClassifiedEmails(HashMap<String, Word> totalWordCount,
-                                                      HashMap<String, Word> totalClassifiedWordCount){
+                                                      HashMap<String, Word> totalClassifiedWordCount) {
         Email emailCurrent;
         String[] wordsInCurrentEmail;
         Word WordInEmail;
