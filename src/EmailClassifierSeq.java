@@ -23,7 +23,7 @@ public class EmailClassifierSeq extends Task {
 
             if (args.length != 1) usage();
 
-            int k = 20;
+            int k = 1000;
 
             MakeScores ms = new MakeScores();
 

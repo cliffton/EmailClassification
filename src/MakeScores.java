@@ -18,8 +18,8 @@ public class MakeScores extends Task {
 //    };
 
     String[] files = {
-            "/home/cliffton/workspace/EmailClassification/dataFiles/ham4.csv",
-            "/home/cliffton/workspace/EmailClassification/dataFiles/spam4.csv",
+            "/home/cliffton/workspace/EmailClassification/dataFiles/ham.csv",
+            "/home/cliffton/workspace/EmailClassification/dataFiles/spam.csv",
             "/home/cliffton/workspace/EmailClassification/dataFiles/unclassified.csv"
     };
 
@@ -222,6 +222,7 @@ public class MakeScores extends Task {
     }
 
     public ArrayList<Email> getUnClassifiedEmails() {
+        Collections.shuffle(emailsUnClassified);
         return emailsUnClassified;
     }
 
