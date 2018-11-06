@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 
-public class EmailClassifierSmp
+public class EmailClassifierSmpOld
         extends Task {
 
 
