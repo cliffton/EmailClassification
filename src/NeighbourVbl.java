@@ -6,6 +6,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.EnumMap;
 
 public class NeighbourVbl implements Vbl {
 
@@ -166,44 +167,42 @@ public class NeighbourVbl implements Vbl {
 
     }
 
+
+    public ArrayList<Pair<Email, Double>> getTopK(ArrayList<Pair<Email, Double>> candidates){
+
+        ArrayList<Pair<Email, Double>> topK = new ArrayList<>();
+
+        for(int i = 0; i < k; i++){
+            double max = Double.MIN_VALUE;
+            int ans = 0;
+            for(int j = 0; i < candidates.size(); j++){
+                Pair<Email, Double> candidate = candidates.get(j);
+                if(candidate.getValue() > max){
+                    max = candidate.getValue();
+                    ans = j;
+                }
+
+            }
+            topK.add(candidates.get(ans));
+            candidates.remove(ans);
+
+        }
+
+        return topK;
+    }
+
     public void set(Vbl vbl) {
         ArrayList<Pair<Email, Double>> result = new ArrayList<Pair<Email, Double>>();
-        ArrayList<Pair<Email, Double>> n1 = this.neighbours;
-        ArrayList<Pair<Email, Double>> n2 = ((NeighbourVbl) vbl).neighbours;
-
-//        int left = 0;
-//        int right = 0;
-//
-//        while (left < n1.size() && right < n2.size() && result.size() < k) {
-//            if (n1.get(left).getValue() > n2.get(right).getValue()) {
-//                result.add(n1.get(left));
-//                left++;
-//            } else {
-//                result.add(n2.get(right));
-//                right++;
-//            }
-//        }
-//
-//        while (left < n1.size() && result.size() < k) {
-//            result.add(n1.get(left));
-//            left++;
-//        }
-//
-//
-//        while (right < n2.size() && result.size() < k) {
-//            result.add(n2.get(right));
-//            right++;
-//        }
-
-
-        result.addAll(n1);
-        result.addAll(n2);
+        result.addAll(this.neighbours);
+        result.addAll(((NeighbourVbl) vbl).neighbours);
+//        System.out.println("neighnots " + result.size() + " | " + n1.hashCode());
+//        System.out.flush();
         Collections.sort(result, new EmailComparator());
-        this.neighbours = new ArrayList<Pair<Email, Double>>();
+        //this.neighbours = new ArrayList<Pair<Email, Double>>();
         if (result.size() < k) {
             this.neighbours = result;
         } else {
-
+//            this.neighbours = this.getTopK(result);
             this.neighbours.addAll(result.subList(0, k));
         }
 

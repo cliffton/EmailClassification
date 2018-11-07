@@ -10,7 +10,7 @@ public class EmailClassifierSmp extends Task {
     ArrayList<Word> words;
     ArrayList<Email> unClassifiedEmails;
     ArrayList<Email> classifiedEmails;
-//    NeighbourVbl neighbourVbl;
+    NeighbourVbl neighbourVbl;
     Email unclassified;
 
     /**
@@ -38,8 +38,8 @@ public class EmailClassifierSmp extends Task {
             while (count < unClassifiedEmails.size()) {
 
                 unclassified = unClassifiedEmails.get(count);
-//                neighbourVbl.reset();
-                final NeighbourVbl neighbourVbl = new NeighbourVbl(k);
+                neighbourVbl = new NeighbourVbl(k);
+                neighbourVbl.reset();
                 parallelFor(0, N - 1).exec(new Loop() {
 
 
@@ -56,21 +56,29 @@ public class EmailClassifierSmp extends Task {
                     public void run(int i) {
                         Email email = classifiedEmails.get(i);
 
-//                        System.out.println(this.rank() + " " + i + "" + email.content);
-                        //System.out.println(i);
+//                        System.out.println(this.rank() + " " + i);
+//                        System.out.println(i);
 //                        System.out.flush();
 
                         double similarityScore = thrNeighbourVbl.cosineSimilarity(email, unclassified, words);
                         thrNeighbourVbl.addNeighbour(similarityScore, email);
                     }
+
+                    @Override
+                    public void finish() throws Exception {
+                        System.out.println(this.rank());
+//                        System.out.println(i);
+                        System.out.flush();
+                    }
                 });
                 int category = neighbourVbl.voting();
-//                if (category == 1) {
+                if (category == 1) {
 
                     System.out.println("Cat " + category + " Email = " + unclassified.content);
-//                } else {
-//                    System.out.println("Cat " + category);
-//                }
+                } else {
+                    System.out.println("Cat " + category);
+                }
+                neighbourVbl.reset();
                 System.out.flush();
                 count++;
             }

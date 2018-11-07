@@ -9,7 +9,11 @@ public class EmailComparator implements Comparator<Pair<Email, Double>> {
         if (a.getValue() > b.getValue()) {
             return -1;
         }
-        return 1;
+
+        if(a.getValue() < b.getValue()){
+            return 1;
+        }
+        return 0;
     }
 
 }
