@@ -1,7 +1,5 @@
 import edu.rit.pj2.Loop;
-import edu.rit.pj2.ObjectLoop;
 import edu.rit.pj2.Task;
-import edu.rit.pj2.WorkQueue;
 
 import java.util.ArrayList;
 

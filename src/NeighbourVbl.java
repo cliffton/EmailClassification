@@ -1,6 +1,4 @@
-import edu.rit.pj2.Tuple;
 import edu.rit.pj2.Vbl;
-import javafx.util.Pair;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
