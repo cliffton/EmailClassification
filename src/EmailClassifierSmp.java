@@ -1,7 +1,5 @@
 import edu.rit.pj2.Loop;
-import edu.rit.pj2.ObjectLoop;
 import edu.rit.pj2.Task;
-import edu.rit.pj2.WorkQueue;
 
 import java.util.ArrayList;
 
@@ -25,52 +23,50 @@ public class EmailClassifierSmp extends Task {
 
             if (args.length != 1) usage();
 
-            int k = 10;
+            int k = 1000;
             MakeScores ms = new MakeScores();
             ms.main(args);
             words = ms.getWords();
             classifiedEmails = ms.getClassifiedEmails();
             unClassifiedEmails = ms.getUnClassifiedEmails();
-            neighbourVbl = new NeighbourVbl(k);
-            int N = unClassifiedEmails.size();
+
+            int N = classifiedEmails.size();
 
             int count = 0;
             while (count < unClassifiedEmails.size()) {
 
                 unclassified = unClassifiedEmails.get(count);
-
+                neighbourVbl = new NeighbourVbl(k);
+                neighbourVbl.reset();
                 parallelFor(0, N - 1).exec(new Loop() {
 
 
                     NeighbourVbl thrNeighbourVbl;
-                    //Email thrUnclassified;
 
                     public void start() {
                         thrNeighbourVbl = threadLocal(neighbourVbl);
-                        //thrUnclassified = threadLocal(unclassified);
-
+                        thrNeighbourVbl.reset();
                     }
 
 
                     public void run(int i) {
                         Email email = classifiedEmails.get(i);
-                        System.out.println(unclassified.category);
-                        System.out.println(email.content);
-                        System.out.flush();
-
-//                        double similarityScore = thrNeighbourVbl.cosineSimilarity(email, unclassified, words);
-//                        thrNeighbourVbl.addNeighbour(similarityScore, email);
+                        double similarityScore = thrNeighbourVbl.cosineSimilarity(email, unclassified, words);
+                        thrNeighbourVbl.addNeighbour(similarityScore, email);
                     }
+
                 });
+                int category = neighbourVbl.voting();
+                if (category == 1) {
 
+                    System.out.println("Cat " + category + " Email = " + unclassified.content);
+                } else {
+                    System.out.println("Cat " + category);
+                }
+                neighbourVbl.reset();
+                System.out.flush();
                 count++;
-
             }
-
-
-            int category = neighbourVbl.voting();
-
-            System.out.println(category);
 
 
         } catch (Exception e) {

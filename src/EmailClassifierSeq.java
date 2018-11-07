@@ -37,17 +37,12 @@ public class EmailClassifierSeq extends Task {
                 neighbourVbl.reset();
                 for (Email email : classifiedEmails) {
                     double similarityScore = neighbourVbl.cosineSimilarity(email, unclassified, words);
-                    //if(similarityScore > 0.0){
-                    //    System.out.println(similarityScore);
-                    //    System.out.flush();
-                    //}
                     neighbourVbl.addNeighbour(similarityScore, email);
 
                 }
 
                 int category = neighbourVbl.voting();
                 if (category == 1) {
-
                     System.out.println("Cat " + category + " Email = " + unclassified.content);
                 } else {
                     System.out.println("Cat " + category);

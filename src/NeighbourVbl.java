@@ -1,11 +1,10 @@
-import edu.rit.pj2.Tuple;
 import edu.rit.pj2.Vbl;
-import javafx.util.Pair;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.EnumMap;
 
 public class NeighbourVbl implements Vbl {
 
@@ -56,9 +55,8 @@ public class NeighbourVbl implements Vbl {
     public void addNeighbour(double similarityScore, Email email) {
         neighbours.add(new Pair<Email, Double>(email, similarityScore));
         Collections.sort(neighbours, new EmailComparator());
-        ArrayList<Pair<Email, Double>> tmpArray = new ArrayList<Pair<Email, Double>>();
         if (neighbours.size() > k) {
-
+            ArrayList<Pair<Email, Double>> tmpArray = new ArrayList<Pair<Email, Double>>();
             tmpArray.addAll(neighbours.subList(0, k));
             neighbours = tmpArray;
         }
@@ -167,76 +165,86 @@ public class NeighbourVbl implements Vbl {
 
     }
 
-    public void setOld(Vbl vbl) {
-        ArrayList<Pair<Email, Double>> result = new ArrayList<>();
-        ArrayList<Pair<Email, Double>> n1 = this.neighbours;
-        ArrayList<Pair<Email, Double>> n2 = ((NeighbourVbl) vbl).neighbours;
 
-        int left = 0;
-        int right = 0;
+    public ArrayList<Pair<Email, Double>> getTopK(ArrayList<Pair<Email, Double>> candidates){
 
-        while (left < n1.size() && right < n2.size()) {
-            if (n1.get(left).getValue() < n2.get(right).getValue()) {
-                result.add(n1.get(left));
-                left++;
-            } else {
-                result.add(n2.get(right));
-                right++;
+        ArrayList<Pair<Email, Double>> topK = new ArrayList<>();
+
+        for(int i = 0; i < k; i++){
+            double max = Double.MIN_VALUE;
+            int ans = 0;
+            for(int j = 0; i < candidates.size(); j++){
+                Pair<Email, Double> candidate = candidates.get(j);
+                if(candidate.getValue() > max){
+                    max = candidate.getValue();
+                    ans = j;
+                }
+
             }
+            topK.add(candidates.get(ans));
+            candidates.remove(ans);
+
         }
 
-        while (left < n1.size()) {
-            result.add(n1.get(left));
-            left++;
-        }
-
-
-        while (right < n2.size()) {
-            result.add(n2.get(right));
-            right++;
-        }
-
-        this.neighbours = result;
+        return topK;
     }
 
-
-    @Override
     public void set(Vbl vbl) {
-        ArrayList<Pair<Double, Integer>> result = new ArrayList<>();
-        double[] tmpScores = ((NeighbourVbl) vbl).similarityScores;
-        int[] tmpCategories = ((NeighbourVbl) vbl).categories;
-
-
-        int left = 0;
-        int right = 0;
-        while (left < k && right < k && result.size() < k) {
-
-            if (this.similarityScores[left] < tmpScores[right]) {
-
-                result.add(new Pair<Double, Integer>(this.similarityScores[left], this.categories[left]));
-                left++;
-
-            } else {
-
-                result.add(new Pair<Double, Integer>(tmpScores[right], tmpCategories[right]));
-                right++;
-
-            }
+        ArrayList<Pair<Email, Double>> result = new ArrayList<Pair<Email, Double>>();
+        result.addAll(this.neighbours);
+        result.addAll(((NeighbourVbl) vbl).neighbours);
+//        System.out.println("neighnots " + result.size() + " | " + n1.hashCode());
+//        System.out.flush();
+        Collections.sort(result, new EmailComparator());
+        //this.neighbours = new ArrayList<Pair<Email, Double>>();
+        if (result.size() < k) {
+            this.neighbours = result;
+        } else {
+//            this.neighbours = this.getTopK(result);
+            this.neighbours.addAll(result.subList(0, k));
         }
 
-        // while (left < k) {
-        //    result.add(new Pair<Double, Integer>(this.similarityScores[left], this.categories[left]));
-        //    left++;
-        // }
-
-
-        // while (right < k) {
-        //    result.add(new Pair<Double, Integer>(tmpScores[right], tmpCategories[right]));
-        //    right++;
-        // }
-
-
+        //this.neighbours = result;
     }
+
+
+//    @Override
+//    public void set(Vbl vbl) {
+//        ArrayList<Pair<Double, Integer>> result = new ArrayList<>();
+//        double[] tmpScores = ((NeighbourVbl) vbl).similarityScores;
+//        int[] tmpCategories = ((NeighbourVbl) vbl).categories;
+//
+//
+//        int left = 0;
+//        int right = 0;
+//        while (left < k && right < k && result.size() < k) {
+//
+//            if (this.similarityScores[left] < tmpScores[right]) {
+//
+//                result.add(new Pair<Double, Integer>(this.similarityScores[left], this.categories[left]));
+//                left++;
+//
+//            } else {
+//
+//                result.add(new Pair<Double, Integer>(tmpScores[right], tmpCategories[right]));
+//                right++;
+//
+//            }
+//        }
+//
+//        // while (left < k) {
+//        //    result.add(new Pair<Double, Integer>(this.similarityScores[left], this.categories[left]));
+//        //    left++;
+//        // }
+//
+//
+//        // while (right < k) {
+//        //    result.add(new Pair<Double, Integer>(tmpScores[right], tmpCategories[right]));
+//        //    right++;
+//        // }
+//
+//
+//    }
 
     @Override
     public void reduce(Vbl vbl) {
@@ -250,6 +258,7 @@ public class NeighbourVbl implements Vbl {
             vbl.similarityScores = this.similarityScores;
             vbl.k = this.k;
             vbl.categories = this.categories;
+            vbl.neighbours = this.neighbours;
             return vbl;
 
         } catch (CloneNotSupportedException exc) {
