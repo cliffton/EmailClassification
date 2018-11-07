@@ -57,16 +57,19 @@ public class EmailClassifierSmp extends Task {
 
                 });
                 int category = neighbourVbl.voting();
-                if (category == 1) {
+//                if (category == 1) {
+//
+//                    System.out.println("Cat " + category + " Email = " + unclassified.content);
+//                } else {
+//                    System.out.println("Cat " + category);
+//                }
 
-                    System.out.println("Cat " + category + " Email = " + unclassified.content);
-                } else {
-                    System.out.println("Cat " + category);
-                }
+                unclassified.category = category;
                 neighbourVbl.reset();
-                System.out.flush();
+//                System.out.flush();
                 count++;
             }
+            ms.writeBackToCSV(unClassifiedEmails);
 
 
         } catch (Exception e) {

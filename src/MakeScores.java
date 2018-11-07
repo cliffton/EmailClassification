@@ -46,7 +46,7 @@ public class MakeScores extends Task {
         makeWordsArray(sb, spamWords, hamWords, numberOfSpamEmails, numberOfHamEmails, totalWordCount);
         pw.write(sb.toString());
 
-        System.out.println("done!");
+//        System.out.println("done!");
 
 
     }
@@ -228,6 +228,21 @@ public class MakeScores extends Task {
 
     public ArrayList<Email> getAllEmails() {
         return emails;
+    }
+
+    public void writeBackToCSV(ArrayList<Email> result) throws FileNotFoundException {
+        PrintWriter pw = new PrintWriter(new File("/home/cliffton/workspace/EmailClassification/dataFiles/classifiedTheUnclassified.csv"));
+        StringBuilder sb = new StringBuilder();
+        int counter = 0;
+        String delimiter = ",";
+        for(Email e: result){
+            sb.append(counter).append(delimiter).
+                    append(e.getCategory()).append(delimiter).
+                    append(e.getContent()).append("\n");
+        }
+        pw.write(sb.toString());
+        pw.close();
+
     }
 
 }
