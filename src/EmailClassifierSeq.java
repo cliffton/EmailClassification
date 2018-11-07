@@ -52,6 +52,7 @@ public class EmailClassifierSeq extends Task {
 
 
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             usage();
         }
 
