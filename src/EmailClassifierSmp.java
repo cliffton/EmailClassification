@@ -44,32 +44,19 @@ public class EmailClassifierSmp extends Task {
 
 
                     NeighbourVbl thrNeighbourVbl;
-                    //Email thrUnclassified;
 
                     public void start() {
                         thrNeighbourVbl = threadLocal(neighbourVbl);
-                        //thrUnclassified = threadLocal(unclassified);
                         thrNeighbourVbl.reset();
                     }
 
 
                     public void run(int i) {
                         Email email = classifiedEmails.get(i);
-
-//                        System.out.println(this.rank() + " " + i);
-//                        System.out.println(i);
-//                        System.out.flush();
-
                         double similarityScore = thrNeighbourVbl.cosineSimilarity(email, unclassified, words);
                         thrNeighbourVbl.addNeighbour(similarityScore, email);
                     }
 
-                    @Override
-                    public void finish() throws Exception {
-                        System.out.println(this.rank());
-//                        System.out.println(i);
-                        System.out.flush();
-                    }
                 });
                 int category = neighbourVbl.voting();
                 if (category == 1) {
