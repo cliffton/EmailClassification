@@ -24,7 +24,8 @@ public class EmailClassifierSeq extends Task {
 
             if (args.length != 1) usage();
 
-            int k = 1000;
+            //int k = 1000;
+            int k = Integer.parseInt(args[0]);
 
             MakeScores ms = new MakeScores();
             ms.main(args);
