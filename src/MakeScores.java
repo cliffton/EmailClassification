@@ -23,10 +23,17 @@ public class MakeScores extends Task {
 //            "/home/cliffton/workspace/EmailClassification/dataFiles/unclassified100.csv"
 //    };
 
+//    String[] files = {
+//            "/home/stu12/s12/cf6715/emails/dataFiles/ham.csv",
+//            "/home/stu12/s12/cf6715/emails/dataFiles/spam.csv",
+//            "/home/stu12/s12/cf6715/emails/dataFiles/unclassified100.csv"
+//    };
+
+
     String[] files = {
-            "/home/stu12/s12/cf6715/emails/dataFiles/ham.csv",
-            "/home/stu12/s12/cf6715/emails/dataFiles/spam.csv",
-            "/home/stu12/s12/cf6715/emails/dataFiles/unclassified100.csv"
+            "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/ham.csv",
+            "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/spam.csv",
+            "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/unclassified100.csv"
     };
 
     public void main(String[] args) throws IOException {
@@ -238,7 +245,8 @@ public class MakeScores extends Task {
 
     public void writeBackToCSV(ArrayList<Email> result) throws FileNotFoundException {
 //        PrintWriter pw = new PrintWriter(new File("/home/cliffton/workspace/EmailClassification/dataFiles/classifiedTheUnclassified.csv"));
-        PrintWriter pw = new PrintWriter(new File(("/home/stu12/s12/cf6715/emails/dataFiles/")));
+//        PrintWriter pw = new PrintWriter(new File(("/home/stu12/s12/cf6715/emails/dataFiles/classifiedTheUnclassified.csv")));
+        PrintWriter pw = new PrintWriter(new File(("/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/classifiedTheUnclassified.csv")));
         StringBuilder sb = new StringBuilder();
         int counter = 0;
         String delimiter = ",";
