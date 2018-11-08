@@ -17,11 +17,11 @@ public class MakeScores extends Task {
 //            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\unclassified.csv"
 //    };
 
-//    String[] files = {
-//            "/home/cliffton/workspace/EmailClassification/dataFiles/ham.csv",
-//            "/home/cliffton/workspace/EmailClassification/dataFiles/spam.csv",
-//            "/home/cliffton/workspace/EmailClassification/dataFiles/unclassified100.csv"
-//    };
+    String[] files = {
+            "/home/cliffton/workspace/EmailClassification/dataFiles/ham.csv",
+            "/home/cliffton/workspace/EmailClassification/dataFiles/spam.csv",
+            "/home/cliffton/workspace/EmailClassification/dataFiles/unclassified100.csv"
+    };
 
 //    String[] files = {
 //            "/home/stu12/s12/cf6715/emails/dataFiles/ham.csv",
@@ -30,11 +30,11 @@ public class MakeScores extends Task {
 //    };
 
 
-    String[] files = {
-            "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/ham.csv",
-            "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/spam.csv",
-            "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/unclassified100.csv"
-    };
+//    String[] files = {
+//            "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/ham.csv",
+//            "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/spam.csv",
+//            "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/unclassified100.csv"
+//    };
 
     public void main(String[] args) throws IOException {
         int numberOfEmails, numberOfSpamEmails, numberOfHamEmails;
@@ -244,9 +244,9 @@ public class MakeScores extends Task {
     }
 
     public void writeBackToCSV(ArrayList<Email> result) throws FileNotFoundException {
-//        PrintWriter pw = new PrintWriter(new File("/home/cliffton/workspace/EmailClassification/dataFiles/classifiedTheUnclassified.csv"));
+        PrintWriter pw = new PrintWriter(new File("/home/cliffton/workspace/EmailClassification/dataFiles/classifiedTheUnclassified.csv"));
 //        PrintWriter pw = new PrintWriter(new File(("/home/stu12/s12/cf6715/emails/dataFiles/classifiedTheUnclassified.csv")));
-        PrintWriter pw = new PrintWriter(new File(("/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/classifiedTheUnclassified.csv")));
+//        PrintWriter pw = new PrintWriter(new File(("/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/classifiedTheUnclassified.csv")));
         StringBuilder sb = new StringBuilder();
         int counter = 0;
         String delimiter = ",";
