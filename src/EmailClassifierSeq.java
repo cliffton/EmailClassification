@@ -24,7 +24,7 @@ public class EmailClassifierSeq extends Task {
 
 //            if (args.length != 1) usage();
 
-            int k = 1000;
+            int k = 100;
 //            int k = Integer.parseInt(args[0]);
 
 //            MakeScores ms = new MakeScores();
@@ -47,7 +47,7 @@ public class EmailClassifierSeq extends Task {
                     double similarityScore = neighbourVbl.cosineSimilarity(email, unclassified, wordsMake);
                     neighbourVbl.addNeighbour(similarityScore, email);
                     if (similarityScore != 0) {
-                        System.out.println("Ss");
+//                        System.out.println("Ss");
                     }
 
                 }

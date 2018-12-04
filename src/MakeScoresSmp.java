@@ -124,13 +124,8 @@ public class MakeScoresSmp extends Task {
         for (Email i : emails) {
             i.transferDataandMakeTFIDFscore(totalWordCount);
         }
-        for (String i : totalWordCount.keySet()) {
-            allWordsSelected.add(new tupleToSortWords(i, totalWordCount.get(i).getIDFScore()));
-        }
-        Collections.sort(allWordsSelected);
-
-        for (int i = 0; i < (numberOfSpamEmails + numberOfHamEmails)*2; i++) {
-            allWords.add(totalWordCount.get(allWordsSelected.get(i).word));
+        for (String s: totalWordCount.keySet()) {
+            allWords.add(totalWordCount.get(s));
         }
 
         System.out.print("SS");

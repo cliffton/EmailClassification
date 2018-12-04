@@ -23,7 +23,7 @@ public class EmailClassifierSmp extends Task {
 
 //            if (args.length != 1) usage();
 
-            int k = 1000;
+            int k = 100;
 //            int k = Integer.parseInt(args[0]);
             MakeScoresSmp ms = new MakeScoresSmp();
             //ms.main(args);
@@ -59,12 +59,12 @@ public class EmailClassifierSmp extends Task {
 
                 });
                 int category = neighbourVbl.voting();
-                if (category == 1) {
+//                if (category == 1) {
 
                     System.out.println("Cat " + category + " Email = " + unclassified.content);
-                } else {
-                    System.out.println("Cat " + category);
-                }
+//                } else {
+//                    System.out.println("Cat " + category);
+//                }
 
                 unclassified.category = category;
                 neighbourVbl.reset();
