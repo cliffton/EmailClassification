@@ -1,25 +1,27 @@
-public class Word {
-    private String word;
-    private double IDFScore, DFScoreSpam, SDScore, DFScoreHam, totalWordCount;
+import edu.rit.io.InStream;
+import edu.rit.io.OutStream;
+import edu.rit.pj2.Tuple;
+import edu.rit.pj2.Vbl;
 
-    Word() {
+import java.io.IOException;
+
+public class Word{
+    public String word;
+    public double IDFScore;
+
+    Word(){
+
     }
-
     Word(String word) {
         this.word = word;
-        this.DFScoreHam = 0;
-        this.DFScoreSpam = 0;
-        this.SDScore = 0;
-        this.totalWordCount = 0;
+        this.IDFScore = 1;
     }
 
-    Word(String word, double IDFScore, double DFScoreSpam, double SDScore, double DFScoreHam) {
+    Word(String word, long IDFScore){
         this.word = word;
         this.IDFScore = IDFScore;
-        this.DFScoreSpam = DFScoreSpam;
-        this.DFScoreHam = DFScoreHam;
-        this.SDScore = SDScore;
     }
+
 
     public void setIDFScore(double IDFScore) {
         this.IDFScore = IDFScore;
@@ -29,39 +31,8 @@ public class Word {
         return this.IDFScore;
     }
 
-    public void setTotalWordCount(double totalWordCount) {
-        this.totalWordCount = totalWordCount;
-    }
 
-    public double getTotalWordCount() {
-        return this.totalWordCount;
-    }
-
-    public void setDFSpamScore(double DFScoreSpam) {
-        this.DFScoreSpam = DFScoreSpam;
-    }
-
-    public void setDFHamScore(double DFScoreHam) {
-        this.DFScoreHam = DFScoreHam;
-    }
-
-    public void setSDScore(double SDScore) {
-        this.SDScore = SDScore;
-    }
-
-    public double getDFSpamScore() {
-        return this.DFScoreSpam;
-    }
-
-    public double getDFHamScore() {
-        return this.DFScoreHam;
-    }
-
-    public double getSDScore() {
-        return this.SDScore;
-    }
-
-    public void makeIDF(int number) {
+    public void makeIDF(long number) {
         this.IDFScore = log2(number / this.IDFScore);
     }
 
@@ -69,19 +40,10 @@ public class Word {
         return Math.log(value) / Math.log(2);
     }
 
-    public void makeDFScores(int numberOfSpamEmails, int numberOfHamEmails) {
-        this.DFScoreSpam = log2(numberOfSpamEmails / this.DFScoreSpam);
-        this.DFScoreHam = log2(numberOfHamEmails / this.DFScoreHam);
-    }
-
     @Override
     public String toString() {
         return word;
     }
 
-//    @Override
-//    public int compareTo(Object o) {
-//        double tfidf = ((Word)o)
-//    }
 }
 

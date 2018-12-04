@@ -4,9 +4,9 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Email {
+public class Email{
     PrintWriter pw;
-    HashMap<Word, Double> words;
+    HashMap<String, Double> words;
     double maxTFScore;
     String content;
     int category;
@@ -19,22 +19,10 @@ public class Email {
         pw = new PrintWriter(new File("test.csv"));
     }
 
-    public void setWord(Word word) {
-        if (!this.words.containsKey(word)) {
-            this.words.put(word, 1.0);
-        } else {
-            this.words.put(word, this.words.get(word) + 1);
-        }
-
-        if (this.words.get(word) > this.maxTFScore) {
-            this.maxTFScore = this.words.get(word);
-        }
-    }
-
-    public void makeTF() {
+    public void makeTF(double max) {
         double score;
-        for (Word word : this.words.keySet()) {
-            score = this.words.get(word) / this.maxTFScore;
+        for (String word: words.keySet()) {
+            score = this.words.get(word) / max;
             this.words.put(word, score);
         }
     }
@@ -63,27 +51,4 @@ public class Email {
         return words.get(word).doubleValue();
     }
 
-    public void maxTFIDFScore() {
-        double score;
-        for (Word word : this.words.keySet()) {
-            score = (this.words.get(word)) * word.getIDFScore();
-            this.words.put(word, score);
-        }
-    }
-
-    public void makeTfidfSDScore(StringBuilder sb, ArrayList<tupleToSortWords> spamWords, ArrayList<tupleToSortWords> hamWords) {
-        double score, scoreSD;
-        for (Word word : this.words.keySet()) {
-            score = this.words.get(word);
-            sb.append(word.toString());
-            sb.append(",");
-            scoreSD = score;
-            if (this.category == 1) {
-                spamWords.add(new tupleToSortWords(word.toString(), scoreSD));
-            } else {
-                hamWords.add(new tupleToSortWords(word.toString(), scoreSD));
-            }
-            sb.append("\n");
-        }
-    }
 }
