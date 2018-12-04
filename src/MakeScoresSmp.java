@@ -19,17 +19,17 @@ public class MakeScoresSmp extends Task {
     private ArrayList<Email> emails;
 
 
-    //    private String[] files = {
-//            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\ham.csv",
-//            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\spam.csv",
-//            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\unclassified.csv"
-//    };
-
-    String[] files = {
-            "/home/cliffton/workspace/EmailClassification/dataFiles/ham.csv",
-            "/home/cliffton/workspace/EmailClassification/dataFiles/spam.csv",
-            "/home/cliffton/workspace/EmailClassification/dataFiles/unclassified100.csv"
+        private String[] files = {
+            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\ham.csv",
+            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\spam.csv",
+            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\unclassified.csv"
     };
+
+//    String[] files = {
+//            "/home/cliffton/workspace/EmailClassification/dataFiles/ham.csv",
+//            "/home/cliffton/workspace/EmailClassification/dataFiles/spam.csv",
+//            "/home/cliffton/workspace/EmailClassification/dataFiles/unclassified100.csv"
+//    };
 
 //    String[] files = {
 //            "/home/stu12/s12/cf6715/emails/dataFiles/ham.csv",
@@ -45,10 +45,10 @@ public class MakeScoresSmp extends Task {
 //    };
 
 
-    public void main(String[] args) throws IOException {
-    }
+    public void main(String[] args){
 
-    public void letsGo() throws IOException {
+    }
+        public void letsGo() throws IOException {
         int numberOfSpamEmails = 0, numberOfHamEmails = 0;
         emails = new ArrayList<>();
         emailsClassified = new ArrayList<>();
@@ -112,21 +112,31 @@ public class MakeScoresSmp extends Task {
 
         CSVFile = "idf1.csv";
         BufferedReader br = new BufferedReader(new FileReader(CSVFile));
+        ArrayList<tupleToSortWords> allwordsWithIDF = new ArrayList<>();
         while ((line = br.readLine()) != null) {
             content = line.split("\n");
             String[] con;
             Word wTemp;
             for (String i : content) {
                 con = i.split(split);
-                totalWordCount.put(con[0], new Word(con[0], Double.parseDouble(con[1])));
+                wTemp = new Word(con[0], Double.parseDouble(con[1]));
+                totalWordCount.put(con[0], wTemp);
+                allWordsSelected.add(new tupleToSortWords(con[0], Double.parseDouble(con[1])));
             }
         }
+        Collections.sort(allWordsSelected);
+
         for (Email i : emails) {
             i.transferDataandMakeTFIDFscore(totalWordCount);
         }
-        for (String s: totalWordCount.keySet()) {
-            allWords.add(totalWordCount.get(s));
+        for (int i = 0; i < numberOfHamEmails + numberOfSpamEmails; i++) {
+            allWords.add(totalWordCount.get(allWordsSelected.get(i).word));
         }
+
+        for (int i = 0; i < numberOfHamEmails + numberOfSpamEmails; i++) {
+            allWords.add(totalWordCount.get(allWordsSelected.get(allWordsSelected.size() - 1 - i).word));
+        }
+
 
         System.out.print("SS");
 
