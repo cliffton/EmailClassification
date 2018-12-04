@@ -5,24 +5,26 @@ import edu.rit.pj2.Vbl;
 
 import java.io.IOException;
 
-public class Word{
+public class Word {
     public String word;
     public double IDFScore;
     public int category;
 
-    Word(){
+    Word() {
 
     }
+
     Word(String word) {
         this.word = word;
         this.IDFScore = 0;
     }
 
-    Word(String word, double IDFScore){
+    Word(String word, double IDFScore) {
         this.word = word;
         this.IDFScore = IDFScore;
     }
-    Word(String word, double IDFScore, int category){
+
+    Word(String word, double IDFScore, int category) {
         this.word = word;
         this.IDFScore = IDFScore;
         this.category = category;
@@ -44,6 +46,11 @@ public class Word{
 
     double log2(double value) {
         return Math.log(value) / Math.log(2);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.word.equals(((Word) obj).word);
     }
 
     @Override

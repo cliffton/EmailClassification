@@ -77,6 +77,9 @@ public class NeighbourVbl implements Vbl {
         for (Word word : words) {
             double tf1 = e1.getTFIDFScore(word);
             double tf2 = e2.getTFIDFScore(word);
+            if(tf1 !=0 && tf2 !=0){
+                System.out.println("here");
+            }
             numerator += (tf1 * tf2);
             e1Denominator += (tf1 * tf1);
             e2Denominator += (tf2 * tf2);

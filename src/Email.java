@@ -3,7 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 
-public class Email{
+public class Email {
     PrintWriter pw;
     HashMap<String, Double> wordsMake;
     HashMap<Word, Double> words = new HashMap<>();
@@ -21,7 +21,7 @@ public class Email{
 
     public void makeTF(double max) {
         double score;
-        for (String word: wordsMake.keySet()) {
+        for (String word : wordsMake.keySet()) {
             score = this.wordsMake.get(word) / max;
             this.wordsMake.put(word, score);
         }
@@ -44,15 +44,15 @@ public class Email{
     }
 
     public double getTFIDFScore(Word word) {
-        if (wordsMake.get(word) == null) {
+        if (words.get(word) == null) {
             return 0.0;
         }
 
-        return wordsMake.get(word);
+        return words.get(word);
     }
 
     public void transferDataandMakeTFIDFscore(HashMap<String, Word> totalWordCount) {
-        for(String i: wordsMake.keySet()){
+        for (String i : wordsMake.keySet()) {
             words.put(totalWordCount.get(i), wordsMake.get(i) * totalWordCount.get(i).getIDFScore());
         }
     }
