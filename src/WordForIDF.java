@@ -4,29 +4,37 @@ import edu.rit.pj2.Tuple;
 import edu.rit.pj2.Vbl;
 
 import java.io.IOException;
+import java.io.Serializable;
 
-public class Word{
+public class WordForIDF implements Comparable<WordForIDF>, Serializable {
     public String word;
     public double IDFScore;
     public int category;
-
-    Word(){
+    WordForIDF(){
 
     }
-    Word(String word) {
+    WordForIDF(String word) {
         this.word = word;
         this.IDFScore = 0;
     }
 
-    Word(String word, double IDFScore){
+    public boolean equals
+            (Object obj)
+    {
+        return (obj instanceof WordForIDF) && (this.word.equals(((WordForIDF)obj).word));
+    }
+
+    WordForIDF(String word, double IDFScore){
         this.word = word;
         this.IDFScore = IDFScore;
     }
-    Word(String word, double IDFScore, int category){
+
+    WordForIDF(String word, double IDFScore, int category){
         this.word = word;
         this.IDFScore = IDFScore;
         this.category = category;
     }
+
 
     public void setIDFScore(double IDFScore) {
         this.IDFScore = IDFScore;
@@ -45,11 +53,20 @@ public class Word{
     double log2(double value) {
         return Math.log(value) / Math.log(2);
     }
+    public int hashCode()
+    {
+        return word.hashCode();
+    }
 
     @Override
     public String toString() {
         return word;
     }
 
+
+    @Override
+    public int compareTo(WordForIDF o) {
+        return 0;
+    }
 }
 

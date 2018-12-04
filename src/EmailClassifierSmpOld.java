@@ -12,7 +12,7 @@
 //        extends Task {
 //
 //
-//    private ArrayList<Word> words;
+//    private ArrayList<Word> wordsMake;
 //    private ArrayList<Email> emails;
 //    private Email unclassified;
 //    private NeighbourVbl neighbourVbl;
@@ -33,7 +33,7 @@
 //
 //            unclassified = new Email("I want to sell toys", 2);
 //            MakeScores ms = new MakeScores();
-//            words = ms.getWords();
+//            wordsMake = ms.getWords();
 //            emails = ms.getUnClassifiedEmails();
 //            neighbourVbl = new NeighbourVbl(k);
 //
@@ -56,7 +56,7 @@
 //
 //
 //                public void run(Email email) {
-//                    double similarityScore = thrNeighbourVbl.cosineSimilarity(email, unclassified, words);
+//                    double similarityScore = thrNeighbourVbl.cosineSimilarity(email, unclassified, wordsMake);
 //                    thrNeighbourVbl.addNeighbour(similarityScore, email);
 //                }
 //            });

@@ -1,7 +1,5 @@
 import edu.rit.pj2.Task;
-import edu.rit.pjmr.PjmrJob;
-import edu.rit.pjmr.TextFileSource;
-import edu.rit.pjmr.TextId;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,15 +69,15 @@ public class MakeScores extends Task {
             for (int i = 0; i < wordsInCurrentEmail.length; i++) {
                 word = wordsInCurrentEmail[i].toLowerCase();
                 if(!word.equals("")) {
-                    if (!emailCurrent.words.containsKey(word)) {
-                        emailCurrent.words.put(word, 1.0);
+                    if (!emailCurrent.wordsMake.containsKey(word)) {
+                        emailCurrent.wordsMake.put(word, 1.0);
                     }
                     else {
-                        scorEmail = emailCurrent.words.get(word) + 1.0;
+                        scorEmail = emailCurrent.wordsMake.get(word) + 1.0;
                         if (maxEmailScore < scorEmail) {
                             maxEmailScore = scorEmail;
                         }
-                        emailCurrent.words.put(word, scorEmail);
+                        emailCurrent.wordsMake.put(word, scorEmail);
                     }
                 }
             }

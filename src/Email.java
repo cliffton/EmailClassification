@@ -1,18 +1,18 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Email{
     PrintWriter pw;
-    HashMap<String, Double> words;
+    HashMap<String, Double> wordsMake;
+    HashMap<Word, Double> words = new HashMap<>();
     double maxTFScore;
     String content;
     int category;
 
     Email(String content, int category) throws FileNotFoundException {
-        this.words = new HashMap<>();
+        this.wordsMake = new HashMap<>();
         this.content = content;
         this.category = category;
         this.maxTFScore = 0;
@@ -21,9 +21,9 @@ public class Email{
 
     public void makeTF(double max) {
         double score;
-        for (String word: words.keySet()) {
-            score = this.words.get(word) / max;
-            this.words.put(word, score);
+        for (String word: wordsMake.keySet()) {
+            score = this.wordsMake.get(word) / max;
+            this.wordsMake.put(word, score);
         }
     }
 
@@ -44,11 +44,16 @@ public class Email{
     }
 
     public double getTFIDFScore(Word word) {
-        if (words.get(word) == null) {
+        if (wordsMake.get(word) == null) {
             return 0.0;
         }
 
-        return words.get(word).doubleValue();
+        return wordsMake.get(word);
     }
 
+    public void transferDataandMakeTFIDFscore(HashMap<String, Word> totalWordCount) {
+        for(String i: wordsMake.keySet()){
+            words.put(totalWordCount.get(i), wordsMake.get(i) * totalWordCount.get(i).getIDFScore());
+        }
+    }
 }

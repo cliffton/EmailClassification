@@ -47,12 +47,15 @@ public class MakeIdfScore extends PjmrJob<TextId,String,String,LongVbl> {
 
         public void map(TextId id, String contents, Combiner<String, LongVbl> combiner) {
             String data[];
+            int cactegory = Integer.parseInt(contents.split(",")[1]);
             data =  contents.split(",")[2].split(" ");
-            Word word;
+            WordForIDF w;
             HashSet<String> record = new HashSet<>();
             combiner.add("", new LongVbl.Sum (1L));
             for(String i: data) {
                 if(!record.contains(i) && !i.equals("")) {
+                    w = new WordForIDF(i);
+                    w.category = cactegory;
                     combiner.add(i, ONE);
                     record.add(i);
                 }
@@ -75,7 +78,7 @@ public class MakeIdfScore extends PjmrJob<TextId,String,String,LongVbl> {
         @Override
         public void reduce(String key, LongVbl value) // Number of requests
         {
-            if(!key .equals( "")) {
+            if(!key.equals("")) {
                 w = new Word(key, value.item);
                 allWords.put(key, w);
             }
@@ -93,8 +96,9 @@ public class MakeIdfScore extends PjmrJob<TextId,String,String,LongVbl> {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
+            String s = "";
             for(String i: allWords.keySet()) {
-                    sb.append(i + "," + allWords.get(i).makeIDF(count.item) + "\n");
+                    sb.append(i).append(",").append(allWords.get(i).makeIDF(count.item)).append("\n");
             }
             try {
                 writer.write(sb.toString());

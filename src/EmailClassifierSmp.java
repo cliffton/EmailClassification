@@ -5,7 +5,7 @@
 //
 //public class EmailClassifierSmp extends Task {
 //
-//    ArrayList<Word> words;
+//    ArrayList<Word> wordsMake;
 //    ArrayList<Email> unClassifiedEmails;
 //    ArrayList<Email> classifiedEmails;
 //    NeighbourVbl neighbourVbl;
@@ -27,7 +27,7 @@
 //            int k = Integer.parseInt(args[0]);
 //            MakeScores ms = new MakeScores();
 //            ms.main(args);
-//            words = ms.getWords();
+//            wordsMake = ms.getWords();
 //            classifiedEmails = ms.getClassifiedEmails();
 //            unClassifiedEmails = ms.getUnClassifiedEmails();
 //
@@ -52,7 +52,7 @@
 //
 //                    public void run(int i) {
 //                        Email email = classifiedEmails.get(i);
-//                        double similarityScore = thrNeighbourVbl.cosineSimilarity(email, unclassified, words);
+//                        double similarityScore = thrNeighbourVbl.cosineSimilarity(email, unclassified, wordsMake);
 //                        thrNeighbourVbl.addNeighbour(similarityScore, email);
 //                    }
 //

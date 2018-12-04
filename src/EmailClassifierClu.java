@@ -4,7 +4,7 @@
 //
 //public class EmailClassifierClu extends Job {
 //
-//    private ArrayList<Word> words;
+//    private ArrayList<Word> wordsMake;
 //    private ArrayList<Email> emails;
 //
 //
@@ -21,7 +21,7 @@
 //        try {
 //
 //            MakeScores ms = new MakeScores();
-//            words = ms.getWords();
+//            wordsMake = ms.getWords();
 //            emails = ms.getClassifiedEmails();
 //            masterChunk(50);
 //
@@ -55,7 +55,7 @@
 //            extends Task {
 //
 //
-//        private ArrayList<Word> words;
+//        private ArrayList<Word> wordsMake;
 //        private ArrayList<Email> emails;
 //        private ArrayList<Email> unclassifiedEmail;
 //        private Email unclassified;
@@ -88,7 +88,7 @@
 //
 //
 //            MakeScores ms = new MakeScores();
-//            words = ms.getWords();
+//            wordsMake = ms.getWords();
 //            emails = ms.getClassifiedEmails();
 //            neighbourVbl = new NeighbourVbl(k);
 //
@@ -117,7 +117,7 @@
 //
 //
 //                    public void run(Email email) {
-//                        double similarityScore = thrNeighbourVbl.cosineSimilarity(email, unclassified, words);
+//                        double similarityScore = thrNeighbourVbl.cosineSimilarity(email, unclassified, wordsMake);
 //                        thrNeighbourVbl.addNeighbour(similarityScore, email);
 //                    }
 //                });

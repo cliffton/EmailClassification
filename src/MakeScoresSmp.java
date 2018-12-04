@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class MakeScoresSmp extends Task {
@@ -27,18 +28,17 @@ public class MakeScoresSmp extends Task {
 //            "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/spam.csv",
 //            "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/unclassified100.csv"
 //    };
-    /**
-     * PJMR job main program.
-     *
-     * @param args Command line arguments.
-     */
+
+
     public void main
     (String[] args) throws IOException {
-        int numberOfSpamEmails, numberOfHamEmails;
+        int numberOfSpamEmails = 0, numberOfHamEmails = 0;
         emails = new ArrayList<>();
         emailsClassified = new ArrayList<>();
         emailsUnClassified = new ArrayList<>();
         allWords = new ArrayList<>();
+        ArrayList<tupleToSortWords> allWordsSelected = new ArrayList<>();
+        ArrayList<String> selected = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
         HashMap<String, Word> totalWordCount = new HashMap<>();
         HashMap<String, Word> totalClassifiedWordCount = new HashMap<>();
@@ -55,8 +55,10 @@ public class MakeScoresSmp extends Task {
                 if (Integer.parseInt(content[1]) != 2) {
                     if (Integer.parseInt(content[1]) == 1) {
                         emailsClassified.add(temp);
+                        numberOfSpamEmails ++;
                     } else {
                         emailsClassified.add(temp);
+                        numberOfHamEmails ++;
                     }
                 } else {
                     emailsUnClassified.add(temp);
@@ -74,15 +76,15 @@ public class MakeScoresSmp extends Task {
                 for (int i = 0; i < wordsInCurrentEmail.length; i++) {
                    word = wordsInCurrentEmail[i].toLowerCase();
                    if(!word.equals("")) {
-                       if (!emailCurrent.words.containsKey(word)) {
-                           emailCurrent.words.put(word, 1.0);
+                       if (!emailCurrent.wordsMake.containsKey(word)) {
+                           emailCurrent.wordsMake.put(word, 1.0);
                        }
                        else {
-                           scorEmail = emailCurrent.words.get(word) + 1.0;
+                           scorEmail = emailCurrent.wordsMake.get(word) + 1.0;
                            if (maxEmailScore < scorEmail) {
                                maxEmailScore = scorEmail;
                            }
-                           emailCurrent.words.put(word, scorEmail);
+                           emailCurrent.wordsMake.put(word, scorEmail);
                        }
                    }
                 }
@@ -100,8 +102,17 @@ public class MakeScoresSmp extends Task {
                 totalWordCount.put(con[0], new Word(con[0],Double.parseDouble(con[1])));
             }
         }
+        for(Email i:emails) {
+            i.transferDataandMakeTFIDFscore(totalWordCount);
+        }
+        for(String i: totalWordCount.keySet()){
+            allWordsSelected.add(new tupleToSortWords(i, totalWordCount.get(i).getIDFScore()));
+        }
+        Collections.sort(allWordsSelected);
 
-
+        for(int i=0; i<(numberOfSpamEmails + numberOfHamEmails); i++){
+            allWords.add(totalWordCount.get(allWordsSelected.get(i).word));
+        }
 
         System.out.print("SS");
 

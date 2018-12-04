@@ -5,7 +5,7 @@
 //public class EmailClassifierSeq extends Task {
 //
 //
-//    ArrayList<Word> words;
+//    ArrayList<Word> wordsMake;
 //    ArrayList<Email> unClassifiedEmails;
 //    ArrayList<Email> classifiedEmails;
 //    NeighbourVbl neighbourVbl;
@@ -29,7 +29,7 @@
 //
 //            MakeScores ms = new MakeScores();
 //            ms.main(args);
-//            words = ms.getWords();
+//            wordsMake = ms.getWords();
 //            classifiedEmails = ms.getClassifiedEmails();
 //            unClassifiedEmails = ms.getUnClassifiedEmails();
 //            neighbourVbl = new NeighbourVbl(k);
@@ -37,7 +37,7 @@
 //            for (Email unclassified : unClassifiedEmails) {
 //                neighbourVbl.reset();
 //                for (Email email : classifiedEmails) {
-//                    double similarityScore = neighbourVbl.cosineSimilarity(email, unclassified, words);
+//                    double similarityScore = neighbourVbl.cosineSimilarity(email, unclassified, wordsMake);
 //                    neighbourVbl.addNeighbour(similarityScore, email);
 //
 //                }

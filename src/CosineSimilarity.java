@@ -8,7 +8,7 @@
 //public class CosineSimilarity {
 //
 //
-//    ArrayList<Word> words;
+//    ArrayList<Word> wordsMake;
 //    Email email1;
 //    Email email2;
 //    ArrayList<Pair<Email, Double>> neighbours;
@@ -30,7 +30,7 @@
 //        double e1Denominator = 0;
 //        double e2Denominator = 0;
 //
-//        for (Word word : words) {
+//        for (Word word : wordsMake) {
 //            double tf1 = e1.getTFIDFScore(word);
 //            double tf2 = e2.getTFIDFScore(word);
 //            numerator += (tf1 * tf2);
