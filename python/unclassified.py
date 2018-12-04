@@ -154,9 +154,9 @@ def remove_dirty(email, count):
     return msg
 
 
-def something():
+def something(num):
     emails = pd.read_csv("/home/cliffton/workspace/EmailData/data/enron/emails.csv/emails.csv")
-    output = open("/home/cliffton/workspace/EmailData/output/unclassified.csv", "w+")
+    output = open("/home/cliffton/workspace/EmailData/output/unclassified"+str(num)+".csv", "w+")
     count = 0
     all_emails = emails['message']
     all_emails.pop(0)
@@ -164,9 +164,9 @@ def something():
         line = remove_dirty(email, count)
         output.write(line)
         count+=1
-        if count == 5000:
+        if count == num:
             break
 
     output.close()
 
-something()
+something(100000)
