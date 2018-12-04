@@ -22,9 +22,9 @@ t = np.arange(1, 2, 3)
 # plt.subplot(223)
 # import pdb; pdb.set_trace()
 # plt.loglog([10,100,1000], [20,2000,2000], basex=10, basey=10)
-plt.plot([1,10,100], [1,50,100])
-plt.grid(True)
-plt.title('loglog base 2 on x')
+# plt.plot([1,10,100], [1,50,100])
+# plt.grid(True)
+# plt.title('loglog base 2 on x')
 
 # with errorbars: clip non-positive values
 # ax = plt.subplot(224)
@@ -38,4 +38,12 @@ plt.title('loglog base 2 on x')
 # ax.set_title('Errorbars go negative')
 
 
-plt.show()
+# plt.show()
+# 
+def me_plot(x,y):
+	xaxis = [ math.log(_,10) for _ in x]
+	yaxis = [ math.log(_,10) for _ in y]
+	plt.plot(xaxis, yaxis)
+	plt.grid(True)
+	plt.title('loglog base 10 on x & y')
+	plt.show()
