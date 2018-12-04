@@ -82,20 +82,7 @@ public class MakeIdfScore extends PjmrJob<TextId,String,String,LongVbl> {
 
         @Override
         public void finish() {
-            Writer writer = null;
-            try {
-                writer = new BufferedWriter(new OutputStreamWriter(
-                        new FileOutputStream("filename.csv")));
-                StringBuilder sb = new StringBuilder();
-                for(String i: allWords.keySet()){
-                    sb.append(i + "," + allWords.get(i).getIDFScore() + "\n");
-                }
-                writer.write(sb.toString());
-            } catch (IOException ex) {
-                // Report
-            } finally {
-                try {writer.close();} catch (Exception ex) {/*ignore*/}
-            }
+            
         }
     }
 }

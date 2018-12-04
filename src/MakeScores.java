@@ -85,6 +85,30 @@ public class MakeScores extends Task {
             }
             emailCurrent.makeTF(maxEmailScore);
         }
+        HashMap<String, Word> totalWords = new HashMap<>();
+        for (int j = 0; j < emails.size(); j++) {
+            emailCurrent = emails.get(j);
+            wordsInCurrentEmail = emailCurrent.getContent().split(" ");
+            String word;
+            double scorEmail, maxEmailScore = 0;
+            HashSet<String> record = new HashSet<>();
+            Word w;
+            for (int i = 0; i < wordsInCurrentEmail.length; i++) {
+                word = wordsInCurrentEmail[i].toLowerCase();
+                if (!record.contains(word)) {
+                    w = new Word(word);
+                    record.add(word);
+                    if (!totalWords.containsKey(word)) {
+                        totalWords.put(word, w);
+                    }
+                    w.setIDFScore(w.getIDFScore() + 1);
+                }
+            }
+        }
+        for(String i: totalWords.keySet()){
+            totalWords.get(i).makeIDF(numberOfEmails);
+        }
+
         System.out.println("s");
     }
 }
