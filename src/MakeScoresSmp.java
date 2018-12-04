@@ -17,16 +17,16 @@ public class MakeScoresSmp extends Task {
     private ArrayList<Email> emailsClassified;
     private ArrayList<Email> emailsUnClassified;
     private ArrayList<Email> emails;
-//    private String[] files = {
-//            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\ham.csv",
-//            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\spam.csv",
-//            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\unclassified.csv",
-//    };
     private String[] files = {
-            "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/ham.csv",
-            "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/spam.csv",
-            "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/unclassified100.csv"
+            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\ham.csv",
+            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\spam.csv",
+            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\unclassified.csv",
     };
+//    private String[] files = {
+//            "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/ham.csv",
+//            "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/spam.csv",
+//            "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/unclassified100.csv"
+//    };
     /**
      * PJMR job main program.
      *
@@ -89,5 +89,21 @@ public class MakeScoresSmp extends Task {
                 emailCurrent.makeTF(maxEmailScore);
                 }
         });
+        CSVFile = "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\idf1.csv";
+        BufferedReader br = new BufferedReader(new FileReader(CSVFile));
+        while ((line = br.readLine()) != null) {
+            content = line.split("\n");
+            String[] con;
+            Word wTemp;
+            for(String i:content){
+                con = i.split(split);
+                totalWordCount.put(con[0], new Word(con[0],Double.parseDouble(con[1])));
+            }
+        }
+
+
+
+        System.out.print("SS");
+
     }
 }

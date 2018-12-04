@@ -101,7 +101,7 @@ public class MakeScores extends Task {
                     if (!totalWords.containsKey(word)) {
                         totalWords.put(word, w);
                     }
-                    w.setIDFScore(w.getIDFScore() + 1);
+                    totalWords.get(word).setIDFScore(totalWords.get(word).getIDFScore() + 1);
                 }
             }
         }

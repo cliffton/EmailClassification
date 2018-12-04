@@ -14,10 +14,10 @@ public class Word{
     }
     Word(String word) {
         this.word = word;
-        this.IDFScore = 1;
+        this.IDFScore = 0;
     }
 
-    Word(String word, long IDFScore){
+    Word(String word, double IDFScore){
         this.word = word;
         this.IDFScore = IDFScore;
     }
@@ -32,8 +32,9 @@ public class Word{
     }
 
 
-    public void makeIDF(long number) {
+    public double makeIDF(long number) {
         this.IDFScore = log2(number / this.IDFScore);
+        return this.IDFScore;
     }
 
     double log2(double value) {
