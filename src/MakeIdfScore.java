@@ -13,23 +13,21 @@ public class MakeIdfScore extends PjmrJob<TextId,String,String,LongVbl> {
 //            "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/unclassified100.csv"
 //    };
 
-    private String[] files = {
-            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\ham.csv",
-            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\spam.csv",
-            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\unclassified.csv",
-    };
+//    private String[] files = {
+//            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\ham.csv",
+//            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\spam.csv",
+//            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\unclassified.csv",
+//    };
     public static HashMap<String, Word> allWords = new HashMap<>();
     public void main(String[] args) {
-        for (String i: files)
-            mapperTask()
-                    .source (new TextFileSource(i))
-                    .mapper (MyMapper.class);
-
-        reducerTask().reducer(MyReducer.class);
-
+        int NT = Math.max(threads(), 1);
+        for (int i = 0;i < args.length - 1; i++)
+            mapperTask("dr0")
+                    .source (new TextFileSource(args[i]))
+                    .mapper (NT, MyMapper.class);
+        reducerTask().reducer(MyReducer.class, args);
         startJob();
 
-        System.out.print("s");
     }
 
     private static void usage() {
@@ -49,12 +47,12 @@ public class MakeIdfScore extends PjmrJob<TextId,String,String,LongVbl> {
             String data[];
             int cactegory = Integer.parseInt(contents.split(",")[1]);
             data =  contents.split(",")[2].split(" ");
-            WordForIDF w;
+            Word w;
             HashSet<String> record = new HashSet<>();
             combiner.add("", new LongVbl.Sum (1L));
             for(String i: data) {
                 if(!record.contains(i) && !i.equals("")) {
-                    w = new WordForIDF(i);
+                    w = new Word(i);
                     w.category = cactegory;
                     combiner.add(i, ONE);
                     record.add(i);
@@ -74,6 +72,11 @@ public class MakeIdfScore extends PjmrJob<TextId,String,String,LongVbl> {
         Writer writer = null;
         StringBuilder sb;
         LongVbl count;
+        String s;
+        @Override
+        public void start(String[] strings) {
+            s = strings[3];
+        }
 
         @Override
         public void reduce(String key, LongVbl value) // Number of requests
@@ -91,7 +94,7 @@ public class MakeIdfScore extends PjmrJob<TextId,String,String,LongVbl> {
         public void finish() {
             try {
                 writer = new BufferedWriter(new OutputStreamWriter(
-                        new FileOutputStream("idf1.csv")));
+                        new FileOutputStream(s)));
                 sb = new StringBuilder();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
