@@ -48,7 +48,7 @@ public class MakeScoresSmp extends Task {
     public void main(String[] args){
 
     }
-        public void letsGo() throws IOException {
+        public void letsGo(String args[]) throws IOException {
         int numberOfSpamEmails = 0, numberOfHamEmails = 0;
         emails = new ArrayList<>();
         emailsClassified = new ArrayList<>();
@@ -61,7 +61,7 @@ public class MakeScoresSmp extends Task {
         HashMap<String, Word> totalClassifiedWordCount = new HashMap<>();
         Email temp;
         String line, CSVFile, content[], split = ",";
-        for (int i = 0; i < files.length; i++) {
+        for (int i = 0; i < args.length - 1; i++) {
             CSVFile = files[i];
             BufferedReader br = new BufferedReader(new FileReader(CSVFile));
             while ((line = br.readLine()) != null) {
@@ -110,7 +110,7 @@ public class MakeScoresSmp extends Task {
 //        CSVFile = "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\idf1.csv";
 
 
-        CSVFile = "idf1.csv";
+        CSVFile = args[3];
         BufferedReader br = new BufferedReader(new FileReader(CSVFile));
         ArrayList<tupleToSortWords> allwordsWithIDF = new ArrayList<>();
         while ((line = br.readLine()) != null) {
@@ -136,10 +136,6 @@ public class MakeScoresSmp extends Task {
         for (int i = 0; i < numberOfHamEmails + numberOfSpamEmails; i++) {
             allWords.add(totalWordCount.get(allWordsSelected.get(allWordsSelected.size() - 1 - i).word));
         }
-
-
-        System.out.print("SS");
-
     }
 
 

@@ -24,7 +24,7 @@ public class EmailClassifierSeq extends Task {
 
 //            if (args.length != 1) usage();
 
-            int k = 100;
+            int k = Integer.parseInt(args[0]);
 //            int k = Integer.parseInt(args[0]);
 
 //            MakeScores ms = new MakeScores();
@@ -35,7 +35,7 @@ public class EmailClassifierSeq extends Task {
 
             MakeScoresSmp ms = new MakeScoresSmp();
             //ms.main(args);
-            ms.letsGo();
+            ms.letsGo(new String[]{args[1], args[2], args[3], args[4]});
             wordsMake = ms.getWords();
             classifiedEmails = ms.getClassifiedEmails();
             unClassifiedEmails = ms.getUnClassifiedEmails();
