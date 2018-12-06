@@ -4,7 +4,6 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 
 public class Email {
-    PrintWriter pw;
     HashMap<String, Double> wordsMake;
     HashMap<Word, Double> words = new HashMap<>();
     double maxTFScore;
@@ -16,7 +15,6 @@ public class Email {
         this.content = content;
         this.category = category;
         this.maxTFScore = 0;
-        pw = new PrintWriter(new File("test.csv"));
     }
 
     public void makeTF(double max) {
@@ -53,7 +51,12 @@ public class Email {
 
     public void transferDataandMakeTFIDFscore(HashMap<String, Word> totalWordCount) {
         for (String i : wordsMake.keySet()) {
-            words.put(totalWordCount.get(i), wordsMake.get(i) * totalWordCount.get(i).getIDFScore());
+            try{
+                words.put(totalWordCount.get(i), wordsMake.get(i) * totalWordCount.get(i).getIDFScore());
+            }
+            catch(Exception e){
+
+            }
         }
     }
 }

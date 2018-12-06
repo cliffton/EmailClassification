@@ -19,7 +19,7 @@ public class MakeScoresSmp extends Task {
     private ArrayList<Email> emails;
 
 
-        private String[] files = {
+    private String[] files = {
             "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\ham.csv",
             "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\spam.csv",
             "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\unclassified.csv"
@@ -45,10 +45,11 @@ public class MakeScoresSmp extends Task {
 //    };
 
 
-    public void main(String[] args){
+    public void main(String[] args) {
 
     }
-        public void letsGo(String args[]) throws IOException {
+
+    public void letsGo(String args[]) throws IOException {
         int numberOfSpamEmails = 0, numberOfHamEmails = 0;
         emails = new ArrayList<>();
         emailsClassified = new ArrayList<>();
@@ -62,7 +63,7 @@ public class MakeScoresSmp extends Task {
         Email temp;
         String line, CSVFile, content[], split = ",";
         for (int i = 0; i < args.length - 1; i++) {
-            CSVFile = files[i];
+            CSVFile = args[i];
             BufferedReader br = new BufferedReader(new FileReader(CSVFile));
             while ((line = br.readLine()) != null) {
                 numberOfEmails++;
@@ -153,7 +154,11 @@ public class MakeScoresSmp extends Task {
 
 
     public void writeBackToCSV(ArrayList<Email> result) throws FileNotFoundException {
-        PrintWriter pw = new PrintWriter(new File("/home/cliffton/workspace/EmailClassification/dataFiles/classifiedTheUnclassified.csv"));
+        PrintWriter pw = new PrintWriter(
+                new File(
+                        "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/" + result.size() + "/classifiedTheUnclassified.csv"
+                )
+        );
 //        PrintWriter pw = new PrintWriter(new File(("/home/stu12/s12/cf6715/emails/dataFiles/classifiedTheUnclassified.csv")));
 //        PrintWriter pw = new PrintWriter(new File(("/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/classifiedTheUnclassified.csv")));
         StringBuilder sb = new StringBuilder();

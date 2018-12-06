@@ -68,7 +68,7 @@ public class EmailClassifierSmp extends Task {
 
                 unclassified.category = category;
                 neighbourVbl.reset();
-                System.out.flush();
+                //System.out.flush();
                 count++;
             }
             ms.writeBackToCSV(unClassifiedEmails);
