@@ -60,6 +60,7 @@ public class EmailClassifierSmp extends Task {
                 System.out.println("Cat " + category);
             }
 
+
             unclassified.category = category;
             neighbourVbl.reset();
             System.out.flush();

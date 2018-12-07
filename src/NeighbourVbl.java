@@ -1,15 +1,11 @@
 import edu.rit.pj2.Vbl;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.EnumMap;
 
 public class NeighbourVbl implements Vbl {
 
     public ArrayList<Pair<Email, Double>> neighbours = new ArrayList<>();
-    //    public ArrayList<Pair<Email, Double>> tmpArray = new ArrayList<>();
     private int k = 0;
     public double[] similarityScores;
 
@@ -77,9 +73,6 @@ public class NeighbourVbl implements Vbl {
         for (Word word : words) {
             double tf1 = e1.getTFIDFScore(word);
             double tf2 = e2.getTFIDFScore(word);
-            if(tf1 !=0 && tf2 !=0){
-//                System.out.println("here");
-            }
             numerator += (tf1 * tf2);
             e1Denominator += (tf1 * tf1);
             e2Denominator += (tf2 * tf2);
@@ -169,16 +162,16 @@ public class NeighbourVbl implements Vbl {
     }
 
 
-    public ArrayList<Pair<Email, Double>> getTopK(ArrayList<Pair<Email, Double>> candidates){
+    public ArrayList<Pair<Email, Double>> getTopK(ArrayList<Pair<Email, Double>> candidates) {
 
         ArrayList<Pair<Email, Double>> topK = new ArrayList<>();
 
-        for(int i = 0; i < k; i++){
+        for (int i = 0; i < k; i++) {
             double max = Double.MIN_VALUE;
             int ans = 0;
-            for(int j = 0; i < candidates.size(); j++){
+            for (int j = 0; i < candidates.size(); j++) {
                 Pair<Email, Double> candidate = candidates.get(j);
-                if(candidate.getValue() > max){
+                if (candidate.getValue() > max) {
                     max = candidate.getValue();
                     ans = j;
                 }

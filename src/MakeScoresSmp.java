@@ -21,6 +21,7 @@ public class MakeScoresSmp extends Task {
     public void main(String[] args){
 
     }
+
     public void letsGo(String args[]) throws IOException {
         int numberOfSpamEmails = 0, numberOfHamEmails = 0;
         emails = new ArrayList<>();

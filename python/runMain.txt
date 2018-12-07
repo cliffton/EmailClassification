@@ -1,0 +1,53 @@
+rm -rf *.class
+rm -rf project.jar
+javac *.java
+jar -cf project.jar *.class
+
+
+nohup java pj2 jar=project.jar cores=1 debug=makespan EmailClassifierSmp 100 "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/ham.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/spam.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/unclassified500.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/scr2/idf500.csv" > results/500/1.out &
+
+
+nohup java pj2 jar=project.jar cores=2 debug=makespan EmailClassifierSmp 100 "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/ham.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/spam.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/unclassified500.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/scr2/idf500.csv" > results/500/2.out &
+
+
+
+nohup java pj2 jar=project.jar cores=3 debug=makespan EmailClassifierSmp 100 "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/ham.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/spam.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/unclassified500.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/scr2/idf500.csv" > results/500/3.out &
+
+
+
+nohup java pj2 jar=project.jar cores=4 debug=makespan EmailClassifierSmp 100 "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/ham.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/spam.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/unclassified500.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/scr2/idf500.csv" > results/500/4.out &
+
+
+
+nohup java pj2 jar=project.jar cores=5 debug=makespan EmailClassifierSmp 100 "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/ham.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/spam.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/unclassified500.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/scr2/idf500.csv" > results/500/5.out &
+
+
+
+nohup java pj2 jar=project.jar cores=6 debug=makespan EmailClassifierSmp 100 "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/ham.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/spam.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/unclassified500.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/scr2/idf500.csv" > results/500/6.out &
+
+
+nohup java pj2 jar=project.jar cores=7 debug=makespan EmailClassifierSmp 100 "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/ham.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/spam.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/unclassified500.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/scr2/idf500.csv" > results/500/7.out &
+
+
+
+nohup java pj2 jar=project.jar cores=8 debug=makespan EmailClassifierSmp 100 "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/ham.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/spam.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/unclassified500.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/scr2/idf500.csv" > results/500/8.out &
+
+
+
+nohup java pj2 jar=project.jar cores=9 debug=makespan EmailClassifierSmp 100 "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/ham.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/spam.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/unclassified500.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/scr2/idf500.csv" > results/500/9.out &
+
+
+
+nohup java pj2 jar=project.jar cores=10 debug=makespan EmailClassifierSmp 100 "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/ham.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/spam.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/unclassified500.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/scr2/idf500.csv" > results/500/10.out &
+
+
+
+nohup java pj2 jar=project.jar cores=11 debug=makespan EmailClassifierSmp 100 "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/ham.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/spam.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/unclassified500.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/scr2/idf500.csv" > results/500/11.out &
+
+
+
+nohup java pj2 jar=project.jar cores=12 debug=makespan EmailClassifierSmp 100 "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/ham.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/spam.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/unclassified500.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/scr2/idf500.csv" > results/500/12.out &
+
+
+
+nohup java pj2 jar=project.jar cores=12 debug=makespan EmailClassifierSmp 100 "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/ham.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/spam.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/unclassified500.csv" "/home/stu2/s18/nhk8621/Courses/Parallel/project/scr2/idf500.csv" > results/500/12.out &
