@@ -6,9 +6,11 @@ import java.util.HashSet;
 
 public class MakeIdfScoreSeq extends Task {
 
-    commonFunctions cf = null;
+    private commonFunctions cf = null;
     @Override
     public void main(String[] args) throws Exception {
+
+        // This  is a library used for the common functions in the
         cf = new commonFunctions();
 
         int numberOfEmails = 0, numberOfSpamEmails = 0 , numberOfHamEmails = 0;
@@ -23,38 +25,10 @@ public class MakeIdfScoreSeq extends Task {
         // The array list of the un-classified  emails.
         ArrayList<Email> emailsUnClassified = new ArrayList<>();
 
-        Email temp;
-        String line, CSVFile, content[], split = ",";
+        CountOfEmails count = cf.createRecorde(args, emails, emailsClassified, emailsUnClassified);
+        numberOfEmails = count.getNumberOfEmails();
 
-        // This goes throug all the command line arguments
-        for (int i = 0; i < args.length - 1; i++) {
-            CSVFile = args[i];
-            BufferedReader br = new BufferedReader(new FileReader(CSVFile));
 
-            // This loop passes through all the lines in the filse and
-            // processes it.
-            while ((line = br.readLine()) != null) {
-                numberOfEmails++;
-                content = line.split(split);
-
-                // Create a new email object
-                temp = new Email(content[2], Integer.parseInt(content[1]));
-                emails.add(temp);
-
-                // Put category.
-                if (Integer.parseInt(content[1]) != 2) {
-                    if (Integer.parseInt(content[1]) == 1) {
-                        emailsClassified.add(temp);
-                        numberOfSpamEmails++;
-                    } else {
-                        emailsClassified.add(temp);
-                        numberOfHamEmails++;
-                    }
-                } else {
-                    emailsUnClassified.add(temp);
-                }
-            }
-        }
         // Tos save the IDF score for all the words
         HashMap<String, Word> totalWords = new HashMap<>();
         String[] wordsInCurrentEmail;

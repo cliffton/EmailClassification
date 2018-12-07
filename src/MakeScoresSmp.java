@@ -3,7 +3,6 @@ import edu.rit.pj2.Task;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 
 public class MakeScoresSmp extends Task {
@@ -18,11 +17,14 @@ public class MakeScoresSmp extends Task {
     private ArrayList<Email> emailsUnClassified;
     private ArrayList<Email> emails;
 
-    public void main(String[] args){
-
+    public void main(String[] args) throws IOException {
+        FindImportantWords(args);
     }
 
-    public void letsGo(String args[]) throws IOException {
+    public void FindImportantWords(String args[]) throws IOException {
+        commonFunctions cf = new commonFunctions();
+
+
         int numberOfSpamEmails = 0, numberOfHamEmails = 0;
         emails = new ArrayList<>();
         emailsClassified = new ArrayList<>();
@@ -30,30 +32,10 @@ public class MakeScoresSmp extends Task {
         allWords = new ArrayList<>();
         ArrayList<tupleToSortWords> allWordsSelected = new ArrayList<>();
         HashMap<String, Word> totalWordCount = new HashMap<>();
-        Email temp;
-        String line, CSVFile, content[], split = ",";
-        for (int i = 0; i < args.length - 1; i++) {
-            CSVFile = args[i];
-            BufferedReader br = new BufferedReader(new FileReader(CSVFile));
-            while ((line = br.readLine()) != null) {
-                numberOfEmails++;
-                content = line.split(split);
-                temp = new Email(content[2], Integer.parseInt(content[1]));
-                emails.add(temp);
-                if (Integer.parseInt(content[1]) != 2) {
-                    if (Integer.parseInt(content[1]) == 1) {
-                        emailsClassified.add(temp);
-                        numberOfSpamEmails++;
-                    } else {
-                        emailsClassified.add(temp);
-                        numberOfHamEmails++;
-                    }
-                } else {
-                    emailsUnClassified.add(temp);
-                }
-            }
-        }
-
+        CountOfEmails count = cf.createRecorde(args, emails, emailsClassified, emailsUnClassified);
+        numberOfEmails = count.getNumberOfEmails();
+        numberOfSpamEmails = count.getNumberOfSpamEmails();
+        numberOfHamEmails = count.getNumberOfHamEmails();
         parallelFor(0, emails.size() - 1).exec(new Loop() {
             @Override
             public void run(int j) {
@@ -80,33 +62,9 @@ public class MakeScoresSmp extends Task {
             }
         });
 
+        cf.readFromIDFFileAndSelect(args, totalWordCount,allWordsSelected, emails,
+                numberOfHamEmails, numberOfSpamEmails, allWords);
 
-        CSVFile = args[3];
-        BufferedReader br = new BufferedReader(new FileReader(CSVFile));
-        ArrayList<tupleToSortWords> allwordsWithIDF = new ArrayList<>();
-        while ((line = br.readLine()) != null) {
-            content = line.split("\n");
-            String[] con;
-            Word wTemp;
-            for (String i : content) {
-                con = i.split(split);
-                wTemp = new Word(con[0], Double.parseDouble(con[1]));
-                totalWordCount.put(con[0], wTemp);
-                allWordsSelected.add(new tupleToSortWords(con[0], Double.parseDouble(con[1])));
-            }
-        }
-        Collections.sort(allWordsSelected);
-
-        for (Email i : emails) {
-            i.transferDataandMakeTFIDFscore(totalWordCount);
-        }
-        for (int i = 0; i < numberOfHamEmails + numberOfSpamEmails; i++) {
-            allWords.add(totalWordCount.get(allWordsSelected.get(i).word));
-        }
-
-        for (int i = 0; i < numberOfHamEmails + numberOfSpamEmails; i++) {
-            allWords.add(totalWordCount.get(allWordsSelected.get(allWordsSelected.size() - 1 - i).word));
-        }
     }
 
 
@@ -122,20 +80,5 @@ public class MakeScoresSmp extends Task {
         return emailsUnClassified;
     }
 
-
-    public void writeBackToCSV(ArrayList<Email> result) throws FileNotFoundException {
-        PrintWriter pw = new PrintWriter(new File(("/home/stu2/s18/nhk8621/tardis/outputs/classifiedTheUnclassified-"+result.size()+".csv")));
-        StringBuilder sb = new StringBuilder();
-        int counter = 0;
-        String delimiter = ",";
-        for (Email e : result) {
-            sb.append(counter).append(delimiter).
-                    append(e.getCategory()).append(delimiter).
-                    append(e.getContent()).append("\n");
-        }
-        pw.write(sb.toString());
-        pw.close();
-
-    }
 
 }

@@ -30,24 +30,6 @@ public class NeighbourVbl implements Vbl {
     }
 
 
-//    public void addNeighbour(double similarityScore, Email email) {
-//        if (neighbours.size() < k) {
-//            neighbours.add(new Pair<Email, Double>(email, similarityScore));
-//            return;
-//        }
-//
-//
-//        if (similarityScore > minSimilarityScore) {
-//
-//
-//            Collections.sort(neighbours, new EmailComparator());
-//            neighbours.remove(0);
-//            minSimilarityScore = neighbours.get(0).getValue();
-//            neighbours.add(new Pair<Email, Double>(email, similarityScore));
-//        }
-//
-//    }
-
     public void addNeighbour(double similarityScore, Email email) {
         neighbours.add(new Pair<Email, Double>(email, similarityScore));
         Collections.sort(neighbours, new EmailComparator());
@@ -56,8 +38,6 @@ public class NeighbourVbl implements Vbl {
             tmpArray.addAll(neighbours.subList(0, k));
             neighbours = tmpArray;
         }
-        //neighbours = System.arraycopy(neighbours, 0, tmpArray, 0, k-1);
-        //System.arraycopy(source_arr, sourcePos, dest_arr,destPos, len);
 
     }
 
@@ -86,51 +66,6 @@ public class NeighbourVbl implements Vbl {
 
         return result;
     }
-
-
-//    public int voting() {
-//        int spamCount = 0;
-//        int hamCount = 0;
-//
-//        for (int category : categories) {
-//            if (category == 0) {
-//                hamCount++;
-//            } else {
-//                spamCount++;
-//            }
-//        }
-//
-//
-//        if (spamCount > hamCount) {
-//            return 1;
-//        }
-//        return 0;
-//
-//    }
-
-//    public int voting() {
-//        int spamCount = 0;
-//        int hamCount = 0;
-//        int count = 0;
-//        for (int i = neighbours.size() - 1; i >= 0 & count < k; i--, count++) {
-//
-//            Email neighbour = neighbours.get(i).getKey();
-//
-//            if (neighbour.category == 0) {
-//                hamCount++;
-//            } else {
-//                spamCount++;
-//            }
-//
-//        }
-//
-//
-//        if (spamCount > hamCount) {
-//            return 1;
-//        }
-//        return 0;
-//
-//    }
 
     public int voting() {
         int spamCount = 0;
@@ -161,11 +96,8 @@ public class NeighbourVbl implements Vbl {
 
     }
 
-
     public ArrayList<Pair<Email, Double>> getTopK(ArrayList<Pair<Email, Double>> candidates) {
-
         ArrayList<Pair<Email, Double>> topK = new ArrayList<>();
-
         for (int i = 0; i < k; i++) {
             double max = Double.MIN_VALUE;
             int ans = 0;
@@ -179,9 +111,7 @@ public class NeighbourVbl implements Vbl {
             }
             topK.add(candidates.get(ans));
             candidates.remove(ans);
-
         }
-
         return topK;
     }
 
@@ -189,58 +119,13 @@ public class NeighbourVbl implements Vbl {
         ArrayList<Pair<Email, Double>> result = new ArrayList<Pair<Email, Double>>();
         result.addAll(this.neighbours);
         result.addAll(((NeighbourVbl) vbl).neighbours);
-//        System.out.println("neighnots " + result.size() + " | " + n1.hashCode());
-//        System.out.flush();
         Collections.sort(result, new EmailComparator());
-        //this.neighbours = new ArrayList<Pair<Email, Double>>();
         if (result.size() < k) {
             this.neighbours = result;
         } else {
-//            this.neighbours = this.getTopK(result);
             this.neighbours.addAll(result.subList(0, k));
         }
-
-        //this.neighbours = result;
     }
-
-
-//    @Override
-//    public void set(Vbl vbl) {
-//        ArrayList<Pair<Double, Integer>> result = new ArrayList<>();
-//        double[] tmpScores = ((NeighbourVbl) vbl).similarityScores;
-//        int[] tmpCategories = ((NeighbourVbl) vbl).categories;
-//
-//
-//        int left = 0;
-//        int right = 0;
-//        while (left < k && right < k && result.size() < k) {
-//
-//            if (this.similarityScores[left] < tmpScores[right]) {
-//
-//                result.add(new Pair<Double, Integer>(this.similarityScores[left], this.categories[left]));
-//                left++;
-//
-//            } else {
-//
-//                result.add(new Pair<Double, Integer>(tmpScores[right], tmpCategories[right]));
-//                right++;
-//
-//            }
-//        }
-//
-//        // while (left < k) {
-//        //    result.add(new Pair<Double, Integer>(this.similarityScores[left], this.categories[left]));
-//        //    left++;
-//        // }
-//
-//
-//        // while (right < k) {
-//        //    result.add(new Pair<Double, Integer>(tmpScores[right], tmpCategories[right]));
-//        //    right++;
-//        // }
-//
-//
-//    }
 
     @Override
     public void reduce(Vbl vbl) {

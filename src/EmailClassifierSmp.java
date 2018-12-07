@@ -5,11 +5,20 @@ import java.util.ArrayList;
 
 public class EmailClassifierSmp extends Task {
 
-    ArrayList<Word> wordsMake;
-    ArrayList<Email> unClassifiedEmails;
-    ArrayList<Email> classifiedEmails;
-    NeighbourVbl neighbourVbl;
-    Email unclassified;
+    // a library of common functions to reduce code repeat
+    commonFunctions cf = new commonFunctions();
+
+    // This has the records of all the words selected int after the
+    // TF-IDf phase.
+    private ArrayList<Word> wordsMake;
+
+    // A list of the classified email objects.
+    private ArrayList<Email> classifiedEmails;
+
+    private NeighbourVbl neighbourVbl;
+
+    // A list of the un-classified email objects.
+    private Email unclassified;
 
     /**
      * Main Program
@@ -18,23 +27,45 @@ public class EmailClassifierSmp extends Task {
      * @throws Exception
      */
     public void main(String[] args) throws Exception {
-        int k = Integer.parseInt(args[0]);
-        MakeScoresSmp ms = new MakeScoresSmp();
-        ms.letsGo(new String[]{args[1], args[2], args[3], args[4]});
-        wordsMake = ms.getWords();
-        classifiedEmails = ms.getClassifiedEmails();
-        unClassifiedEmails = ms.getUnClassifiedEmails();
+        int k = 3;
+
+        if(args.length < 4) usage();
+        try {
+            k = Integer.parseInt(args[0]);
+        } catch (Exception e){
+            usage();
+        }
+        if(args.length < 4) usage();
+        // This is a parallel approach to finding the TF-IDF score.
+        MakeScoresSmp makeTFIDFScore = new MakeScoresSmp();
+        makeTFIDFScore.FindImportantWords(new String[]{args[1], args[2], args[3], args[4]});
+
+        // The highest selected score.
+        wordsMake = makeTFIDFScore.getWords();
+
+        // The record of all the classified emails.
+        classifiedEmails = makeTFIDFScore.getClassifiedEmails();
+
+        // The record of all the un-classified emails.
+        ArrayList<Email> unClassifiedEmails = makeTFIDFScore.getUnClassifiedEmails();
+
+        // The size of the classified emails
         int N = classifiedEmails.size();
 
         int count = 0;
+
+        // This loop iterates though all the unclassified emails.
         while (count < unClassifiedEmails.size()) {
 
+            // Unclassified email to classify
             unclassified = unClassifiedEmails.get(count);
+
+            // VBl for neighbours of the email
             neighbourVbl = new NeighbourVbl(k);
             neighbourVbl.reset();
+
+            // Parallel For loop to find the nearest neighbour with all the  classified emails
             parallelFor(0, N - 1).exec(new Loop() {
-
-
                 NeighbourVbl thrNeighbourVbl;
 
                 public void start() {
@@ -44,38 +75,44 @@ public class EmailClassifierSmp extends Task {
 
 
                 public void run(int i) {
+
+                    // get the classified email with which the distance needs to be found out.
                     Email email = classifiedEmails.get(i);
+
+                    // Similarity score between unclassified email and the classified email.
                     double similarityScore = thrNeighbourVbl.cosineSimilarity(email, unclassified, wordsMake);
                     thrNeighbourVbl.addNeighbour(similarityScore, email);
                 }
 
             });
+
+            // Find the nearest neighbours and classify the unclassified email
             int category = neighbourVbl.voting();
-            if (category == 1) {
-
-               System.out.println("Cat " + category + " Email = " + unclassified.content);
-            } else {
-                System.out.println("Cat " + category);
-            }
-
-
-            unclassified.category = category;
+            unclassified.setCategory(category);
+            System.out.println(unclassified.category+" " + unclassified.content);
             neighbourVbl.reset();
             System.out.flush();
             count++;
         }
-        ms.writeBackToCSV(unClassifiedEmails);
-
-
+        if(args.length > 5) {
+            cf.output(unClassifiedEmails, args[5]);
+        }
+        else {
+            cf.output(unClassifiedEmails, "UnclassifyTheClassified.csv");
+        }
     }
-
 
     /**
      * Print a usage message and exit.
      */
     private static void usage() {
-        System.err.println("Usage: java pj2 LargestTriangleSeq \"<ctor>\"");
-        System.err.println("<ctor> = PointSpec constructor expression");
+        System.err.println(
+                "java pj2 jar=<jar> threads=<NT> EmailClassifierSmp <HAM> <SPAM> <UNCLASSIFIED> <IDF>\n" +
+                "a. <HAM> The location of the classified Ham file.\n" +
+                "b. <SPAM> The location of the classified SPAM file.\n" +
+                "c. <UNCLASSIFIED> The location of the unclassified file.\n" +
+                "d. <IDF> The location of the IDF file where the results of the computed IDF's are stored.\n"
+        );
         terminate(1);
     }
 
