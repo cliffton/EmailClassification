@@ -23,8 +23,8 @@ public class EmailClassifierSmp extends Task {
 
 //            if (args.length != 1) usage();
 
+            // Number of neighbours to consider
             int k = Integer.parseInt(args[0]);
-//            int k = Integer.parseInt(args[0]);
             MakeScoresSmp ms = new MakeScoresSmp();
             //ms.main(args);
             ms.letsGo(new String[]{args[1], args[2], args[3], args[4]});
@@ -32,6 +32,7 @@ public class EmailClassifierSmp extends Task {
             classifiedEmails = ms.getClassifiedEmails();
             unClassifiedEmails = ms.getUnClassifiedEmails();
 
+            // Number of emails
             int N = classifiedEmails.size();
 
             int count = 0;
@@ -59,18 +60,12 @@ public class EmailClassifierSmp extends Task {
 
                 });
                 int category = neighbourVbl.voting();
-//                if (category == 1) {
-
-//                    System.out.println("Cat " + category + " Email = " + unclassified.content);
-//                } else {
-//                    System.out.println("Cat " + category);
-//                }
-
                 unclassified.category = category;
                 neighbourVbl.reset();
-                //System.out.flush();
                 count++;
             }
+
+            // Output.
             ms.writeBackToCSV(unClassifiedEmails);
 
 
