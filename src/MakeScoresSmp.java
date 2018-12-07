@@ -75,7 +75,8 @@ public class MakeScoresSmp extends Task {
                         }
                     }
                 }
-                emailCurrent.makeTF(maxEmailScore);
+                emailCurrent.setMaxTFScore(maxEmailScore);
+                emailCurrent.makeTF();
             }
         });
 

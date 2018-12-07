@@ -77,7 +77,8 @@ public class MakeScores extends Task {
                     }
                 }
             }
-            emailCurrent.makeTF(maxEmailScore);
+            emailCurrent.setMaxTFScore(maxEmailScore);
+            emailCurrent.makeTF();
         }
 
         CSVFile = args[3];
