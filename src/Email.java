@@ -45,7 +45,6 @@ public class Email {
         if (words.get(word) == null) {
             return 0.0;
         }
-
         return words.get(word);
     }
 
