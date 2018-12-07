@@ -1,13 +1,13 @@
-// ############################################
+// ##############################################################
+//
 // This file is a class method to store the data for
 // every email that is processed
 //
 // Autjor: Nikhil Keswaney, Cliffton Fernandes
 // Last Modified: 07-Dec-2018
-// ############################################
+//
+// ##############################################################
 
-
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 /**
@@ -109,7 +109,11 @@ public class Email {
         return words.get(word);
     }
 
-    
+    /**
+     * This method is used for making the TF-IDF score by using the IDF score from
+     * total WordCount.
+     * @param totalWordCount This is a hashmap for the IDF score of the words
+     */
     public void transferDataandMakeTFIDFscore(HashMap<String, Word> totalWordCount) {
 
         for (String i : wordsMake.keySet()) {
