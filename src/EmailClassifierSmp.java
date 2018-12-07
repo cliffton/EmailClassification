@@ -20,12 +20,10 @@ public class EmailClassifierSmp extends Task {
     public void main(String[] args) throws Exception {
         int k = Integer.parseInt(args[0]);
         MakeScoresSmp ms = new MakeScoresSmp();
-        //ms.main(args);
         ms.letsGo(new String[]{args[1], args[2], args[3], args[4]});
         wordsMake = ms.getWords();
         classifiedEmails = ms.getClassifiedEmails();
         unClassifiedEmails = ms.getUnClassifiedEmails();
-        //System.out.println("works");
         int N = classifiedEmails.size();
 
         int count = 0;

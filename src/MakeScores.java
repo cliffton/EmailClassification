@@ -1,9 +1,8 @@
 import edu.rit.pj2.Task;
-
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 
 public class MakeScores extends Task {
     private static void usage() {
@@ -15,32 +14,25 @@ public class MakeScores extends Task {
     private ArrayList<Email> emailsClassified;
     private ArrayList<Email> emailsUnClassified;
     private ArrayList<Email> emails;
-    private String[] files = {
-            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\ham.csv",
-            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\spam.csv",
-            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\unclassified.csv",
-    };
-    /**
-     * PJMR job main program.
-     *
-     * @param args Command line arguments.
-     */
+
     public void main
-    (String[] args) throws IOException {
-        int numberOfEmails = 0, numberOfSpamEmails, numberOfHamEmails;
+    (String[] args) throws IOException {}
+
+    public void FindImportantWords(String args[]) throws IOException {
+
+        int numberOfEmails = 0, numberOfSpamEmails = 0 , numberOfHamEmails = 0;
         emails = new ArrayList<>();
         emailsClassified = new ArrayList<>();
         emailsUnClassified = new ArrayList<>();
         allWords = new ArrayList<>();
-        ArrayList<tupleToSortWords> spamWords = new ArrayList<>();
-        ArrayList<tupleToSortWords> hamWords = new ArrayList<>();
-        StringBuilder sb = new StringBuilder();
+
+        ArrayList<tupleToSortWords> allWordsSelected = new ArrayList<>();
         HashMap<String, Word> totalWordCount = new HashMap<>();
-        HashMap<String, Word> totalClassifiedWordCount = new HashMap<>();
         Email temp;
         String line, CSVFile, content[], split = ",";
-        for (int i = 0; i < files.length; i++) {
-            CSVFile = files[i];
+
+        for (int i = 0; i < args.length - 1; i++) {
+            CSVFile = args[i];
             BufferedReader br = new BufferedReader(new FileReader(CSVFile));
             while ((line = br.readLine()) != null) {
                 numberOfEmails++;
@@ -50,17 +42,21 @@ public class MakeScores extends Task {
                 if (Integer.parseInt(content[1]) != 2) {
                     if (Integer.parseInt(content[1]) == 1) {
                         emailsClassified.add(temp);
+                        numberOfSpamEmails++;
                     } else {
                         emailsClassified.add(temp);
+                        numberOfHamEmails++;
                     }
                 } else {
                     emailsUnClassified.add(temp);
                 }
             }
         }
+
         Email emailCurrent;
         String[] wordsInCurrentEmail;
         Word WordInEmail;
+
         for (int j = 0; j < emails.size(); j++) {
             emailCurrent = emails.get(j);
             wordsInCurrentEmail = emailCurrent.getContent().split(" ");
@@ -83,30 +79,60 @@ public class MakeScores extends Task {
             }
             emailCurrent.makeTF(maxEmailScore);
         }
-        HashMap<String, Word> totalWords = new HashMap<>();
-        for (int j = 0; j < emails.size(); j++) {
-            emailCurrent = emails.get(j);
-            wordsInCurrentEmail = emailCurrent.getContent().split(" ");
-            String word;
-            double scorEmail, maxEmailScore = 0;
-            HashSet<String> record = new HashSet<>();
-            Word w;
-            for (int i = 0; i < wordsInCurrentEmail.length; i++) {
-                word = wordsInCurrentEmail[i].toLowerCase();
-                if (!record.contains(word)) {
-                    w = new Word(word);
-                    record.add(word);
-                    if (!totalWords.containsKey(word)) {
-                        totalWords.put(word, w);
-                    }
-                    totalWords.get(word).setIDFScore(totalWords.get(word).getIDFScore() + 1);
-                }
+
+        CSVFile = args[3];
+        BufferedReader br = new BufferedReader(new FileReader(CSVFile));
+
+        while ((line = br.readLine()) != null) {
+            content = line.split("\n");
+            String[] con;
+            Word wTemp;
+            for (String i : content) {
+                con = i.split(split);
+                wTemp = new Word(con[0], Double.parseDouble(con[1]));
+                totalWordCount.put(con[0], wTemp);
+                allWordsSelected.add(new tupleToSortWords(con[0], Double.parseDouble(con[1])));
             }
         }
-        for(String i: totalWords.keySet()){
-            totalWords.get(i).makeIDF(numberOfEmails);
+        Collections.sort(allWordsSelected);
+
+        for (Email i : emails) {
+            i.transferDataandMakeTFIDFscore(totalWordCount);
+        }
+        for (int i = 0; i < numberOfHamEmails + numberOfSpamEmails; i++) {
+            allWords.add(totalWordCount.get(allWordsSelected.get(i).word));
         }
 
-        System.out.println("s");
+        for (int i = 0; i < numberOfHamEmails + numberOfSpamEmails; i++) {
+            allWords.add(totalWordCount.get(allWordsSelected.get(allWordsSelected.size() - 1 - i).word));
+        }
     }
+    public ArrayList<Word> getWords() {
+        return allWords;
+    }
+
+    public ArrayList<Email> getClassifiedEmails() {
+        return emailsClassified;
+    }
+
+    public ArrayList<Email> getUnClassifiedEmails() {
+        return emailsUnClassified;
+    }
+
+
+    public void writeBackToCSV(ArrayList<Email> result) throws FileNotFoundException {
+        PrintWriter pw = new PrintWriter(new File(("/home/stu2/s18/nhk8621/tardis/outputs/classifiedTheUnclassified-"+result.size()+".csv")));
+        StringBuilder sb = new StringBuilder();
+        int counter = 0;
+        String delimiter = ",";
+        for (Email e : result) {
+            sb.append(counter).append(delimiter).
+                    append(e.getCategory()).append(delimiter).
+                    append(e.getContent()).append("\n");
+        }
+        pw.write(sb.toString());
+        pw.close();
+
+    }
+
 }

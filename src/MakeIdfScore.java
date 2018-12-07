@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class MakeIdfScore extends PjmrJob<TextId,String,String,LongVbl> {
-    
+
     public static HashMap<String, Word> allWords = new HashMap<>();
     public void main(String[] args) {
         int NT = Math.max(threads(), 1);

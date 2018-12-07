@@ -21,24 +21,12 @@ public class EmailClassifierSeq extends Task {
 
 
         try {
-
-//            if (args.length != 1) usage();
-
             int k = Integer.parseInt(args[0]);
-//            int k = Integer.parseInt(args[0]);
-
-//            MakeScores ms = new MakeScores();
-//            ms.main(args);
-//            wordsMake = ms.getWords();
-//            classifiedEmails = ms.getClassifiedEmails();
-//            unClassifiedEmails = ms.getUnClassifiedEmails();
-
-            MakeScoresSmp ms = new MakeScoresSmp();
-            //ms.main(args);
-            ms.letsGo(new String[]{args[1], args[2], args[3], args[4]});
-            wordsMake = ms.getWords();
-            classifiedEmails = ms.getClassifiedEmails();
-            unClassifiedEmails = ms.getUnClassifiedEmails();
+            MakeScores makeScores = new MakeScores();
+            makeScores.FindImportantWords(new String[]{args[1], args[2], args[3], args[4]});
+            wordsMake = makeScores.getWords();
+            classifiedEmails = makeScores.getClassifiedEmails();
+            unClassifiedEmails = makeScores.getUnClassifiedEmails();
             neighbourVbl = new NeighbourVbl(k);
 
             for (Email unclassified : unClassifiedEmails) {
@@ -64,7 +52,7 @@ public class EmailClassifierSeq extends Task {
 
             }
 
-            ms.writeBackToCSV(unClassifiedEmails);
+            makeScores.writeBackToCSV(unClassifiedEmails);
 
 
         } catch (Exception e) {
