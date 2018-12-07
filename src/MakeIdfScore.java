@@ -6,18 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class MakeIdfScore extends PjmrJob<TextId,String,String,LongVbl> {
-
-//    private String[] files = {
-//            "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/ham.csv",
-//            "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/spam.csv",
-//            "/home/stu2/s18/nhk8621/Courses/Parallel/project/dataFiles/unclassified100.csv"
-//    };
-
-//    private String[] files = {
-//            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\ham.csv",
-//            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\spam.csv",
-//            "C:\\Nikhil\\fall2018\\parallel\\Project\\EmailClassification\\dataFiles\\unclassified.csv",
-//    };
+    
     public static HashMap<String, Word> allWords = new HashMap<>();
     public void main(String[] args) {
         int NT = Math.max(threads(), 1);

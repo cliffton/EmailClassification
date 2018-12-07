@@ -52,8 +52,14 @@ public class Email {
     }
 
     public void transferDataandMakeTFIDFscore(HashMap<String, Word> totalWordCount) {
+
         for (String i : wordsMake.keySet()) {
-            words.put(totalWordCount.get(i), wordsMake.get(i) * totalWordCount.get(i).getIDFScore());
+            try {
+                words.put(totalWordCount.get(i), wordsMake.get(i) * totalWordCount.get(i).getIDFScore());
+            }catch (Exception e){
+                System.out.println(i);
+                System.out.flush();
+            }
         }
     }
 }
