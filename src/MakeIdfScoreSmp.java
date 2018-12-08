@@ -5,11 +5,13 @@
 //
 // Autjor: Nikhil Keswaney, Cliffton Fernandes.
 // Last Modified: 07-Dec-2018.
-// usage: java pj2 jar=<jar> threads=<NT> MakeIdfScoreSmp <HAM> <SPAM> <UNCLASSIFIED> <IDF>
+// usage: java pj2 jar=<jar> threads=<NT> MakeIdfScoreSmp <HAM> <SPAM> <UNCLASSIFIED> <IDF> <CLASSIFIED>
 //                a. <HAM> The location of the classified Ham file.
 //                b. <SPAM> The location of the classified SPAM file.
 //                c. <UNCLASSIFIED> The location of the unclassified file.
 //                similarity. <IDF> The location of the IDF file where the results should be stored.
+//                d. <CLASSIFIED> This is an optional input if you want the classified data to
+////                   go in a particular directory
 // ##################################################################
 
 import edu.rit.pj2.vbl.LongVbl;
@@ -54,11 +56,12 @@ public class MakeIdfScoreSmp extends PjmrJob<TextId, String, String, LongVbl> {
      */
     private static void usage() {
         System.err.println("" +
-                            "java pj2 jar=<jar> threads=<NT> MakeIdfScoreSmp <HAM> <SPAM> <UNCLASSIFIED> <IDF>\n" +
+                            "java pj2 jar=<jar> threads=<NT> MakeIdfScoreSmp <HAM> <SPAM> <UNCLASSIFIED> <IDF> <CLASSIFIED>\n" +
                             "a. <HAM> The location of the classified Ham file.\n" +
                             "b. <SPAM> The location of the classified SPAM file.\n" +
                             "c. <UNCLASSIFIED> The location of the unclassified file.\n" +
-                            "similarity. <IDF> The location of the IDF file where the results should be stored."
+                            "similarity. <IDF> The location of the IDF file where the results should be stored.\n" +
+                            "d. <CLASSIFIED> This is an optional input if you want the classified data to go in a particular directory"
         );
         terminate(1);
     }

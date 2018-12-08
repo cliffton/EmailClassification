@@ -3,12 +3,14 @@
 // This file is main file that is used to start the classification of
 // the email this file has a program that runs in multi threading\
 //
-// usage:java pj2 jar=<jar> threads=<NT> EmailClassifierSmp <HAM> <SPAM> <UNCLASSIFIED> <IDF>
+// usage:java pj2 jar=<jar> threads=<NT> EmailClassifierSeq <HAM> <SPAM> <UNCLASSIFIED> <IDF> <CLASSIFIED>
 //                a. <HAM> The location of the classified Ham file.
 //                b. <SPAM> The location of the classified SPAM file.
 //                c. <UNCLASSIFIED> The location of the unclassified file.
 //                   similarity. <IDF> The location of the IDF file where the results of the
 //                   computed IDF's are stored.
+//                d. <CLASSIFIED> This is an optional input if you want the classified data to
+//                   go in a particular directory
 //
 // Autjor: Nikhil Keswaney, Cliffton Fernandes
 // Last Modified: 07-Dec-2018
@@ -90,11 +92,12 @@ public class EmailClassifierSeq extends Task {
      */
     private static void usage() {
         System.err.println("" +
-                "java pj2 jar=<jar> threads=<NT> EmailClassifierSeq <HAM> <SPAM> <UNCLASSIFIED> <IDF>\n" +
+                "java pj2 jar=<jar> threads=<NT> EmailClassifierSeq <HAM> <SPAM> <UNCLASSIFIED> <IDF> <CLASSIFIED>\n" +
                 "a. <HAM> The location of the classified Ham file.\n" +
                 "b. <SPAM> The location of the classified SPAM file.\n" +
                 "c. <UNCLASSIFIED> The location of the unclassified file.\n" +
-                "similarity. <IDF> The location of the IDF file where the results of the computed IDF's are stored.\n");
+                "similarity. <IDF> The location of the IDF file where the results of the computed IDF's are stored.\n" +
+                "d. <CLASSIFIED> This is an optional input if you want the classified data to go in a particular directory");
     }
 
     /**
