@@ -3,6 +3,12 @@
 // This program is used to create a CSV file of the Inverse Document
 // Frequency (IDF) of all the words in sequence.
 //
+// usage: java pj2 jar=<jar> MakeIdfScoreSeq <HAM> <SPAM> <UNCLASSIFIED> <IDF>
+//                a. <HAM> The location of the classified Ham file.
+//                b. <SPAM> The location of the classified SPAM file.
+//                c. <UNCLASSIFIED> The location of the unclassified file.
+//                similarity. <IDF> The location of the IDF file where the results should be stored.
+//
 // Autjor: Nikhil Keswaney, Cliffton Fernandes.
 // Last Modified: 07-Dec-2018.
 //
@@ -56,7 +62,7 @@ public class MakeIdfScoreSeq extends Task {
             // Go through each word in the email and record
             for (int i = 0; i < wordsInCurrentEmail.length; i++) {
                 word = wordsInCurrentEmail[i].toLowerCase();
-                if (!record.contains(word)) {
+                if (!record.contains(word) && !word.equals("")) {
                     currentWord = new Word(word);
                     record.add(word);
                     if (!totalWords.containsKey(word)) {
@@ -75,11 +81,11 @@ public class MakeIdfScoreSeq extends Task {
         if(args.length <= 3){
             file = "IDFseq.csv";
         } else {
-            file = args[4];
+            file = args[3];
         }
         sb = new StringBuilder();
         for(String i: totalWords.keySet()) {
-            sb.append(i).append(",").append(totalWords.get(i)).append("\n");
+            sb.append(i).append(",").append(totalWords.get(i).getIDFScore()).append("\n");
         }
         cf.writingToFile(file, sb);
 

@@ -108,12 +108,13 @@ public class commonFunctions {
     public void output(ArrayList<Email> result, String Filename) throws FileNotFoundException {
         PrintWriter pw = new PrintWriter(new File((Filename)));
         StringBuilder sb = new StringBuilder();
-        int counter = 0;
+        int counter = 1;
         String delimiter = ",";
         for (Email e : result) {
             sb.append(counter).append(delimiter).
                     append(e.getCategory()).append(delimiter).
                     append(e.getContent()).append("\n");
+            counter ++;
         }
         pw.write(sb.toString());
         pw.close();

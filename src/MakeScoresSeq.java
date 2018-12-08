@@ -18,10 +18,6 @@ import java.util.HashMap;
  *
  */
 public class MakeScoresSeq extends Task {
-    private static void usage() {
-        System.err.println("Usage: java pj2 [threads=<NT>] edu.rit.pjmr.example.WebLog01 <nodes> <file> [<pattern>]");
-        terminate(1);
-    }
 
     private ArrayList<Word> allWords;
     private ArrayList<Email> emailsClassified;

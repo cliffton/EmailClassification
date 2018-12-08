@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class EmailClassifierSmp extends Task {
 
     // a library of common functions to reduce code repeat
-    commonFunctions cf = new commonFunctions();
+    private commonFunctions cf = new commonFunctions();
 
     // This has the records of all the words selected int after the
     // TF-IDf phase.
@@ -53,9 +53,16 @@ public class EmailClassifierSmp extends Task {
             usage();
         }
         if(args.length < 4) usage();
-        // This is a parallel approach to finding the TF-IDF score.
-        MakeScoresSmp makeTFIDFScore = new MakeScoresSmp();
-        makeTFIDFScore.FindImportantWords(new String[]{args[1], args[2], args[3], args[4]});
+        MakeScoresSmp makeTFIDFScore = null;
+        try {
+
+            // This is a parallel approach to finding the TF-IDF score.
+            makeTFIDFScore = new MakeScoresSmp();
+            makeTFIDFScore.FindImportantWords(new String[]{args[1], args[2], args[3], args[4]});
+        }
+        catch (Exception e){
+            usage();
+        }
 
         // The highest selected score.
         wordsMake = makeTFIDFScore.getWords();
@@ -106,9 +113,7 @@ public class EmailClassifierSmp extends Task {
             // Find the nearest neighbours and classify the unclassified email
             int category = neighbourVbl.voting();
             unclassified.setCategory(category);
-            System.out.println(unclassified.category+" " + unclassified.content);
             neighbourVbl.reset();
-            System.out.flush();
             count++;
         }
         if(args.length > 5) {

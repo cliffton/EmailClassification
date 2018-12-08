@@ -5,7 +5,11 @@
 //
 // Autjor: Nikhil Keswaney, Cliffton Fernandes.
 // Last Modified: 07-Dec-2018.
-//
+// usage: java pj2 jar=<jar> threads=<NT> MakeIdfScoreSmp <HAM> <SPAM> <UNCLASSIFIED> <IDF>
+//                a. <HAM> The location of the classified Ham file.
+//                b. <SPAM> The location of the classified SPAM file.
+//                c. <UNCLASSIFIED> The location of the unclassified file.
+//                similarity. <IDF> The location of the IDF file where the results should be stored.
 // ##################################################################
 
 import edu.rit.pj2.vbl.LongVbl;

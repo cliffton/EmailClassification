@@ -21,10 +21,6 @@ import java.util.HashMap;
  *
  */
 public class MakeScoresSmp extends Task {
-    private static void usage() {
-        System.err.println("Usage: java pj2 [threads=<NT>] edu.rit.pjmr.example.WebLog01 <nodes> <file> [<pattern>]");
-        terminate(1);
-    }
 
     public static long numberOfEmails = 0;
     private ArrayList<Word> allWords;
@@ -61,15 +57,13 @@ public class MakeScoresSmp extends Task {
 
         // A hash map for storing all the word counts
         HashMap<String, Word> totalWordCount = new HashMap<>();
-
         // This method will be called to fill in all the arraylists of emails.
         CountOfEmails count = cf.createRecorde(args, emails, emailsClassified, emailsUnClassified);
         numberOfEmails = count.getNumberOfEmails();
         numberOfSpamEmails = count.getNumberOfSpamEmails();
         numberOfHamEmails = count.getNumberOfHamEmails();
-
         // This is a parallel for loop iterates through all the emails
-        // parallely
+        // parallely.
         parallelFor(0, emails.size() - 1).exec(new Loop() {
             @Override
             public void run(int j) {
