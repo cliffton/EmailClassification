@@ -1,19 +1,36 @@
+// ###################################################################
+//
+// This file is the VBL class that is used for reduction of the
+// Nearest neighbours of an email.
+//
+// Autjor: Nikhil Keswaney, Cliffton Fernandes
+// Last Modified: 07-Dec-2018
+//
+// ###################################################################
+
 import edu.rit.pj2.Vbl;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+ * This is a NeighbourVbl class that is used for reduction of the
+ * Nearest neighbours of an email.
+ */
 public class NeighbourVbl implements Vbl {
 
-    public ArrayList<Pair<Email, Double>> neighbours = new ArrayList<>();
+    // This is a list that maintains the neighbours of the unclassified email.
+    private ArrayList<Pair<Email, Double>> neighbours = new ArrayList<>();
     private int k = 0;
-    public double[] similarityScores;
+    private double[] similarityScores;
 
     // Use bitset instead
     public int[] categories;
-    double minSimilarityScore = 0.0;
 
-
+    /**
+     * This is constructor to create a NeighbourVbl object.
+     * @param numberOfNeighbors The number of neighbours of an email.
+     */
     public NeighbourVbl(int numberOfNeighbors) {
         k = numberOfNeighbors;
         similarityScores = new double[k];
@@ -23,31 +40,20 @@ public class NeighbourVbl implements Vbl {
         }
     }
 
+    /**
+     * This method is used to reset the VBL object.
+     */
     public void reset() {
         similarityScores = new double[k];
         categories = new int[k];
         neighbours = new ArrayList<>();
     }
 
-
-//    public void addNeighbour(double similarityScore, Email email) {
-//        if (neighbours.size() < k) {
-//            neighbours.add(new Pair<Email, Double>(email, similarityScore));
-//            return;
-//        }
-//
-//
-//        if (similarityScore > minSimilarityScore) {
-//
-//
-//            Collections.sort(neighbours, new EmailComparator());
-//            neighbours.remove(0);
-//            minSimilarityScore = neighbours.get(0).getValue();
-//            neighbours.add(new Pair<Email, Double>(email, similarityScore));
-//        }
-//
-//    }
-
+    /**
+     * This method is used for adding a neighbour to the neighbour list.
+     * @param similarityScore Similarity index between the VBL email and the recieved email
+     * @param email The name of the email i.e. the neighbour.
+     */
     public void addNeighbour(double similarityScore, Email email) {
         neighbours.add(new Pair<Email, Double>(email, similarityScore));
         Collections.sort(neighbours, new EmailComparator());
@@ -56,12 +62,17 @@ public class NeighbourVbl implements Vbl {
             tmpArray.addAll(neighbours.subList(0, k));
             neighbours = tmpArray;
         }
-        //neighbours = System.arraycopy(neighbours, 0, tmpArray, 0, k-1);
-        //System.arraycopy(source_arr, sourcePos, dest_arr,destPos, len);
 
     }
 
-
+    /**
+     * This method is used for callculating the similarity between the 2 emails using
+     * the given words.
+     * @param e1 Email 1
+     * @param e2 Email 2
+     * @param words Selected words
+     * @return similarity score between e1 and e2 using words
+     */
     public double cosineSimilarity(Email e1, Email e2, ArrayList<Word> words) {
 
         double numerator = 0;
@@ -87,51 +98,10 @@ public class NeighbourVbl implements Vbl {
         return result;
     }
 
-
-//    public int voting() {
-//        int spamCount = 0;
-//        int hamCount = 0;
-//
-//        for (int category : categories) {
-//            if (category == 0) {
-//                hamCount++;
-//            } else {
-//                spamCount++;
-//            }
-//        }
-//
-//
-//        if (spamCount > hamCount) {
-//            return 1;
-//        }
-//        return 0;
-//
-//    }
-
-//    public int voting() {
-//        int spamCount = 0;
-//        int hamCount = 0;
-//        int count = 0;
-//        for (int i = neighbours.size() - 1; i >= 0 & count < k; i--, count++) {
-//
-//            Email neighbour = neighbours.get(i).getKey();
-//
-//            if (neighbour.category == 0) {
-//                hamCount++;
-//            } else {
-//                spamCount++;
-//            }
-//
-//        }
-//
-//
-//        if (spamCount > hamCount) {
-//            return 1;
-//        }
-//        return 0;
-//
-//    }
-
+    /**
+     * This method is used for voting i.e. finding the category of the unclassified email.
+     * @return Category
+     */
     public int voting() {
         int spamCount = 0;
         int hamCount = 0;
@@ -161,92 +131,36 @@ public class NeighbourVbl implements Vbl {
 
     }
 
-
-    public ArrayList<Pair<Email, Double>> getTopK(ArrayList<Pair<Email, Double>> candidates) {
-
-        ArrayList<Pair<Email, Double>> topK = new ArrayList<>();
-
-        for (int i = 0; i < k; i++) {
-            double max = Double.MIN_VALUE;
-            int ans = 0;
-            for (int j = 0; i < candidates.size(); j++) {
-                Pair<Email, Double> candidate = candidates.get(j);
-                if (candidate.getValue() > max) {
-                    max = candidate.getValue();
-                    ans = j;
-                }
-
-            }
-            topK.add(candidates.get(ans));
-            candidates.remove(ans);
-
-        }
-
-        return topK;
-    }
-
+    /**
+     * This is the set method for the VBL reduction vetween the
+     * neighbours of between threads.
+     * @param vbl The NeighbourVBL object
+     */
     public void set(Vbl vbl) {
         ArrayList<Pair<Email, Double>> result = new ArrayList<Pair<Email, Double>>();
         result.addAll(this.neighbours);
         result.addAll(((NeighbourVbl) vbl).neighbours);
-//        System.out.println("neighnots " + result.size() + " | " + n1.hashCode());
-//        System.out.flush();
         Collections.sort(result, new EmailComparator());
-        //this.neighbours = new ArrayList<Pair<Email, Double>>();
         if (result.size() < k) {
             this.neighbours = result;
         } else {
-//            this.neighbours = this.getTopK(result);
             this.neighbours.addAll(result.subList(0, k));
         }
-
-        //this.neighbours = result;
     }
 
-
-//    @Override
-//    public void set(Vbl vbl) {
-//        ArrayList<Pair<Double, Integer>> result = new ArrayList<>();
-//        double[] tmpScores = ((NeighbourVbl) vbl).similarityScores;
-//        int[] tmpCategories = ((NeighbourVbl) vbl).categories;
-//
-//
-//        int left = 0;
-//        int right = 0;
-//        while (left < k && right < k && result.size() < k) {
-//
-//            if (this.similarityScores[left] < tmpScores[right]) {
-//
-//                result.add(new Pair<Double, Integer>(this.similarityScores[left], this.categories[left]));
-//                left++;
-//
-//            } else {
-//
-//                result.add(new Pair<Double, Integer>(tmpScores[right], tmpCategories[right]));
-//                right++;
-//
-//            }
-//        }
-//
-//        // while (left < k) {
-//        //    result.add(new Pair<Double, Integer>(this.similarityScores[left], this.categories[left]));
-//        //    left++;
-//        // }
-//
-//
-//        // while (right < k) {
-//        //    result.add(new Pair<Double, Integer>(tmpScores[right], tmpCategories[right]));
-//        //    right++;
-//        // }
-//
-//
-//    }
-
+    /**
+     * This method is called for reduction
+     * @param vbl NeighbourVbl object
+     */
     @Override
     public void reduce(Vbl vbl) {
         set(vbl);
     }
 
+    /**
+     * This method is used to clone the neighbourVbl object.
+     * @return New object of neighbourVbl hat has the same value as this object
+     */
     @Override
     public Object clone() {
         try {
