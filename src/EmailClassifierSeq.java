@@ -79,7 +79,7 @@ public class EmailClassifierSeq extends Task {
             cf.output(unClassifiedEmails, args[5]);
         }
         else {
-            cf.output(unClassifiedEmails, "UnclassifyTheClassified.csv");
+            cf.output(unClassifiedEmails, "classify_The_Un-classified "+ unClassifiedEmails.size() + ".csv");
         }
 
     }

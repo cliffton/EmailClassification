@@ -110,6 +110,9 @@ public class commonFunctions {
         StringBuilder sb = new StringBuilder();
         int counter = 1;
         String delimiter = ",";
+        sb.append("Counter").append(delimiter).
+                append("Category (1 - SPAM, 0 - HAM)").append(delimiter).
+                append("Content").append("\n");
         for (Email e : result) {
             sb.append(counter).append(delimiter).
                     append(e.getCategory()).append(delimiter).
