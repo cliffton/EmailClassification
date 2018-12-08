@@ -1,7 +1,7 @@
 // ##################################################################
 //
 // This program is used to create a CSV file of the Inverse Document
-// Frequency (IDF) of all the words.
+// Frequency (IDF) of all the words. in sequence
 //
 // Autjor: Nikhil Keswaney, Cliffton Fernandes.
 // Last Modified: 07-Dec-2018.
@@ -54,7 +54,7 @@ public class MakeIdfScoreSmp extends PjmrJob<TextId, String, String, LongVbl> {
                             "a. <HAM> The location of the classified Ham file.\n" +
                             "b. <SPAM> The location of the classified SPAM file.\n" +
                             "c. <UNCLASSIFIED> The location of the unclassified file.\n" +
-                            "d. <IDF> The location of the IDF file where the results should be stored."
+                            "similarity. <IDF> The location of the IDF file where the results should be stored."
         );
         terminate(1);
     }

@@ -1,6 +1,14 @@
 // ###################################################################
 //
-// This file is used to classify all the emails in a sequential manner.
+// This file is main file that is used to start the classification of
+// the email this file has a program that runs in multi threading\
+//
+// usage:java pj2 jar=<jar> threads=<NT> EmailClassifierSmp <HAM> <SPAM> <UNCLASSIFIED> <IDF>
+//                a. <HAM> The location of the classified Ham file.
+//                b. <SPAM> The location of the classified SPAM file.
+//                c. <UNCLASSIFIED> The location of the unclassified file.
+//                   similarity. <IDF> The location of the IDF file where the results of the
+//                   computed IDF's are stored.
 //
 // Autjor: Nikhil Keswaney, Cliffton Fernandes
 // Last Modified: 07-Dec-2018
@@ -90,7 +98,7 @@ public class EmailClassifierSeq extends Task {
                 "a. <HAM> The location of the classified Ham file.\n" +
                 "b. <SPAM> The location of the classified SPAM file.\n" +
                 "c. <UNCLASSIFIED> The location of the unclassified file.\n" +
-                "d. <IDF> The location of the IDF file where the results of the computed IDF's are stored.\n");
+                "similarity. <IDF> The location of the IDF file where the results of the computed IDF's are stored.\n");
     }
 
     /**

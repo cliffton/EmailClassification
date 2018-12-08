@@ -121,7 +121,7 @@ public class MakeScoresSeq extends Task {
 
     /**
      * This method is called to get the arraylist of all the unclassified email
-     * @return
+     * @return unclassified emails.
      */
     public ArrayList<Email> getUnClassifiedEmails() {
         return emailsUnClassified;
