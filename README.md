@@ -17,3 +17,8 @@ This project is an email classifier that uses k-NN statistical analysis to class
 
 # Results
 ![enter image description here](https://raw.githubusercontent.com/cliffton/EmailClassification/master/misc/strongScalling.png)
+
+# Contributors
+
+ - Cliffton Fernandes (https://github.com/cliffton)
+ - Nikhil Keswaney (https://github.com/nikhilkeswaney)
