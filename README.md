@@ -15,6 +15,9 @@ This project is an email classifier that uses k-NN statistical analysis to class
 # Requirements
 [Parallel Java 2 Library](https://www.cs.rit.edu/~ark/pj2.shtml) 
 
+# Installation and Running
+Detailed installation and running guide can be found in the Report.pdf file.
+
 # Results
 ![enter image description here](https://raw.githubusercontent.com/cliffton/EmailClassification/master/misc/strongScalling.png)
 
