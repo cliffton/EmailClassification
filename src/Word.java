@@ -1,86 +1,120 @@
+// ###################################################################
+//
+// This file is used to structurize the words in all the documents
+//
+// Autjor: Nikhil Keswaney, Cliffton Fernandes
+// Last Modified: 07-Dec-2018
+//
+// ###################################################################
+import edu.rit.io.InStream;
+import edu.rit.io.OutStream;
+import edu.rit.pj2.Tuple;
+import edu.rit.pj2.Vbl;
+
+import java.io.IOException;
+
+/**
+ * This class is used to store the value of words
+ */
 public class Word {
-    private String word;
-    private double IDFScore, DFScoreSpam, SDScore, DFScoreHam, totalWordCount;
 
-    Word(){
+    public String word;
+    public double IDFScore;
+    public int category;
+
+    /**
+     * Default cunstructor
+     */
+    Word() {
+
     }
 
-    Word(String word){
+    /**
+     * This is to store the value of words
+     * @param word word to store in the Word object
+     */
+    Word(String word) {
         this.word = word;
-        this.DFScoreHam = 0;
-        this.DFScoreSpam = 0;
-        this.SDScore = 0;
-        this.totalWordCount = 0;
+        this.IDFScore = 0;
     }
-    Word(String word, double IDFScore, double DFScoreSpam, double SDScore, double DFScoreHam){
+
+    /**
+     * This is to store the value of words
+     * @param word word to store in the Word object
+     * @param IDFScore anf the IDFScore of the word
+     */
+    Word(String word, double IDFScore) {
         this.word = word;
         this.IDFScore = IDFScore;
-        this.DFScoreSpam = DFScoreSpam;
-        this.DFScoreHam = DFScoreHam;
-        this.SDScore = SDScore;
     }
 
-    public void setIDFScore(double IDFScore){
+    /**
+     * This is to store the value of words.
+     * @param word word to store in the Word object.
+     * @param IDFScore anf the IDFScore of the word.
+     * @param category Category of the word.
+     */
+    Word(String word, double IDFScore, int category) {
+        this.word = word;
+        this.IDFScore = IDFScore;
+        this.category = category;
+    }
+
+    /**
+     * This is used to set the IDF score of the word.
+     * @param IDFScore IDF score of the word.
+     */
+    public void setIDFScore(double IDFScore) {
         this.IDFScore = IDFScore;
     }
 
-    public void setTotalWordCount(double totalWordCount){
-        this.totalWordCount = totalWordCount;
-    }
-
-    public void setDFSpamScore(double DFScoreSpam){
-        this.DFScoreSpam = DFScoreSpam;
-    }
-
-    public void setDFHamScore(double DFScoreHam){
-        this.DFScoreHam = DFScoreHam;
-    }
-
-    public void setSDScore(double SDScore){
-        this.SDScore = SDScore;
-    }
-
-    public double getIDFScore(){
+    /**
+     * This is used to get the IDF score of the word.
+     * @return IDF score of the word.
+     */
+    public double getIDFScore() {
         return this.IDFScore;
     }
 
-    public double getTotalWordCount(){
-        return this.totalWordCount;
+    /**
+     * This is used to calculate the IDF score.
+     * @param number Totol number of doccuments
+     * @return IDF score of the word
+     */
+    public double makeIDF(long number) {
+        this.IDFScore = log2(number / this.IDFScore);
+        return this.IDFScore;
     }
 
-    public double getDFSpamScore(){
-        return this.DFScoreSpam;
+    /**
+     * This is used to calculate the log to base 2 with a given number divided by the
+     * IDF score
+     * @param value (Total number of documents)/(Total occurence)
+     * @return
+     */
+    double log2(double value) {
+        return Math.log(value) / Math.log(2);
     }
 
-    public double getDFHamScore(){
-        return this.DFScoreHam;
+    /**
+     * This is an equals method to return whether the object passed is same as this object
+     * @param obj Object to check equality with
+     * @return true or false
+     */
+    @Override
+    public boolean equals(Object obj) {
+        return this.word.equals(((Word) obj).word);
     }
 
-    public double getSDScore(){
-        return this.SDScore;
-    }
 
-    public void makeIDF(int number){
-        this.IDFScore = log2(number/this.IDFScore);
-    }
-
-    double log2(double value){
-        return Math.log(value)/Math.log(2);
-    }
-
-    public void makeDFScores(int numberOfSpamEmails, int numberOfHamEmails) {
-        this.DFScoreSpam = log2(numberOfSpamEmails/this.DFScoreSpam);
-        this.DFScoreHam = log2(numberOfHamEmails/this.DFScoreHam);
-    }
-
+    /**
+     * A to string method.
+     * @return word
+     */
     @Override
     public String toString() {
         return word;
     }
 
-//    @Override
-//    public int compareTo(Object o) {
-//        double tfidf = ((Word)o)
-//    }
 }
 

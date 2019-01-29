@@ -75,8 +75,14 @@ fabric.properties
 __pycache__
 
 
-
+unclassified500.csv
 enron.tar.gz
 emails.csv.zip
 data
 enron
+emails.csv
+test.csv
+spamSMP.csv
+spamSmp.csv
+*.onetoc2
+classifiedTheUnclassified.csv
